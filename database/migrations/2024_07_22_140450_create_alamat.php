@@ -11,10 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('family', function (Blueprint $table) {
+        Schema::create('alamat', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
+            $table->bigInteger('kecamatan_id')->unsigned(); //FK
+            $table->string('alamat_lengkap');
             $table->timestamps();
+
+            $table->foreign('kecamatan_id')->references('id')->on('kecamatan'); //FK
         });
     }
 
@@ -23,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('family');
+        Schema::dropIfExists('alamat');
     }
 };

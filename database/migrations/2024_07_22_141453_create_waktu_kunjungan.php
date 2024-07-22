@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('family', function (Blueprint $table) {
+        Schema::create('waktu_kunjungan', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
+            $table->time('waktu');
             $table->timestamps();
         });
     }
@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('family');
+        Schema::dropIfExists('waktu_kunjungan');
     }
 };
