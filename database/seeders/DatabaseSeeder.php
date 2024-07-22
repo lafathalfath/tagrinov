@@ -17,6 +17,8 @@ class DatabaseSeeder extends Seeder
             JenisSeeder::class,
             kategoriSeeder::class,
             EntitasSeeder::class,
+            JenisPengunjungSeeder::class,
+            KategoriKunjunganSeeder::class,
         ]);
     }
 }
