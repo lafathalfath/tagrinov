@@ -23,9 +23,9 @@
    composer install
    ```
    - generate app key
-     ```
-     php artisan key:generate
-     ```
+   ```
+   php artisan key:generate
+   ```
    - migrate the database
    ```
    php artisan migrate --seed
