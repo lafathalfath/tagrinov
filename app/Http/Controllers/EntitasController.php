@@ -7,9 +7,6 @@ use Illuminate\Http\Request;
 
 class EntitasController extends Controller
 {
-    public function tes() {
-        return view('tes');
-    }
     public function getAll() {
         $entitas = Entitas::get();
         if (!$entitas) return response()->json(['status' => 'error', 'message' => "couldn't find any data"], 404);
@@ -30,9 +27,9 @@ class EntitasController extends Controller
 
     public function store(Request $request) {
         $request->validate([
-            'nama' => 'required|string|max:255',
-            'nama_latin' => 'required|string|max:255',
-            'nama_daerah' => 'required|string|max:255',
+            'nama' => 'required|string|max:255|unique:entitas',
+            'nama_latin' => 'required|string|max:255|unique:entitas',
+            'nama_daerah' => 'required|string|max:255|unique:entitas',
             'family_id' => 'required|numeric',
             'jenis_id' => 'required|numeric',
             'kategori_id' => 'required|numeric',
@@ -49,6 +46,9 @@ class EntitasController extends Controller
             'nama.max' => 'nama terlalu panjang',
             'nama_latin.max' => 'nama latin terlalu panjang',
             'nama_daerah.max' => 'nama daerah terlalu panjang',
+            'nama.unique' => 'nama sudah ada',
+            'nama_latin.unique' => 'nama latin sudah ada',
+            'nama_daerah.unique' => 'nama daerah sudah ada',
             'family_id.numeric' => 'tipe data tidak sesuai',
             'jenis_id.numeric' => 'tipe data tidak sesuai',
             'kategori_id.numeric' => 'tipe data tidak sesuai',
@@ -65,9 +65,9 @@ class EntitasController extends Controller
         $entitas = Entitas::find($id);
         if (!$entitas) return response()->json(['status' => 'error', 'message' => "couldn't find any data"], 404);
         $request->validate([
-            'nama' => 'required|string|max:255',
-            'nama_latin' => 'required|string|max:255',
-            'nama_daerah' => 'required|string|max:255',
+            'nama' => 'required|string|max:255|unique:entitas',
+            'nama_latin' => 'required|string|max:255|unique:entitas',
+            'nama_daerah' => 'required|string|max:255|unique:entitas',
             'family_id' => 'required|numeric',
             'jenis_id' => 'required|numeric',
             'kategori_id' => 'required|numeric',
@@ -84,6 +84,9 @@ class EntitasController extends Controller
             'nama.max' => 'nama terlalu panjang',
             'nama_latin.max' => 'nama latin terlalu panjang',
             'nama_daerah.max' => 'nama daerah terlalu panjang',
+            'nama.unique' => 'nama sudah ada',
+            'nama_latin.unique' => 'nama latin sudah ada',
+            'nama_daerah.unique' => 'nama daerah sudah ada',
             'family_id.numeric' => 'tipe data tidak sesuai',
             'jenis_id.numeric' => 'tipe data tidak sesuai',
             'kategori_id.numeric' => 'tipe data tidak sesuai',
