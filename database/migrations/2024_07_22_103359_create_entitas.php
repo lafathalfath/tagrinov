@@ -20,6 +20,7 @@ return new class extends Migration
             $table->bigInteger('jenis_id')->unsigned()->nullable();
             $table->bigInteger('kategori_id')->unsigned()->nullable();
             $table->string('url_qr')->nullable();
+            $table->string('url_gambar')->nullable();
             $table->timestamps();
 
             $table->foreign('family_id')->references('id')->on('family');

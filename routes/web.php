@@ -21,8 +21,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Route::get('/tes', [EntitasController::class, 'tes']);
-
 Route::prefix('/family')->group(function () {
     Route::get('/', [FamilyController::class, 'getAll'])->name('family.getAll');
     Route::get('/{id}', [FamilyController::class, 'getById'])->name('family.getById');
