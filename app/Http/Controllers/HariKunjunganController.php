@@ -58,6 +58,7 @@ class HariKunjunganController extends Controller
     public function destroy($id) {
         $hari_kunjungan = HariKunjungan::find($id);
         if (!$hari_kunjungan) return response()->json(['status' => 'error', 'message' => "couldn't find any data"], 404);
+        if (count($hari_kunjungan->kunjungan)) return response()->json(['status' => 'error', 'message' => 'cannot delete parent row'], 403);
         if ($hari_kunjungan->delete()) return response()->json(['status' => 'deleted'], 204);
         return response()->json(['status' => 'error', 'message' => "internal server error"], 500);
     }

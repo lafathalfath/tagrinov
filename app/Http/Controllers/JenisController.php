@@ -60,6 +60,7 @@ class JenisController extends Controller
     public function destroy($id) {
         $jenis = Jenis::find($id);
         if (!$jenis) return response()->json(['status' => 'error', 'message' => "couldn't find any data"], 404);
+        if (count($jenis->entitas)) return response()->json(['status' => 'error', 'message' => 'cannot delete parent row'], 403);
         if ($jenis->delete()) return response()->json(['status' => 'deleted'], 204);
         return response()->json(['status' => 'error', 'message' => "internal server error"], 500);
     }
