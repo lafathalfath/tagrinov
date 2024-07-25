@@ -73,3 +73,11 @@
    ```
 
 ### Merge
+1. Master to your branch
+   - ![Tux, the Linux mascot](/public/contribution_guide/Screenshot%202024-07-25%20160406.png)
+   - ![Tux, the Linux mascot](/public/contribution_guide/Screenshot%202024-07-25%20161001.png)
+   - ![Tux, the Linux mascot](/public/contribution_guide/Screenshot%202024-07-25%20161054.png)
+   - ![Tux, the Linux mascot](/public/contribution_guide/Screenshot%202024-07-25%20161144.png)
+   - ![Tux, the Linux mascot](/public/contribution_guide/Screenshot%202024-07-25%20161210.png)
+   - ![Tux, the Linux mascot](/public/contribution_guide/Screenshot%202024-07-25%20161221.png)
+2. Your branch to master
