@@ -21,6 +21,18 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/stok-benih', function () {
+    return view('stok-benih'); 
+});
+
+Route::get('/tanaman', function () {
+    return view('tanaman'); 
+});
+
+Route::get('/pelaporan', function () {
+    return view('pelaporan'); 
+});
+
 Route::prefix('/family')->group(function () {
     Route::get('/', [FamilyController::class, 'getAll'])->name('family.getAll');
     Route::get('/{id}', [FamilyController::class, 'getById'])->name('family.getById');
