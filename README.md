@@ -88,3 +88,4 @@
      ![step6](https://github.com/user-attachments/assets/a976d97e-9d47-4486-b54a-d0012da9f690)
 2. Your branch to master
    <br/>The steps is same as number 1 but you must set **base** to master and **compare** to your branch name
+   ![merge](https://github.com/user-attachments/assets/d871b30e-8ad5-4de9-bfee-f7acb2f52612)
