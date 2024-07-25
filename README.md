@@ -89,3 +89,6 @@
 2. Your branch to master
    <br/>The steps is same as number 1 but you must set **base** to master and **compare** to your branch name
    ![merge](https://github.com/user-attachments/assets/d871b30e-8ad5-4de9-bfee-f7acb2f52612)
+3. **Note**
+   - Merge from **master** to **your branch** if the last merge to **master** was **not** from **your branch**.
+   - You can merge from **your branch** to **master** if the last merge to **master** was from **your branch**.
