@@ -73,3 +73,18 @@
    ```
 
 ### Merge
+1. Master to your branch
+   - click pull request
+     <br/>![step1](https://github.com/user-attachments/assets/6c58ca37-852e-45ff-ab39-2dbad97344bb)
+   - click new pull request
+     ![step2](https://github.com/user-attachments/assets/a1d3deea-e483-46a0-91a1-1a2e9b1bfe7e)
+   - set base to your branch name and compare to master
+     ![step3](https://github.com/user-attachments/assets/49c43d23-e882-4051-be22-82b4cfd73613)
+   - add a title and create pull request
+     ![step4](https://github.com/user-attachments/assets/9530bfc7-2ec5-4d5c-b11c-0b36ef5831f3)
+   - merge pull request
+     ![step5](https://github.com/user-attachments/assets/541f104a-6ccf-42a3-bc9b-e7efbffde4bc)
+   - confirm merge
+     ![step6](https://github.com/user-attachments/assets/a976d97e-9d47-4486-b54a-d0012da9f690)
+2. Your branch to master
+   <br/>The steps is same as number 1 but you must set **base** to master and **compare** to your branch name
