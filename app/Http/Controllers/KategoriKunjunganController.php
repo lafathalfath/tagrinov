@@ -60,6 +60,7 @@ class KategoriKunjunganController extends Controller
     public function destroy($id) {
         $kategori_kunjungan = KategoriKunjungan::find($id);
         if (!$kategori_kunjungan) return response()->json(['status' => 'error', 'message' => "couldn't find any data"], 404);
+        if (count($kategori_kunjungan->kunjungan)) return response()->json(['status' => 'error', 'message' => 'cannot delete parent row'], 403);
         if ($kategori_kunjungan->delete()) return response()->json(['status' => 'deleted'], 204);
         return response()->json(['status' => 'error', 'message' => "internal server error"], 500);
     }

@@ -60,6 +60,7 @@ class JenisPengunjungController extends Controller
     public function destroy($id) {
         $jenis_pengunjung = JenisPengunjung::find($id);
         if (!$jenis_pengunjung) return response()->json(['status' => 'error', 'message' => "couldn't find any data"], 404);
+        if (count($jenis_pengunjung->kunjungan)) return response()->json(['status' => 'error', 'message' => 'cannot delete parent row'], 403);
         if ($jenis_pengunjung->delete()) return response()->json(['status' => 'deleted'], 204);
         return response()->json(['status' => 'error', 'message' => "internal server error"], 500);
     }
