@@ -28,14 +28,14 @@
                         <a class="nav-link active" aria-current="page" href="#">Beranda</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">Koleksi Tanaman</a>
+                        <a class="nav-link active" href="{{ url('/tanaman') }}">Koleksi Tanaman</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Permohonan
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="{{ url('/stok-benih') }}">Permohonan Kunjungan</a></li>
+                            <li><a class="dropdown-item" href="{{ url('/stokbenih') }}">Permohonan Kunjungan</a></li>
                             <li><a class="dropdown-item" href="{{ url('/tanaman') }}">Permohonan Benih</a></li>
                         </ul>
                     </li>
@@ -46,7 +46,7 @@
                         <a class="nav-link active" href="#">Event</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ url('/testimoni/create') }}">Testimoni</a>
+                        <a class="nav-link active" href="{{ url('/kunjungan') }}">Testimoni</a>
                     </li>
                 </ul>
             </div>
