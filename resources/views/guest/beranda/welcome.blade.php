@@ -53,13 +53,13 @@
             <h2>Denah Taman</h2>
             <div class="position-relative">
                 <img src="{{ asset('assets/image/denah_taman.png') }}" class="img-fluid mt-4" alt="Denah Taman">
-                <div class="location-icon" style="position: absolute; top: 30%; left: 40%;"
-                    data-detail="<b>Taman Horti</b><br>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                <div class="location-icon" style="position: absolute; top: 30%; left: 40%;" 
+                    data-detail="<b>Taman Horti</b><br>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." 
                     data-audio="{{ asset('assets/image/sound3.mp3') }}">
                     <i class="bi bi-geo-alt-fill" style="font-size: 2rem; color: red;"></i>
                 </div>
-                <div class="location-icon" style="position: absolute; top: 50%; left: 60%;"
-                    data-detail="<b>Area hortikultura</b><br>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                <div class="location-icon" style="position: absolute; top: 50%; left: 60%;" 
+                    data-detail="<b>Area hortikultura</b><br>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." 
                     data-audio="{{ asset('assets/image/sound2.mp3') }}">
                     <i class="bi bi-geo-alt-fill" style="font-size: 2rem; color: red;"></i>
                 </div>
@@ -90,7 +90,7 @@
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
     <script>
@@ -132,19 +132,19 @@
                     // Hentikan pemutaran suara
                     clickSound.pause();
                     clickSound.currentTime = 0; // Mengatur waktu kembali ke 0
-
+                    
                     document.body.removeChild(popup);
                 });
             }
 
-    // Tambahkan event listener untuk ikon lokasi
-    document.querySelectorAll('.location-icon').forEach(function(icon) {
-        icon.addEventListener('click', function() {
-            var detail = this.getAttribute('data-detail');
-            var audioSrc = this.getAttribute('data-audio');
-            showPopup(detail, audioSrc);
+            // Tambahkan event listener untuk ikon lokasi
+            document.querySelectorAll('.location-icon').forEach(function(icon) {
+                icon.addEventListener('click', function() {
+                    var detail = this.getAttribute('data-detail');
+                    var audioSrc = this.getAttribute('data-audio');
+                    showPopup(detail, audioSrc);
+                });
             });
-        });
         });
     </script>
 @endsection
