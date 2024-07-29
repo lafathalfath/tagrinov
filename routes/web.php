@@ -5,6 +5,8 @@ use App\Http\Controllers\FamilyController;
 use App\Http\Controllers\Guest\TestimoniController;
 use App\Http\Controllers\JenisController;
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\DetailBenihController;
+use App\Http\Controllers\FeedbackController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -22,6 +24,19 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/testimoni/create', [TestimoniController::class, 'create'])->name('testimoni.create');
+
+Route::get('/tanaman', function () {
+    return view('tanaman');
+});
+
+Route::get('/stokbenih', function () {
+    return view('stokbenih');
+});
+
+Route::get('/stokbenih/detail/{name}', [DetailBenihController::class, 'show'])->name('benih.show');
+
+Route::get('/kunjungan', [FeedbackController::class, 'index']);
+Route::post('/kunjungan', [FeedbackController::class, 'store']);
 
 Route::prefix('/family')->group(function () {
     Route::get('/', [FamilyController::class, 'getAll'])->name('family.getAll');
