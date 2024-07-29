@@ -60,6 +60,7 @@ class FamilyController extends Controller
     public function destroy($id) {
         $family = Family::find($id);
         if (!$family) return response()->json(['status' => 'error', 'message' => "couldn't find any data"], 404);
+        if (count($family->entitas)) return response()->json(['status' => 'error', 'message' => 'cannot delete parent row'], 403);
         if ($family->delete()) return response()->json(['status' => 'deleted'], 204);
         return response()->json(['status' => 'error', 'message' => "internal server error"], 500);
     }

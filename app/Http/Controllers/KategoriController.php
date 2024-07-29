@@ -60,6 +60,7 @@ class KategoriController extends Controller
     public function destroy($id) {
         $kategori = Kategori::find($id);
         if (!$kategori) return response()->json(['status' => 'error', 'message' => "couldn't find any data"], 404);
+        if (count($kategori->entitas)) return response()->json(['status' => 'error', 'message' => 'cannot delete parent row'], 403);
         if ($kategori->delete()) return response()->json(['status' => 'deleted'], 204);
         return response()->json(['status' => 'error', 'message' => "internal server error"], 500);
     }

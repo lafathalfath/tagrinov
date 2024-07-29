@@ -58,6 +58,7 @@ class WaktuKunjunganController extends Controller
     public function destroy($id) {
         $waktu_kunjungan = WaktuKunjungan::find($id);
         if (!$waktu_kunjungan) return response()->json(['status' => 'error', 'message' => "couldn't find any data"], 404);
+        if (count($waktu_kunjungan->kunjungan)) return response()->json(['status' => 'error', 'message' => 'cannot delete parent row'], 403);
         if ($waktu_kunjungan->delete()) return response()->json(['status' => 'deleted'], 204);
         return response()->json(['status' => 'error', 'message' => "internal server error"], 500);
     }

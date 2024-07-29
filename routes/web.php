@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\EntitasController;
 use App\Http\Controllers\FamilyController;
+use App\Http\Controllers\Guest\TestimoniController;
 use App\Http\Controllers\JenisController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\DetailBenihController;
@@ -22,6 +23,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/testimoni/create', [TestimoniController::class, 'create'])->name('testimoni.create');
 
 Route::get('/tanaman', function () {
     return view('tanaman');
