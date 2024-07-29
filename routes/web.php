@@ -38,6 +38,20 @@ Route::get('/stokbenih/detail/{name}', [DetailBenihController::class, 'show'])->
 Route::get('/kunjungan', [FeedbackController::class, 'index']);
 Route::post('/kunjungan', [FeedbackController::class, 'store']);
 
+Route::get('/stok-benih', function () {
+    return view('stok-benih'); 
+});
+
+Route::get('/tanaman', function () {
+    return view('tanaman'); 
+});
+
+Route::get('/events', [EventController::class, 'index']);
+
+Route::get('/pelaporan', function () {
+    return view('pelaporan'); 
+});
+
 Route::prefix('/family')->group(function () {
     Route::get('/', [FamilyController::class, 'getAll'])->name('family.getAll');
     Route::get('/{id}', [FamilyController::class, 'getById'])->name('family.getById');
