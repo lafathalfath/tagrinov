@@ -1,6 +1,5 @@
 @extends('layouts.main')
 @section('content')
-
     <section id="hero" class="px-0">
         <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
