@@ -12,9 +12,53 @@
     <audio id="click-sound" src="{{ asset('assets/image/sound3.mp3') }}" preload="auto"></audio>
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 </head>
+<style>
+    .nav-link {
+        color: green !important;
+    }
+    .nav-link:hover {
+        font-weight: bold !important;
+    }
+    .active {
+        font-weight: bold !important;
+        display: flex;
+        flex-direction: column;
+        text-decoration: underline;
+    }
+
+
+    footer {
+        background-color: #009144;
+        color: white;
+        padding: 20px;
+        text-align: center;
+    }
+    footer .contact-info, footer .map {
+        display: inline-block;
+        vertical-align: top;
+        margin: 0 20px;
+    }
+    footer .contact-info {
+        text-align: left;
+    }
+    footer .map iframe {
+        border: 0;
+        width: 450px;
+        height: 250px;
+        border-radius: 8px;
+    }
+    footer a {
+        color: white;
+        text-decoration: none;
+        margin: 0 10px;
+    }
+    footer a:hover {
+        text-decoration: underline;
+    }
+</style>
 <body>
     <!--navbar-->
-    <nav class="navbar navbar-expand-lg navbar-dark py-3 fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark py-2 fixed-top bg-light shadow">
         <div class="container">
             <a class="navbar-brand" href="#">
                 <img src="{{ asset('assets/icons/logo.png') }}" height="55" width="55" alt="">
@@ -25,37 +69,38 @@
             <div class="collapse navbar-collapse justify-content-center" id="navbarSupportedContent">
                 <ul class="navbar-nav mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Beranda</a>
+                        <a class="nav-link {{ request()->path()=='/'?'active':'' }}" aria-current="page" href="/">Beranda</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="{{ url('/tanaman') }}">Koleksi Tanaman</a>
+                    <li class="nav-item {{ request()->url()==route('tanaman.index')?'active':'' }}">
+                        <a class="nav-link" href="{{ route('tanaman.index') }}">Koleksi Tanaman</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             Permohonan
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="{{ url('/stokbenih') }}">Permohonan Kunjungan</a></li>
+                            <li><a class="dropdown-item" href="{{ url('guest/stokbenih') }}">Permohonan Kunjungan</a></li>
                             <li><a class="dropdown-item" href="{{ url('/tanaman') }}">Permohonan Benih</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">Stok Benih</a>
+                        <a class="nav-link" href="#">Stok Benih</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">Event</a>
+                        <a class="nav-link" href="#">Event</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{ url('/testimoni/create') }}">Testimoni</a>
+                        <a class="nav-link" href="{{ url('/testimoni/create') }}">Testimoni</a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
     <!-- Navbar -->
+    <div style="margin-top: 80px;">
+        @yield('content')
+    </div>
 
-    @yield('content')
-    
     <footer>
         <div class="map">
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d990.8860998470195!2d106.7875092695418!3d-6.579033999588393!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69c5311ad80031%3A0xae42de3ba17aceb7!2sBalai%20Besar%20Penerapan%20Standar%20Instrumen%20Pertanian%20(BBPSIP)!5e0!3m2!1sen!2sid!4v1721834025093!5m2!1sen!2sid" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>

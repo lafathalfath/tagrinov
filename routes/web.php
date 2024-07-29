@@ -2,11 +2,13 @@
 
 use App\Http\Controllers\EntitasController;
 use App\Http\Controllers\FamilyController;
+use App\Http\Controllers\Guest\TanamanController;
 use App\Http\Controllers\Guest\TestimoniController;
 use App\Http\Controllers\JenisController;
 use App\Http\Controllers\KategoriController;
-use App\Http\Controllers\DetailBenihController;
-use App\Http\Controllers\FeedbackController;
+use App\Http\Guest\Controllers\DetailBenihController;
+use App\Http\Guest\Controllers\EventController;
+use App\Http\Guest\Controllers\FeedbackController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,11 +28,11 @@ Route::get('/', function () {
 Route::get('/testimoni/create', [TestimoniController::class, 'create'])->name('testimoni.create');
 
 Route::get('/tanaman', function () {
-    return view('tanaman');
+    return view('guest.tanaman.tanaman');
 });
 
 Route::get('/stokbenih', function () {
-    return view('stokbenih');
+    return view('guest.stokbenih.stokbenih');
 });
 
 Route::get('/stokbenih/detail/{name}', [DetailBenihController::class, 'show'])->name('benih.show');
@@ -38,13 +40,11 @@ Route::get('/stokbenih/detail/{name}', [DetailBenihController::class, 'show'])->
 Route::get('/kunjungan', [FeedbackController::class, 'index']);
 Route::post('/kunjungan', [FeedbackController::class, 'store']);
 
-Route::get('/stok-benih', function () {
-    return view('stok-benih');
+Route::get('/stokbenih', function () {
+    return view('stokbenih');
 });
 
-Route::get('/tanaman', function () {
-    return view('tanaman');
-});
+Route::get('/tanaman', [TanamanController::class, 'index'])->name('tanaman.index');
 
 Route::get('/events', [EventController::class, 'index']);
 

@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Guest\Controllers;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Feedback;
 
@@ -10,7 +11,9 @@ class FeedbackController extends Controller
     public function index()
     {
         $feedbacks = Feedback::all();
-        return view('kunjungan', compact('feedbacks'));
+        return view('kunjungan', [
+            'feedbacks' => $feedbacks,
+        ]);
     }
 
     public function store(Request $request)
