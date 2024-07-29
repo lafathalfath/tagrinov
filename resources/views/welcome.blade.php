@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
@@ -123,7 +122,7 @@
     </section>
 
     <!-- WhatsApp Button -->
-    <a href="https://wa.me/62XXXXXXXXXX" class="whatsapp-button" target="_blank">
+    <a href="https://wa.me/6285218339006" class="whatsapp-button" target="_blank">
         <img src="{{ asset('assets/icons/whatsapp.png') }}" alt="WhatsApp">
     </a>
 
@@ -145,7 +144,6 @@
         </div>
     </div>
 
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
@@ -159,6 +157,13 @@
                 navbar.classList.remove('scrolled');
             }
         });
+
+        // JavaScript to handle location icon click
+        document.querySelectorAll('.location-icon').forEach(function(icon) {
+            icon.addEventListener('click', function() {
+                var detail = this.getAttribute('data-detail');
+                document.getElementById('location-detail').innerHTML = detail;
+
                 document.addEventListener('DOMContentLoaded', function() {
             // Fungsi untuk menampilkan popup dan memutar suara
             function showPopup(content, audioSrc) {
