@@ -21,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('guest.beranda.welcome');
 });
 Route::get('/testimoni/create', [TestimoniController::class, 'create'])->name('testimoni.create');
 
@@ -39,17 +39,17 @@ Route::get('/kunjungan', [FeedbackController::class, 'index']);
 Route::post('/kunjungan', [FeedbackController::class, 'store']);
 
 Route::get('/stok-benih', function () {
-    return view('stok-benih'); 
+    return view('stok-benih');
 });
 
 Route::get('/tanaman', function () {
-    return view('tanaman'); 
+    return view('tanaman');
 });
 
 Route::get('/events', [EventController::class, 'index']);
 
 Route::get('/pelaporan', function () {
-    return view('pelaporan'); 
+    return view('pelaporan');
 });
 
 Route::prefix('/family')->group(function () {
