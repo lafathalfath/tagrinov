@@ -31,6 +31,8 @@ Route::get('/tanaman', function () {
     return view('tanaman'); 
 });
 
+Route::get('/events', [EventController::class, 'index']);
+
 Route::get('/pelaporan', function () {
     return view('pelaporan'); 
 });
