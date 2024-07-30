@@ -30,10 +30,9 @@
                 <h1 class="text-white">Selamat Datang di</h1>
                 <h1 class="text-green">Taman Agro Standar</h1>
                 <p class="lead mt-3">Nikmati keindahan alam dan belajar lebih banyak tentang berbagai jenis tanaman yang ada di taman kami. Dengan berbagai fitur interaktif, Anda bisa memindai barcode pada setiap tanaman untuk mendapatkan informasi lebih detail, serta memantau stok benih yang tersedia.</p>
-                <!-- Tombol untuk Scroll ke Bagian Denah Taman -->
                 <a href="#denah" class="btn btn-light btn-lg mt-4 scroll-btn">
                     <span>Denah Taman</span>
-                    <i class="bi bi-arrow-down-circle"></i> <!-- Ikon Panah -->
+                    <i class="bi bi-arrow-down-circle"></i> 
                 </a>
             </div>
         </div>
@@ -53,12 +52,56 @@
             <h2>Denah Taman</h2>
             <div class="position-relative">
                 <img src="{{ asset('assets/image/denah_taman.png') }}" class="img-fluid mt-4" alt="Denah Taman">
+                <!-- ikon 7 -->
                 <div class="location-icon" style="position: absolute; top: 30%; left: 40%;" 
                     data-detail="<b>Taman Horti</b><br>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." 
                     data-audio="{{ asset('assets/image/sound3.mp3') }}">
                     <i class="bi bi-geo-alt-fill" style="font-size: 2rem; color: red;"></i>
                 </div>
-                <div class="location-icon" style="position: absolute; top: 50%; left: 60%;" 
+                <!-- ikon 1 -->
+                <div class="location-icon" style="position: absolute; top: 30%; left: 60%;" 
+                    data-detail="<b>Area hortikultura</b><br>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." 
+                    data-audio="{{ asset('assets/image/sound2.mp3') }}">
+                    <i class="bi bi-geo-alt-fill" style="font-size: 2rem; color: red;"></i>
+                </div>
+                <!-- ikon 8 -->
+                <div class="location-icon" style="position: absolute; top: 30%; left: 5%;" 
+                    data-detail="<b>Rumah Bibit</b><br>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." 
+                    data-audio="{{ asset('assets/image/sound2.mp3') }}">
+                    <i class="bi bi-geo-alt-fill" style="font-size: 2rem; color: red;"></i>
+                </div>
+                <!-- ikon 2 -->
+                <div class="location-icon" style="position: absolute; top: 30%; right: 3%;" 
+                    data-detail="<b>Kafe</b><br>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." 
+                    data-audio="{{ asset('assets/image/sound2.mp3') }}">
+                    <i class="bi bi-geo-alt-fill" style="font-size: 2rem; color: red;"></i>
+                </div>
+                <!-- ikon 5 -->
+                <div class="location-icon" style="position: absolute; top: 65%; left: 60%;" 
+                    data-detail="<b>Tanaman Hias</b><br>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." 
+                    data-audio="{{ asset('assets/image/sound2.mp3') }}">
+                    <i class="bi bi-geo-alt-fill" style="font-size: 2rem; color: red;"></i>
+                </div>
+                <!-- ikon 3 -->
+                <div class="location-icon" style="position: absolute; top: 65%; right: 7%;" 
+                    data-detail="<b>Perairan Panel Surya</b><br>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." 
+                    data-audio="{{ asset('assets/image/sound2.mp3') }}">
+                    <i class="bi bi-geo-alt-fill" style="font-size: 2rem; color: red;"></i>
+                </div>
+                <!-- ikon 4 -->
+                <div class="location-icon" style="position: absolute; top: 65%; right: 22%;" 
+                    data-detail="<b>Kopi & Kelor</b><br>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." 
+                    data-audio="{{ asset('assets/image/sound2.mp3') }}">
+                    <i class="bi bi-geo-alt-fill" style="font-size: 2rem; color: red;"></i>
+                </div>
+                <!-- ikon 6 -->
+                <div class="location-icon" style="position: absolute; top: 55%; left: 50%;" 
+                    data-detail="<b>Gazebo</b><br>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." 
+                    data-audio="{{ asset('assets/image/sound2.mp3') }}">
+                    <i class="bi bi-geo-alt-fill" style="font-size: 2rem; color: red;"></i>
+                </div>
+                <!-- ikon 9 -->
+                <div class="location-icon" style="position: absolute; top: 85%; left: 50%;" 
                     data-detail="<b>Area hortikultura</b><br>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." 
                     data-audio="{{ asset('assets/image/sound2.mp3') }}">
                     <i class="bi bi-geo-alt-fill" style="font-size: 2rem; color: red;"></i>
@@ -73,6 +116,7 @@
     </a>
 
     <!-- Location Detail Modal -->
+
     <div class="modal fade" id="locationModal" tabindex="-1" aria-labelledby="locationModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -81,7 +125,6 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" id="location-modal-body">
-                    <!-- Konten detail lokasi akan diisi oleh JavaScript -->
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
@@ -90,7 +133,6 @@
         </div>
     </div>
 
-<<<<<<< HEAD
     <!-- Form Modal -->
     <div class="modal fade" id="formModal" tabindex="-1" aria-labelledby="formModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -117,13 +159,12 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-=======
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
->>>>>>> cf551ccaed4084504a1627f34954b0e2f9d571c0
+
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
     <script>
-        // JavaScript to add background to navbar on scroll
         window.addEventListener('scroll', function() {
             var navbar = document.querySelector('.navbar');
             if (window.scrollY > 50) {
@@ -133,11 +174,10 @@
             }
         });
 
-        // JavaScript to handle location icon click
         document.querySelectorAll('.location-icon').forEach(function(icon) {
             icon.addEventListener('click', function() {
                 var detail = this.getAttribute('data-detail');
-<<<<<<< HEAD
+ 
                 var audioSrc = this.getAttribute('data-audio');
                 showPopup(detail, audioSrc);
             });
@@ -186,45 +226,31 @@
                 });
             });
         });
-=======
+
                 document.getElementById('location-detail').innerHTML = detail;
 
-                document.addEventListener('DOMContentLoaded', function() {
-            // Fungsi untuk menampilkan popup dan memutar suara
-            function showPopup(content, audioSrc) {
+                var audioSrc = this.getAttribute('data-audio');
+
+
                 var popup = document.createElement('div');
                 popup.className = 'popup';
                 popup.innerHTML = `
                     <div class="popup-content">
                         <span class="popup-close">&times;</span>
-                        <div class="popup-body">${content}</div>
+                        <div class="popup-body">${detail}</div>
                     </div>
                 `;
                 document.body.appendChild(popup);
 
-                // Buat elemen audio untuk memutar suara
                 var clickSound = new Audio(audioSrc);
                 clickSound.play();
 
-                // Tambahkan event listener untuk menutup popup
                 popup.querySelector('.popup-close').addEventListener('click', function() {
-                    // Hentikan pemutaran suara
                     clickSound.pause();
-                    clickSound.currentTime = 0; // Mengatur waktu kembali ke 0
-                    
+                    clickSound.currentTime = 0;
                     document.body.removeChild(popup);
-                });
-            }
-
-            // Tambahkan event listener untuk ikon lokasi
-            document.querySelectorAll('.location-icon').forEach(function(icon) {
-                icon.addEventListener('click', function() {
-                    var detail = this.getAttribute('data-detail');
-                    var audioSrc = this.getAttribute('data-audio');
-                    showPopup(detail, audioSrc);
                 });
             });
         });
->>>>>>> cf551ccaed4084504a1627f34954b0e2f9d571c0
     </script>
 @endsection

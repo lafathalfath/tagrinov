@@ -10,7 +10,6 @@ body {
     transition: background-color 0.3s ease;
 }
 
-
 .navbar.scrolled {
     background-color: rgba(255, 255, 255, 1);
 }
@@ -27,7 +26,6 @@ body {
 .navbar-dark .navbar-brand {
     color: white;
 }
-
 
 .scroll-btn {
     display: inline-flex;
@@ -52,11 +50,11 @@ body {
 }
 
 .carousel-caption {
-    text-align: left; /* Mengatur teks untuk align ke kiri */
-    left: 10%; /* Menentukan jarak dari sisi kiri layar */
-    bottom: 15%; /* Menyediakan ruang dari bawah slider */
-    right: 20%; /* Menghilangkan ruang di sebelah kanan */
-    max-width: 50%; /* Membatasi lebar teks agar tidak terlalu melebar */
+    text-align: left;
+    left: 10%;
+    bottom: 15%;
+    right: 20%;
+    max-width: 50%;
 }
 
 .hero-title h1 {
@@ -65,7 +63,7 @@ body {
 }
 
 .text-green {
-    color: #28a745; /* Bootstrap green color */
+    color: #28a745;
 }
 
 .hero-title p {
@@ -86,9 +84,12 @@ body {
     position: absolute;
     width: 40px;
     height: 40px;
-    background: url(../icons/lokasi.png) no-repeat center;
-    background-size: contain;
     cursor: pointer;
+}
+
+.location-icon i {
+    font-size: 2rem;
+    color: red;
 }
 
 #location-detail {
