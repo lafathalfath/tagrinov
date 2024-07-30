@@ -32,7 +32,7 @@
                 <p class="lead mt-3">Nikmati keindahan alam dan belajar lebih banyak tentang berbagai jenis tanaman yang ada di taman kami. Dengan berbagai fitur interaktif, Anda bisa memindai barcode pada setiap tanaman untuk mendapatkan informasi lebih detail, serta memantau stok benih yang tersedia.</p>
                 <a href="#denah" class="btn btn-light btn-lg mt-4 scroll-btn">
                     <span>Denah Taman</span>
-                    <i class="bi bi-arrow-down-circle"></i> <!-- Ikon Panah -->
+                    <i class="bi bi-arrow-down-circle"></i> 
                 </a>
             </div>
         </div>
