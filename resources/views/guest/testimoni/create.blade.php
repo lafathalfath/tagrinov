@@ -2,16 +2,15 @@
 
 @section('content')
 <style>
-    .container-testimoni {
+    .containern {
         padding: 20px 100px;
     }
     h2 {
-        background-color: #00a65a;
+        background-color: #00573d;
         color: white;
-        padding: 20px;
+        padding: 15px;
         text-align: center;
-        margin-top: 0;
-        border-radius: 8px 8px 0 0;
+        margin-top: 100px;
     }
     .form-section {
         padding: 20px 0px;
@@ -90,7 +89,7 @@
         margin-left: 8px;
     }
     .feedback .feedback-name {
-        font-size: 20px;
+        font-size: 18px;
         font-weight: 600;
         margin: 0;
     }
@@ -114,8 +113,8 @@
 </style>
 </head>
 <body>
-    <div class="container-testimoni">
-        <h2>Ulasan Kunjungan</h2>
+    <div class="container">
+        <h2>Testimoni</h2>
         @if (session('success'))
             <div class="alert alert-success">
                 {{ session('success') }}
@@ -165,6 +164,7 @@
                 <button type="submit" class="btn-feedback">Kirim</button>
             </form>
         </div>
+        <h2>Ulasan</h2>
         @foreach($feedbacks as $feedback)
             <div class="feedback">
                 <div class="info">
