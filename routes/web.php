@@ -27,9 +27,9 @@ Route::get('/', function () {
 });
 Route::get('/testimoni/create', [TestimoniController::class, 'create'])->name('testimoni.create');
 
-Route::get('/tanaman', function () {
-    return view('guest.tanaman.tanaman');
-});
+// Route::get('/tanaman', function () {
+//     return view('guest.tanaman.tanaman');
+// });
 
 Route::get('/stokbenih', function () {
     return view('guest.stokbenih.stokbenih');
@@ -45,6 +45,8 @@ Route::get('/stokbenih', function () {
 });
 
 Route::get('/tanaman', [TanamanController::class, 'index'])->name('tanaman.index');
+// Route::get('/tanaman/{id}/detail', [TanamanController::class, 'detail'])->name('tanaman.detail');
+Route::get('/tanaman/detail', [TanamanController::class, 'detail'])->name('tanaman.detail');
 
 Route::get('/events', [EventController::class, 'index']);
 

@@ -72,7 +72,7 @@
         <img src="{{ asset('assets/icons/whatsapp.png') }}" alt="WhatsApp">
     </a>
 
-    <!-- Modal -->
+    <!-- Location Detail Modal -->
     <div class="modal fade" id="locationModal" tabindex="-1" aria-labelledby="locationModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -85,6 +85,31 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Form Modal -->
+    <div class="modal fade" id="formModal" tabindex="-1" aria-labelledby="formModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="formModalLabel">Isi Data Anda</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="visitorForm">
+                        <div class="mb-3">
+                            <label for="visitorName" class="form-label">Nama</label>
+                            <input type="text" class="form-control" id="visitorName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="visitorWA" class="form-label">No. WA</label>
+                            <input type="text" class="form-control" id="visitorWA" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -108,43 +133,53 @@
         document.querySelectorAll('.location-icon').forEach(function(icon) {
             icon.addEventListener('click', function() {
                 var detail = this.getAttribute('data-detail');
-                document.getElementById('location-detail').innerHTML = detail;
-
-                document.addEventListener('DOMContentLoaded', function() {
-            // Fungsi untuk menampilkan popup dan memutar suara
-            function showPopup(content, audioSrc) {
-                var popup = document.createElement('div');
-                popup.className = 'popup';
-                popup.innerHTML = `
-                    <div class="popup-content">
-                        <span class="popup-close">&times;</span>
-                        <div class="popup-body">${content}</div>
-                    </div>
-                `;
-                document.body.appendChild(popup);
-
-                // Buat elemen audio untuk memutar suara
-                var clickSound = new Audio(audioSrc);
-                clickSound.play();
-
-                // Tambahkan event listener untuk menutup popup
-                popup.querySelector('.popup-close').addEventListener('click', function() {
-                    // Hentikan pemutaran suara
-                    clickSound.pause();
-                    clickSound.currentTime = 0; // Mengatur waktu kembali ke 0
-
-                    document.body.removeChild(popup);
-                });
-            }
-
-    // Tambahkan event listener untuk ikon lokasi
-    document.querySelectorAll('.location-icon').forEach(function(icon) {
-        icon.addEventListener('click', function() {
-            var detail = this.getAttribute('data-detail');
-            var audioSrc = this.getAttribute('data-audio');
-            showPopup(detail, audioSrc);
+                var audioSrc = this.getAttribute('data-audio');
+                showPopup(detail, audioSrc);
             });
         });
+
+        // Function to show popup
+        function showPopup(content, audioSrc) {
+            var popup = document.createElement('div');
+            popup.className = 'popup';
+            popup.innerHTML = `
+                <div class="popup-content">
+                    <span class="popup-close">&times;</span>
+                    <div class="popup-body">${content}</div>
+                </div>
+            `;
+            document.body.appendChild(popup);
+
+            // Create audio element to play sound
+            var clickSound = new Audio(audioSrc);
+            clickSound.play();
+
+            // Add event listener to close popup
+            popup.querySelector('.popup-close').addEventListener('click', function() {
+                clickSound.pause();
+                clickSound.currentTime = 0; // Reset time to 0
+                document.body.removeChild(popup);
+            });
+        }
+
+        // Track clicks for showing form modal
+        document.addEventListener('DOMContentLoaded', function() {
+            const clickCounts = new Map();
+
+            document.querySelectorAll('.location-icon').forEach(function(icon) {
+                clickCounts.set(icon, 0);
+
+                icon.addEventListener('click', function() {
+                    const count = clickCounts.get(icon) + 1;
+                    clickCounts.set(icon, count);
+
+                    if (count === 3) {
+                        clickCounts.set(icon, 0); // Reset count after showing the form
+                        const formModal = new bootstrap.Modal(document.getElementById('formModal'));
+                        formModal.show();
+                    }
+                });
+            });
         });
     </script>
 @endsection
