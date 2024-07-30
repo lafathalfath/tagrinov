@@ -37,8 +37,12 @@ Route::get('/stokbenih', function () {
 
 Route::get('/stokbenih/detail/{name}', [DetailBenihController::class, 'show'])->name('benih.show');
 
-Route::get('/kunjungan', [FeedbackController::class, 'index']);
-Route::post('/kunjungan', [FeedbackController::class, 'store']);
+Route::get('/kunjungan', function () {
+    return view('guest.permohonan.kunjungan.kunjungan');
+});
+
+// Route::get('/kunjungan', [KunjunganController::class, 'index']);
+// Route::post('/kunjungan', [KunjunganController::class, 'store']);
 
 Route::get('/stokbenih', function () {
     return view('stokbenih');
