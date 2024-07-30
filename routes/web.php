@@ -4,11 +4,11 @@ use App\Http\Controllers\EntitasController;
 use App\Http\Controllers\FamilyController;
 use App\Http\Controllers\Guest\TanamanController;
 use App\Http\Controllers\Guest\TestimoniController;
+use App\Http\Controllers\Guest\FeedbackController;
 use App\Http\Controllers\JenisController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Guest\Controllers\DetailBenihController;
 use App\Http\Guest\Controllers\EventController;
-use App\Http\Guest\Controllers\FeedbackController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,8 +37,8 @@ Route::get('/stokbenih', function () {
 
 Route::get('/stokbenih/detail/{name}', [DetailBenihController::class, 'show'])->name('benih.show');
 
-Route::get('/kunjungan', [FeedbackController::class, 'index']);
-Route::post('/kunjungan', [FeedbackController::class, 'store']);
+Route::get('/testimoni/create', [FeedbackController::class, 'create']);
+Route::post('/testimoni', [FeedbackController::class, 'store']);
 
 Route::get('/stokbenih', function () {
     return view('stokbenih');

@@ -1,38 +1,46 @@
 <?php
 
-namespace App\Http\Guest\Controllers;
+namespace App\Http\Controllers\Guest;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Feedback;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class FeedbackController extends Controller
 {
-    public function index()
+    public function create()
     {
         $feedbacks = Feedback::all();
-        return view('kunjungan', [
-            'feedbacks' => $feedbacks,
-        ]);
+        return view('guest.testimoni.create', compact('feedbacks'));
     }
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $request->validate([
             'nama' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'tanggal' => 'required|date',
             'rating' => 'required|integer|min:1|max:5',
-            'pesan' => 'nullable|string|max:1000',
+            'pesan' => 'nullable|string',
             'foto' => 'nullable|image|max:2048',
         ]);
 
+        $path = null;
         if ($request->hasFile('foto')) {
-            $validated['foto'] = $request->file('foto')->store('feedback_photos', 'public');
+            $path = $request->file('foto')->store('feedback', 'public');
         }
 
-        Feedback::create($validated);
+        Feedback::create([
+            'nama' => $request->nama,
+            'email' => $request->email,
+            'tanggal' => $request->tanggal,
+            'rating' => $request->rating,
+            'pesan' => $request->pesan,
+            'foto' => $path,
+        ]);
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Feedback has been submitted.');
     }
 }
+
