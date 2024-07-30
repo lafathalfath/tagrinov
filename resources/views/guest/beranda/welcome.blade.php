@@ -53,13 +53,13 @@
             <h2>Denah Taman</h2>
             <div class="position-relative">
                 <img src="{{ asset('assets/image/denah_taman.png') }}" class="img-fluid mt-4" alt="Denah Taman">
-                <div class="location-icon" style="position: absolute; top: 30%; left: 40%;"
-                    data-detail="<b>Taman Horti</b><br>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                <div class="location-icon" style="position: absolute; top: 30%; left: 40%;" 
+                    data-detail="<b>Taman Horti</b><br>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." 
                     data-audio="{{ asset('assets/image/sound3.mp3') }}">
                     <i class="bi bi-geo-alt-fill" style="font-size: 2rem; color: red;"></i>
                 </div>
-                <div class="location-icon" style="position: absolute; top: 50%; left: 60%;"
-                    data-detail="<b>Area hortikultura</b><br>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
+                <div class="location-icon" style="position: absolute; top: 50%; left: 60%;" 
+                    data-detail="<b>Area hortikultura</b><br>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." 
                     data-audio="{{ asset('assets/image/sound2.mp3') }}">
                     <i class="bi bi-geo-alt-fill" style="font-size: 2rem; color: red;"></i>
                 </div>
@@ -90,6 +90,7 @@
         </div>
     </div>
 
+<<<<<<< HEAD
     <!-- Form Modal -->
     <div class="modal fade" id="formModal" tabindex="-1" aria-labelledby="formModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -116,6 +117,9 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+=======
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
+>>>>>>> cf551ccaed4084504a1627f34954b0e2f9d571c0
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
     <script>
@@ -133,6 +137,7 @@
         document.querySelectorAll('.location-icon').forEach(function(icon) {
             icon.addEventListener('click', function() {
                 var detail = this.getAttribute('data-detail');
+<<<<<<< HEAD
                 var audioSrc = this.getAttribute('data-audio');
                 showPopup(detail, audioSrc);
             });
@@ -181,5 +186,45 @@
                 });
             });
         });
+=======
+                document.getElementById('location-detail').innerHTML = detail;
+
+                document.addEventListener('DOMContentLoaded', function() {
+            // Fungsi untuk menampilkan popup dan memutar suara
+            function showPopup(content, audioSrc) {
+                var popup = document.createElement('div');
+                popup.className = 'popup';
+                popup.innerHTML = `
+                    <div class="popup-content">
+                        <span class="popup-close">&times;</span>
+                        <div class="popup-body">${content}</div>
+                    </div>
+                `;
+                document.body.appendChild(popup);
+
+                // Buat elemen audio untuk memutar suara
+                var clickSound = new Audio(audioSrc);
+                clickSound.play();
+
+                // Tambahkan event listener untuk menutup popup
+                popup.querySelector('.popup-close').addEventListener('click', function() {
+                    // Hentikan pemutaran suara
+                    clickSound.pause();
+                    clickSound.currentTime = 0; // Mengatur waktu kembali ke 0
+                    
+                    document.body.removeChild(popup);
+                });
+            }
+
+            // Tambahkan event listener untuk ikon lokasi
+            document.querySelectorAll('.location-icon').forEach(function(icon) {
+                icon.addEventListener('click', function() {
+                    var detail = this.getAttribute('data-detail');
+                    var audioSrc = this.getAttribute('data-audio');
+                    showPopup(detail, audioSrc);
+                });
+            });
+        });
+>>>>>>> cf551ccaed4084504a1627f34954b0e2f9d571c0
     </script>
 @endsection
