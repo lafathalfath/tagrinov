@@ -1,310 +1,216 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ulasan Kunjungan</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+@extends('layouts.main')
+
+@section('content')
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            background-color: #f5f5f5;
+            color: #333;
+            background-color: #f8f9fa;
         }
-        header {
-            background-color: #000;
-            opacity: 50%;
-            color: white;
-            padding: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        header img {
-            vertical-align: middle;
-        }
-        nav {
-            flex-grow: 1;
+
+        .banner {
+            background-color: #00452C;
+            color: #fff;
+            padding: 2rem;
+            border-radius: 0px;
             text-align: center;
+            margin-bottom: 2rem;
         }
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin: 0 10px;
-            font-weight: 500;
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #fff;
         }
-        .dropdown {
-            position: relative;
-            display: inline-block;
+
+        form {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        .dropdown-content {
+
+        label {
+            font-weight: bold;
+        }
+
+        textarea {
+            resize: none;
+        }
+
+        .btn-green {
+            background-color: #00452C;
+            color: #fff;
+            border: 1px solid #00452C;
+        }
+
+        .btn-green:hover {
+            background-color: #00342a;
+            border-color: #00342a;
+        }
+
+        .form-check-inline {
+            margin-right: 1rem;
+        }
+
+        .date-picker-container {
             display: none;
-            position: absolute;
-            background-color: #f9f9f9;
-            min-width: 200px;
-            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-            z-index: 1;
-            text-align: left;
+            margin-top: 1rem;
         }
-        .dropdown-content a {
-            color: black;
-            padding: 12px 16px;
-            text-decoration: none;
-            display: block;
-        }
-        .dropdown-content a:hover {
-            background-color: #f1f1f1;
-        }
-        .dropdown:hover .dropdown-content {
-            display: block;
-        }
-        .container {
-            padding: 20px;
-            max-width: 1200px;
-            margin: 20px auto;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        h2 {
-            background-color: #00a65a;
-            color: white;
-            padding: 20px;
-            text-align: center;
-            margin-top: 0;
-            border-radius: 8px 8px 0 0;
-        }
-        .form-section {
-            padding: 20px;
-        }
-        .form-group {
-            margin-bottom: 20px;
-            display: flex;
-            flex-direction: column;
-        }
-        .form-group label {
-            margin-bottom: 5px;
-            font-weight: 600;
-        }
-        .form-group input, .form-group textarea, .form-group select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 16px;
-        }
-        .form-group .rating {
-            display: flex;
-            gap: 10px;
-            font-size: 30px;
-            flex-direction: row-reverse;
-            width: 30%;
-        }
-        .form-group .rating input {
-            display: none;
-        }
-        .form-group .rating label {
-            cursor: pointer;
-            color: #ccc;
-        }
-        .form-group .rating input:checked ~ label {
-            color: gold;
-        }
-        .form-group .rating input:hover ~ label {
-            color: gold;
-        }
-        .form-group .rating input:checked ~ label:hover {
-            color: gold;
-        }
-        .btn {
-            display: inline-block;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            background-color: #28a745;
-            color: white;
-            width: 100%;
-        }
-        .form-group.half {
-            width: 48%;
-        }
-        .form-group.full {
-            width: 100%;
-        }
-        .form-row {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-        }
-        .feedback {
-            margin: 20px;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            background-color: #f9f9f9;
-            display: flex;
-            align-items: center;
-        }
-        .feedback .info {
-            margin-left: 8px;
-        }
-        .feedback .info h3 {
-            margin: 0;
-        }
-        .feedback .info .date {
-            font-size: 14px;
-            color: gray;
-        }
-        .feedback .info .rating {
-            color: gold;
-            margin: 5px 0;
-        }
-        .feedback .info p {
-            margin: 0;
-        }
-        .foto-kunjungan {
-            margin: 10px 0px;
-            width: auto;
-            height: 200px;
-            border-radius: 10px;
-        }
-        footer {
-            background-color: #009144;
-            color: white;
-            padding: 20px;
-            text-align: center;
-        }
-        footer .contact-info, footer .map {
-            display: inline-block;
-            vertical-align: top;
-            margin: 0 20px;
-        }
-        footer .contact-info {
-            text-align: left;
-        }
-        footer .map iframe {
-            border: 0;
-            width: 450px;
-            height: 250px;
-            border-radius: 8px;
-        }
-        footer a {
-            color: white;
-            text-decoration: none;
-            margin: 0 10px;
-        }
-        footer a:hover {
-            text-decoration: underline;
+
+        .date-picker-container label {
+            margin-right: 1rem;
         }
     </style>
-</head>
-<body>
-    <header>
-        <img src="{{ asset('images/logo.png') }}" alt="Logo" height="60">
-        <nav>
-            <a href="/">Beranda</a>
-            <div class="dropdown">
-                <a href="#">Produk</a>
-                <div class="dropdown-content">
-                    <a href="{{ url('/stokbenih') }}">Stok Benih</a>
-                    <a href="{{ url('/tanaman') }}">Tanaman</a>
-                </div>
-            </div>
-            <a href="#">Permohonan</a>
-            <a href="{{ url('/kunjungan') }}">Pelaporan</a>
-        </nav>
-        <img src="{{ asset('images/id_flag.png') }}" alt="Indonesian Flag" height="15">
-    </header>
-    <div class="container">
-        <h2>Ulasan Kunjungan</h2>
-        <div class="form-section">
-            <form action="{{ url('/kunjungan') }}" method="post" enctype="multipart/form-data">
-                @csrf
-                <div class="form-row">
-                    <div class="form-group half">
-                        <label for="nama">Nama Lengkap/Instansi</label>
-                        <input type="text" id="nama" name="nama" placeholder="Nama atau Instansi" required>
-                    </div>
-                    <div class="form-group half">
-                        <label for="rating">Rating</label>
-                        <div class="rating">
-                            <input type="radio" id="star5" name="rating" value="5" required><label for="star5">&#9733;</label>
-                            <input type="radio" id="star4" name="rating" value="4"><label for="star4">&#9733;</label>
-                            <input type="radio" id="star3" name="rating" value="3"><label for="star3">&#9733;</label>
-                            <input type="radio" id="star2" name="rating" value="2"><label for="star2">&#9733;</label>
-                            <input type="radio" id="star1" name="rating" value="1"><label for="star1">&#9733;</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group half">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" placeholder="Email Pengunjung" required>
-                    </div>
-                    <div class="form-group half">
-                        <label for="tanggal">Tanggal Kunjungan</label>
-                        <input type="date" id="tanggal" name="tanggal" placeholder="dd/mm/yyyy" required>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group full">
-                        <label for="foto">Foto (Opsional)</label>
-                        <input type="file" id="foto" name="foto" accept="image/*">
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group full">
-                        <label for="pesan">Kesan dan Pesan</label>
-                        <textarea id="pesan" name="pesan" rows="4" placeholder="Isikan kesan dan pesan anda"></textarea>
-                    </div>
-                </div>
-                <button type="submit" class="btn">Kirim</button>
-            </form>
-        </div>
 
-        @foreach($feedbacks as $feedback)
-            <div class="feedback">
-                <div class="info">
-                    <h3>{{ $feedback['nama'] }}</h3>
-                    <div class="rating">
-                        @for ($i = 0; $i < $feedback['rating']; $i++)
-                            &#9733;
-                        @endfor
-                        @for ($i = $feedback['rating']; $i < 5; $i++)
-                            &#9734;
-                        @endfor
-                    </div>
-                    <div class="date">{{ \Carbon\Carbon::parse($feedback['tanggal'])->format('F j, Y') }}</div>
-                    <p>{{ $feedback['pesan'] }}</p>
-                    @if(isset($feedback['foto']))
-                    <img class="foto-kunjungan" src="{{ asset('storage/' . $feedback['foto']) }}" alt="Foto">
-                    @endif
+    <div class="container my-5">
+        <div class="banner">
+            <h1>Rencanakan Kunjunganmu</h1>
+        </div>
+        <form id="visitForm">
+            <div class="mb-3">
+                <label for="namaLengkap" class="form-label">Nama Lengkap:</label>
+                <input type="text" class="form-control" id="namaLengkap" name="namaLengkap" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="noHp" class="form-label">No HP:</label>
+                <input type="tel" class="form-control" id="noHp" name="noHp" required>
+            </div>
+
+            <fieldset class="mb-3">
+                <legend class="col-form-label">Usia (tahun):</legend>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="usia1" name="usia" value="<20" required>
+                    <label class="form-check-label" for="usia1">&lt;20</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="usia2" name="usia" value="20-29">
+                    <label class="form-check-label" for="usia2">20-29</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="usia3" name="usia" value="30-39">
+                    <label class="form-check-label" for="usia3">30-39</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="usia4" name="usia" value="40-49">
+                    <label class="form-check-label" for="usia4">40-49</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="usia5" name="usia" value=">50">
+                    <label class="form-check-label" for="usia5">&gt;50</label>
+                </div>
+            </fieldset>
+
+            <fieldset class="mb-3">
+                <legend class="col-form-label">Jenis Kelamin:</legend>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="lakiLaki" name="jenisKelamin" value="Laki-laki" required>
+                    <label class="form-check-label" for="lakiLaki">Laki-laki</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="perempuan" name="jenisKelamin" value="Perempuan">
+                    <label class="form-check-label" for="perempuan">Perempuan</label>
+                </div>
+            </fieldset>
+
+            <div class="mb-3">
+                <label for="pekerjaan" class="form-label">Pekerjaan:</label>
+                <select class="form-select" id="pekerjaan" name="pekerjaan" required>
+                    <option value="PNS">PNS</option>
+                    <option value="TNI">TNI</option>
+                    <option value="POLRI">POLRI</option>
+                    <option value="Swasta">Swasta</option>
+                    <option value="Wirausaha">Wirausaha</option>
+                    <option value="Guru">Guru</option>
+                    <option value="Siswa">Siswa</option>
+                    <option value="Mahasiswa">Mahasiswa</option>
+                    <option value="Lainnya">Lainnya</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="kategoriInformasi" class="form-label">Kategori Informasi Publik:</label>
+                <select class="form-select" id="kategoriInformasi" name="kategoriInformasi" required>
+                    <option value="Pertanian">Pertanian</option>
+                    <option value="Anggaran dan Keuangan">Anggaran dan Keuangan</option>
+                    <option value="Kepegawaian">Kepegawaian</option>
+                    <option value="Hukum dan Perundang-undangan">Hukum dan Perundang-undangan</option>
+                    <option value="Pengadaan Barang dan Jasa">Pengadaan Barang dan Jasa</option>
+                    <option value="Lain-lain">Lain-lain</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="pendidikanTerakhir" class="form-label">Pendidikan Terakhir:</label>
+                <select class="form-select" id="pendidikanTerakhir" name="pendidikanTerakhir" required>
+                    <option value="SD">SD</option>
+                    <option value="SMP">SMP</option>
+                    <option value="SMA">SMA</option>
+                    <option value="D3">D3</option>
+                    <option value="D4">D4</option>
+                    <option value="S1">S1</option>
+                    <option value="S2">S2</option>
+                    <option value="S3">S3</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Jenis Pengunjung:</label>
+                <div class="btn-group mb-3" role="group" aria-label="Jenis Pengunjung">
+                    <input type="radio" class="btn-check" id="pelajar" name="jenisPengunjung" value="Pelajar" required>
+                    <label class="btn btn-outline-success" for="pelajar">Pelajar</label>
+
+                    <input type="radio" class="btn-check" id="umum" name="jenisPengunjung" value="Umum">
+                    <label class="btn btn-outline-success" for="umum">Umum</label>
+
+                    <input type="radio" class="btn-check" id="peneliti" name="jenisPengunjung" value="Peneliti">
+                    <label class="btn btn-outline-success" for="peneliti">Peneliti</label>
                 </div>
             </div>
-        @endforeach
-    </div>
-    <footer>
-        <div class="map">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d990.8860998470195!2d106.7875092695418!3d-6.579033999588393!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69c5311ad80031%3A0xae42de3ba17aceb7!2sBalai%20Besar%20Penerapan%20Standar%20Instrumen%20Pertanian%20(BBPSIP)!5e0!3m2!1sen!2sid!4v1721834025093!5m2!1sen!2sid" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-        </div>
-        <div class="contact-info">
-            <p>(0251) 8351277 / WA : 085218339006</p>
-            <p>(0251) 8350928 <a href="https://bbpsip.bsip.pertanian.go.id" target="_blank">https://bbpsip.bsip.pertanian.go.id</a></p>
-            <p><a href="mailto:bsip.bbpsip@pertanian.go.id">bsip.bbpsip@pertanian.go.id</a></p>
-            <p>Jl. Tentara Pelajar No.10, RT.01/RW.07, Ciwaringin,<br> Kecamatan Bogor Tengah, Kota Bogor, Jawa Barat 16124</p>
-            <div>
-                <a href="#"><i class="fab fa-facebook"></i></a>
-                <a href="#"><i class="fab fa-linkedin"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
+
+            <div class="mb-3">
+                <label class="form-label">Hari Kunjungan:</label>
+                <div class="btn-group mb-3" role="group" aria-label="Hari Kunjungan">
+                    <input type="radio" class="btn-check" id="hariIni" name="hariKunjungan" value="Hari ini" required>
+                    <label class="btn btn-outline-success" for="hariIni">Hari ini</label>
+
+                    <input type="radio" class="btn-check" id="besok" name="hariKunjungan" value="Besok">
+                    <label class="btn btn-outline-success" for="besok">Besok</label>
+
+                    <input type="radio" class="btn-check" id="lainnya" name="hariKunjungan" value="Lainnya">
+                    <label class="btn btn-outline-success" for="lainnya">Lainnya</label>
+                </div>
             </div>
-        </div>
-        <p>&copy; 2024 Balai Besar Penerapan Standar Instrumen Pertanian. All Right Reserved</p>
-    </footer>
-</body>
-</html>
+
+            <div class="date-picker-container mb-3">
+                <label for="tanggalKunjungan" class="form-label">Tanggal Kunjungan:</label>
+                <input type="date" class="form-control" id="tanggalKunjunganDate" name="tanggalKunjunganDate">
+            </div>
+
+            <div class="mb-3">
+                <label for="materi" class="form-label">Materi yang diinginkan:</label>
+                <textarea class="form-control" id="materi" name="materi" rows="3" required></textarea>
+            </div>
+
+            <div class="text-center">
+                <button type="submit" class="btn btn-green">Kirim Permohonan</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        document.querySelectorAll('input[name="hariKunjungan"]').forEach((element) => {
+            element.addEventListener('change', function () {
+                const datePicker = document.querySelector('.date-picker-container');
+                if (this.value === 'Lainnya') {
+                    datePicker.style.display = 'block';
+                } else {
+                    datePicker.style.display = 'none';
+                }
+            });
+        });
+    </script>
+@endsection
