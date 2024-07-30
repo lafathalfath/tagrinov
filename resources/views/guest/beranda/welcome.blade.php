@@ -115,6 +115,8 @@
         <img src="{{ asset('assets/icons/whatsapp.png') }}" alt="WhatsApp">
     </a>
 
+    <!-- Location Detail Modal -->
+
     <div class="modal fade" id="locationModal" tabindex="-1" aria-labelledby="locationModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -131,7 +133,35 @@
         </div>
     </div>
 
+    <!-- Form Modal -->
+    <div class="modal fade" id="formModal" tabindex="-1" aria-labelledby="formModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="formModalLabel">Isi Data Anda</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="visitorForm">
+                        <div class="mb-3">
+                            <label for="visitorName" class="form-label">Nama</label>
+                            <input type="text" class="form-control" id="visitorName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="visitorWA" class="form-label">No. WA</label>
+                            <input type="text" class="form-control" id="visitorWA" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
+
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
     <script>
@@ -147,7 +177,60 @@
         document.querySelectorAll('.location-icon').forEach(function(icon) {
             icon.addEventListener('click', function() {
                 var detail = this.getAttribute('data-detail');
+ 
                 var audioSrc = this.getAttribute('data-audio');
+                showPopup(detail, audioSrc);
+            });
+        });
+
+        // Function to show popup
+        function showPopup(content, audioSrc) {
+            var popup = document.createElement('div');
+            popup.className = 'popup';
+            popup.innerHTML = `
+                <div class="popup-content">
+                    <span class="popup-close">&times;</span>
+                    <div class="popup-body">${content}</div>
+                </div>
+            `;
+            document.body.appendChild(popup);
+
+            // Create audio element to play sound
+            var clickSound = new Audio(audioSrc);
+            clickSound.play();
+
+            // Add event listener to close popup
+            popup.querySelector('.popup-close').addEventListener('click', function() {
+                clickSound.pause();
+                clickSound.currentTime = 0; // Reset time to 0
+                document.body.removeChild(popup);
+            });
+        }
+
+        // Track clicks for showing form modal
+        document.addEventListener('DOMContentLoaded', function() {
+            const clickCounts = new Map();
+
+            document.querySelectorAll('.location-icon').forEach(function(icon) {
+                clickCounts.set(icon, 0);
+
+                icon.addEventListener('click', function() {
+                    const count = clickCounts.get(icon) + 1;
+                    clickCounts.set(icon, count);
+
+                    if (count === 3) {
+                        clickCounts.set(icon, 0); // Reset count after showing the form
+                        const formModal = new bootstrap.Modal(document.getElementById('formModal'));
+                        formModal.show();
+                    }
+                });
+            });
+        });
+
+                document.getElementById('location-detail').innerHTML = detail;
+
+                var audioSrc = this.getAttribute('data-audio');
+
 
                 var popup = document.createElement('div');
                 popup.className = 'popup';

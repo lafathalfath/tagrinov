@@ -1,4 +1,3 @@
-
 @extends('layouts.main')
 @section('content')
 <style>
@@ -8,14 +7,25 @@
     }
     .search-bar {
         margin-bottom: 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
-    .search-bar input {
+    .search-bar input, .search-bar select {
         padding: 10px;
-        width: 300px;
         font-size: 16px;
         border: 1px solid #ccc;
-        border-radius: 40px;
-        der-radius: 4px;
+        border-radius: 20px;
+    }
+    .search-bar input {
+        margin-right: 10px;
+    }
+    h2 {
+        background-color: #00573d;
+        color: white;
+        padding: 15px;
+        text-align: center;
+        margin-top: 10px;
     }
     .seed-grid {
         display: grid;
@@ -52,81 +62,84 @@
         color: inherit;
     }
 </style>
-    <div class="container-tanaman">
-        <h1>Koleksi Tanaman</h1>
-        <div class="search-bar">
-            <input type="text" id="search-input" placeholder="Cari">
+<div class="container-tanaman">
+    <h2>Koleksi Tanaman</h2>
+    <div class="search-bar">
+        <input type="text" id="search-input" placeholder="Cari">
+        <select id="category-select">
+            <option value="">Semua Kategori</option>
+            <option value="Tanaman Obat (TOGA)">Tanaman Obat (TOGA)</option>
+            <option value="Tanaman Buah">Tanaman Buah</option>
+            <option value="Tanaman Hias">Tanaman Hias</option>
+            <option value="Tanaman Liar">Tanaman Liar</option>
+            <option value="Tanaman Sayur">Tanaman Sayur</option>
+            <option value="Mamalia">Mamalia</option>
+            <option value="Pisces">Pisces</option>
+        </select>
+    </div>
+    <div class="seed-grid" id="seed-grid">
+        {{-- @foreach ($tanaman as $tm)
+            <div class="seed-item" data-name="{{ $tm->nama }}" data-category="{{ $tm->kategori }}">
+                <a href="{{ route('tanaman.detail', $tm->id) }}"><img src="{{ asset('images/seed1.png') }}" alt="{{ $tm->nama }}">
+                <p>{{ $tm->nama }}</p></a>
+            </div>
+        @endforeach --}}
+        <div class="seed-item" data-name="Kangkung" data-category="Tanaman Sayur">
+            <a href="tanaman/detail"><img src="{{ asset('images/kangkung.jpeg') }}" alt="Kangkung">
+            <p>Kangkung</p></a>
         </div>
-        <div class="seed-grid" id="seed-grid">
-            <div class="seed-item" data-name="Benih Kangkung">
-                <a href="infokangkung"><img src="{{ asset('images/seed1.png') }}" alt="Benih Kangkung">
-                <p>Kangkung</p></a>
-            </div>
-            <div class="seed-item" data-name="Benih Bawang Merah">
-                <a href="#"><img src="{{ asset('images/seed2.png') }}" alt="Benih Bawang Merah">
-                <p>Bawang Merah</p></a>
-            </div>
-            <div class="seed-item" data-name="Nama Benih 3">
-                <a href="#"><img src="{{ asset('images/seed1.png') }}" alt="Nama Benih 3">
-                <p>Nama Benih 3</p></a>
-            </div>
-            <div class="seed-item" data-name="Nama Benih 4">
-                <a href="#"><img src="{{ asset('images/seed2.png') }}" alt="Nama Benih 4">
-                <p>Nama Benih 4</p></a>
-            </div>
-            <div class="seed-item" data-name="Nama Benih 5">
-                <a href="#"><img src="{{ asset('images/seed1.png') }}" alt="Nama Benih 5">
-                <p>Nama Benih 5</p></a>
-            </div>
-            <div class="seed-item" data-name="Nama Benih 6">
-                <a href="#"><img src="{{ asset('images/seed1.png') }}" alt="Nama Benih 6">
-                <p>Nama Benih 6</p></a>
-            </div>
-            <div class="seed-item" data-name="Nama Benih 7">
-                <a href="#"><img src="{{ asset('images/seed2.png') }}" alt="Nama Benih 7">
-                <p>Nama Benih 7</p></a>
-            </div>
-            <div class="seed-item" data-name="Nama Benih 8">
-                <a href="#"><img src="{{ asset('images/seed2.png') }}" alt="Nama Benih 8">
-                <p>Nama Benih 8</p></a>
-            </div>
+        <div class="seed-item" data-name="Bawang Merah" data-category="Tanaman Sayur">
+            <a href="#"><img src="{{ asset('images/seed2.png') }}" alt="Bawang Merah">
+            <p>Bawang Merah</p></a>
+        </div>
+        <div class="seed-item" data-name="Nama Benih 3" data-category="Tanaman Buah">
+            <a href="#"><img src="{{ asset('images/seed1.png') }}" alt="Nama Benih 3">
+            <p>Nama Benih 3</p></a>
+        </div>
+        <div class="seed-item" data-name="Nama Benih 4" data-category="Tanaman Hias">
+            <a href="#"><img src="{{ asset('images/seed2.png') }}" alt="Nama Benih 4">
+            <p>Nama Benih 4</p></a>
+        </div>
+        <div class="seed-item" data-name="Nama Benih 5" data-category="Tanaman Liar">
+            <a href="#"><img src="{{ asset('images/seed1.png') }}" alt="Nama Benih 5">
+            <p>Nama Benih 5</p></a>
+        </div>
+        <div class="seed-item" data-name="Nama Benih 6" data-category="Tanaman Obat (TOGA)">
+            <a href="tanaman/detail"><img src="{{ asset('images/lidahbuaya.jpeg') }}" alt="Nama Benih 6">
+            <p>Lidah Buaya</p></a>
+        </div>
+        <div class="seed-item" data-name="Nama Benih 7" data-category="Mamalia">
+            <a href="#"><img src="{{ asset('images/seed2.png') }}" alt="Nama Benih 7">
+            <p>Nama Benih 7</p></a>
+        </div>
+        <div class="seed-item" data-name="Nama Benih 8" data-category="Pisces">
+            <a href="#"><img src="{{ asset('images/seed2.png') }}" alt="Nama Benih 8">
+            <p>Nama Benih 8</p></a>
         </div>
     </div>
-    {{-- <footer>
-        <div class="map">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d990.8860998470195!2d106.7875092695418!3d-6.579033999588393!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69c5311ad80031%3A0xae42de3ba17aceb7!2sBalai%20Besar%20Penerapan%20Standar%20Instrumen%20Pertanian%20(BBPSIP)!5e0!3m2!1sen!2sid!4v1721834025093!5m2!1sen!2sid" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-        </div>
-        <div class="contact-info">
-            <p>(0251) 8351277 / WA : 085218339006</p>
-            <p>(0251) 8350928 <a href="https://bbpsip.bsip.pertanian.go.id" target="_blank">https://bbpsip.bsip.pertanian.go.id</a></p>
-            <p><a href="mailto:bsip.bbpsip@pertanian.go.id">bsip.bbpsip@pertanian.go.id</a></p>
-            <p>Jl. Tentara Pelajar No.10, RT.01/RW.07, Ciwaringin,<br> Kecamatan Bogor Tengah, Kota Bogor, Jawa Barat 16124</p>
-            <div>
-                <a href="#"><i class="fab fa-facebook"></i></a>
-                <a href="#"><i class="fab fa-linkedin"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-            </div>
-        </div>
-        <p>&copy; 2024 Balai Besar Penerapan Standar Instrumen Pertanian. All Right Reserved</p>
-    </footer> --}}
+</div>
+<script>
+    document.getElementById('search-input').addEventListener('input', filterItems);
+    document.getElementById('category-select').addEventListener('change', filterItems);
 
-    <script>
-        document.getElementById('search-input').addEventListener('input', function() {
-            const searchQuery = this.value.toLowerCase();
-            const seedItems = document.querySelectorAll('.seed-item');
+    function filterItems() {
+        const searchQuery = document.getElementById('search-input').value.toLowerCase();
+        const selectedCategory = document.getElementById('category-select').value.toLowerCase();
+        const seedItems = document.querySelectorAll('.seed-item');
 
-            seedItems.forEach(item => {
-                const itemName = item.getAttribute('data-name').toLowerCase();
-                if (itemName.includes(searchQuery)) {
-                    item.style.display = 'block';
-                } else {
-                    item.style.display = 'none';
-                }
-            });
+        seedItems.forEach(item => {
+            const itemName = item.getAttribute('data-name').toLowerCase();
+            const itemCategory = item.getAttribute('data-category').toLowerCase();
+            const matchesSearch = itemName.includes(searchQuery);
+            const matchesCategory = selectedCategory === "" || itemCategory.includes(selectedCategory);
+
+            if (matchesSearch && matchesCategory) {
+                item.style.display = 'block';
+            } else {
+                item.style.display = 'none';
+            }
         });
-    </script>
+    }
+</script>
 
 @endsection
-{{-- </body>
-</html> --}}
