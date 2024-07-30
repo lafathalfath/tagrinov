@@ -2,9 +2,13 @@
 
 use App\Http\Controllers\EntitasController;
 use App\Http\Controllers\FamilyController;
+use App\Http\Controllers\Guest\TanamanController;
 use App\Http\Controllers\Guest\TestimoniController;
+use App\Http\Controllers\Guest\FeedbackController;
 use App\Http\Controllers\JenisController;
 use App\Http\Controllers\KategoriController;
+use App\Http\Guest\Controllers\DetailBenihController;
+use App\Http\Guest\Controllers\EventController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,9 +23,49 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('guest.beranda.welcome');
 });
 Route::get('/testimoni/create', [TestimoniController::class, 'create'])->name('testimoni.create');
+
+// Route::get('/tanaman', function () {
+//     return view('guest.tanaman.tanaman');
+// });
+
+Route::get('/stokbenih', function () {
+    return view('guest.stokbenih.stokbenih');
+});
+
+Route::get('/stokbenih/detail/{name}', [DetailBenihController::class, 'show'])->name('benih.show');
+
+
+Route::get('/kunjungan', function () {
+    return view('guest.permohonan.kunjungan.kunjungan');
+});
+
+Route::get('/benih', function () {
+    return view('guest.permohonan.benih.benih');
+});
+
+// Route::get('/kunjungan', [KunjunganController::class, 'index']);
+// Route::post('/kunjungan', [KunjunganController::class, 'store']);
+
+Route::get('/testimoni/create', [FeedbackController::class, 'create']);
+Route::post('/testimoni', [FeedbackController::class, 'store']);
+
+
+Route::get('/stokbenih', function () {
+    return view('stokbenih');
+});
+
+Route::get('/tanaman', [TanamanController::class, 'index'])->name('tanaman.index');
+// Route::get('/tanaman/{id}/detail', [TanamanController::class, 'detail'])->name('tanaman.detail');
+Route::get('/tanaman/detail', [TanamanController::class, 'detail'])->name('tanaman.detail');
+
+Route::get('/events', [EventController::class, 'index']);
+
+Route::get('/pelaporan', function () {
+    return view('pelaporan');
+});
 
 Route::prefix('/family')->group(function () {
     Route::get('/', [FamilyController::class, 'getAll'])->name('family.getAll');
