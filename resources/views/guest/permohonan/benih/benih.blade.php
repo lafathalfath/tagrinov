@@ -30,7 +30,7 @@
             padding: 2rem;
             border-radius: 8px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            margin-bottom: 3rem; 
+            margin-bottom: 3rem; /* Tambahkan margin-bottom untuk ruang di bawah form */
         }
 
         label {
@@ -73,7 +73,7 @@
         }
 
         .btn-group .btn {
-            border-radius: 0.375rem; 
+            border-radius: 0.375rem; /* Adjust if needed */
         }
 
         .file-input-container {
@@ -81,7 +81,7 @@
         }
 
         .file-input-container:last-of-type {
-            margin-bottom: 2rem; 
+            margin-bottom: 2rem;
         }
 
         .submit-btn-container {
@@ -92,23 +92,22 @@
 
     <div class="container my-5">
         <div class="banner">
-            <h2>Rencanakan Kunjunganmu</h2>
+            <h1>Permohonan Benih</h1>
         </div>
         <form id="visitForm" enctype="multipart/form-data">
-            <!-- Form fields remain unchanged -->
 
             <div class="mb-3">
-                <label for="namaLengkap" class="form-label">Nama Lengkap</label>
+                <label for="namaLengkap" class="form-label">Nama Lengkap:</label>
                 <input type="text" class="form-control" id="namaLengkap" name="namaLengkap" required>
             </div>
 
             <div class="mb-3">
-                <label for="noHp" class="form-label">No HP</label>
+                <label for="noHp" class="form-label">No HP:</label>
                 <input type="tel" class="form-control" id="noHp" name="noHp" required>
             </div>
 
             <fieldset class="mb-3">
-                <legend class="col-form-label">Usia (tahun)</legend>
+                <legend class="col-form-label">Usia (tahun):</legend>
                 <div class="form-check">
                     <input class="form-check-input" type="radio" id="usia1" name="usia" value="<20" required>
                     <label class="form-check-label" for="usia1">&lt;20</label>
@@ -132,7 +131,7 @@
             </fieldset>
 
             <fieldset class="mb-3">
-                <legend class="col-form-label">Jenis Kelamin</legend>
+                <legend class="col-form-label">Jenis Kelamin:</legend>
                 <div class="form-check">
                     <input class="form-check-input" type="radio" id="lakiLaki" name="jenisKelamin" value="Laki-laki" required>
                     <label class="form-check-label" for="lakiLaki">Laki-laki</label>
@@ -144,7 +143,7 @@
             </fieldset>
 
             <div class="mb-3">
-                <label for="pekerjaan" class="form-label">Pekerjaan</label>
+                <label for="pekerjaan" class="form-label">Pekerjaan:</label>
                 <select class="form-select" id="pekerjaan" name="pekerjaan" required>
                     <option value="PNS">PNS</option>
                     <option value="TNI">TNI</option>
@@ -159,7 +158,7 @@
             </div>
 
             <div class="mb-3">
-                <label for="kategoriInformasi" class="form-label">Kategori Informasi Publik</label>
+                <label for="kategoriInformasi" class="form-label">Kategori Informasi Publik:</label>
                 <select class="form-select" id="kategoriInformasi" name="kategoriInformasi" required>
                     <option value="Pertanian">Pertanian</option>
                     <option value="Anggaran dan Keuangan">Anggaran dan Keuangan</option>
@@ -171,7 +170,7 @@
             </div>
 
             <div class="mb-3">
-                <label for="pendidikanTerakhir" class="form-label">Pendidikan Terakhir</label>
+                <label for="pendidikanTerakhir" class="form-label">Pendidikan Terakhir:</label>
                 <select class="form-select" id="pendidikanTerakhir" name="pendidikanTerakhir" required>
                     <option value="SD">SD</option>
                     <option value="SMP">SMP</option>
@@ -185,7 +184,7 @@
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Jenis Pengunjung</label>
+                <label class="form-label">Jenis Pengunjung:</label>
                 <div class="btn-group mb-3" role="group" aria-label="Jenis Pengunjung">
                     <input type="radio" class="btn-check" id="pelajar" name="jenisPengunjung" value="Pelajar" required>
                     <label class="btn btn-outline-success" for="pelajar">Pelajar</label>
@@ -199,7 +198,7 @@
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Hari Kunjungan</label>
+                <label class="form-label">Hari Kunjungan:</label>
                 <div class="btn-group mb-3" role="group" aria-label="Hari Kunjungan">
                     <input type="radio" class="btn-check" id="hariIni" name="hariKunjungan" value="Hari ini" required>
                     <label class="btn btn-outline-success" for="hariIni">Hari ini</label>
@@ -217,17 +216,17 @@
             </div>
 
             <div class="mb-3">
-                <label for="tujuanKunjungan" class="form-label">Tujuan Kunjungan</label>
+                <label for="tujuanKunjungan" class="form-label">Tujuan Kunjungan:</label>
                 <textarea class="form-control" id="tujuanKunjungan" name="tujuanKunjungan" rows="3" required></textarea>
             </div>
 
             <div class="file-input-container">
-                <label for="fotoKTP" class="form-label">Unggah Foto KTP</label>
+                <label for="fotoKTP" class="form-label">Unggah Foto KTP:</label>
                 <input type="file" class="form-control" id="fotoKTP" name="fotoKTP" accept="image/*" required>
             </div>
 
             <div class="file-input-container">
-                <label for="fotoSelfie" class="form-label">Unggah Foto Selfie</label>
+                <label for="fotoSelfie" class="form-label">Unggah Foto Selfie:</label>
                 <input type="file" class="form-control" id="fotoSelfie" name="fotoSelfie" accept="image/*" required>
             </div>
 

@@ -100,7 +100,7 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <li><a class="dropdown-item" href="{{ url('/kunjungan') }}">Permohonan Kunjungan</a></li>
-                            <li><a class="dropdown-item" href="{{ url('/tanaman') }}">Permohonan Benih</a></li>
+                            <li><a class="dropdown-item" href="{{ url('/benih') }}">Permohonan Benih</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">
