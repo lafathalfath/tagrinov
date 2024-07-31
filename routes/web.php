@@ -83,4 +83,5 @@ Route::prefix('/admin')->group(function () {
         Route::delete('/{id}', [EntitasController::class, 'destroy'])->name('entitas.destroy');
     });
 });
+
 // admin end
