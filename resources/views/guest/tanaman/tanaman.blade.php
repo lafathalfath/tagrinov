@@ -29,7 +29,7 @@
     }
     .seed-grid {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(5, 1fr);
         gap: 20px;
         justify-items: center;
     }
@@ -115,6 +115,14 @@
         <div class="seed-item" data-name="Nama Benih 8" data-category="Pisces">
             <a href="#"><img src="{{ asset('images/seed2.png') }}" alt="Nama Benih 8">
             <p>Nama Benih 8</p></a>
+        </div>
+        <div class="seed-item" data-name="Nama Benih 7" data-category="Mamalia">
+            <a href="#"><img src="{{ asset('images/seed2.png') }}" alt="Nama Benih 7">
+            <p>Nama Benih 9</p></a>
+        </div>
+        <div class="seed-item" data-name="Nama Benih 8" data-category="Pisces">
+            <a href="#"><img src="{{ asset('images/seed2.png') }}" alt="Nama Benih 8">
+            <p>Nama Benih 10</p></a>
         </div>
     </div>
 </div>

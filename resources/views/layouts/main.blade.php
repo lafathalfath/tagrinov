@@ -104,7 +104,7 @@
                         </ul>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Stok Benih</a>
+                        <a class="nav-link" href="{{ url('/stokbenih') }}">Stok Benih</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Event</a>
@@ -147,10 +147,6 @@
     </div>
     <p class="bottom-text">&copy; 2024 Balai Besar Penerapan Standar Instrumen Pertanian. All Rights Reserved</p>
 </footer>
-
-
-
-
     <script>
         document.getElementById('search-input').addEventListener('input', function() {
             const searchQuery = this.value.toLowerCase();
