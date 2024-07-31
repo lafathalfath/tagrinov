@@ -82,7 +82,7 @@
         @endforeach --}}
         @foreach ($tanaman as $tm)
             <div class="seed-item" data-name="{{ $tm->nama }}" data-category="{{ $tm->jenis->nama }}">
-                <a href="{{ route('tanaman.detail', Crypt::encryptString($tm->id)) }}"><img src="{{ asset('images/kangkung.jpeg') }}" alt="{{ $tm->nama }}">
+                <a href="{{ route('tanaman.detail', Crypt::encrypt($tm->id)) }}"><img src="{{ asset('images/kangkung.jpeg') }}" alt="{{ $tm->nama }}">
                 <p>{{ $tm->nama }}</p></a>
             </div>
         @endforeach

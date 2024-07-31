@@ -46,6 +46,7 @@ Route::prefix('/tanaman')->group(function () {
     Route::get('/', [TanamanController::class, 'index'])->name('tanaman.index');
     Route::get('/{id}/detail', [TanamanController::class, 'detail'])->name('tanaman.detail');
     Route::get('/qr/generate', [TanamanController::class, 'generateQrAll'])->name('tanaman.generate.qr');
+    Route::get('/qr/view', [TanamanController::class, 'viewQr']);
 });
 
 Route::get('/events', [EventController::class, 'index']);
