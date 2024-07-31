@@ -29,7 +29,7 @@
     }
     .seed-grid {
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: repeat(5, 1fr);
         gap: 20px;
         justify-items: center;
     }
@@ -68,13 +68,9 @@
         <input type="text" id="search-input" placeholder="Cari">
         <select id="category-select">
             <option value="">Semua Kategori</option>
-            <option value="Tanaman Obat (TOGA)">Tanaman Obat (TOGA)</option>
-            <option value="Tanaman Buah">Tanaman Buah</option>
-            <option value="Tanaman Hias">Tanaman Hias</option>
-            <option value="Tanaman Liar">Tanaman Liar</option>
-            <option value="Tanaman Sayur">Tanaman Sayur</option>
-            <option value="Mamalia">Mamalia</option>
-            <option value="Pisces">Pisces</option>
+            @foreach ($jenis_kategori as $kat)
+                <option value="{{ $kat->nama }}">{{ $kat->nama }}</option>
+            @endforeach
         </select>
     </div>
     <div class="seed-grid" id="seed-grid">
@@ -84,38 +80,12 @@
                 <p>{{ $tm->nama }}</p></a>
             </div>
         @endforeach --}}
-        <div class="seed-item" data-name="Kangkung" data-category="Tanaman Sayur">
-            <a href="tanaman/detail"><img src="{{ asset('images/kangkung.jpeg') }}" alt="Kangkung">
-            <p>Kangkung</p></a>
-        </div>
-        <div class="seed-item" data-name="Bawang Merah" data-category="Tanaman Sayur">
-            <a href="#"><img src="{{ asset('images/seed2.png') }}" alt="Bawang Merah">
-            <p>Bawang Merah</p></a>
-        </div>
-        <div class="seed-item" data-name="Nama Benih 3" data-category="Tanaman Buah">
-            <a href="#"><img src="{{ asset('images/seed1.png') }}" alt="Nama Benih 3">
-            <p>Nama Benih 3</p></a>
-        </div>
-        <div class="seed-item" data-name="Nama Benih 4" data-category="Tanaman Hias">
-            <a href="#"><img src="{{ asset('images/seed2.png') }}" alt="Nama Benih 4">
-            <p>Nama Benih 4</p></a>
-        </div>
-        <div class="seed-item" data-name="Nama Benih 5" data-category="Tanaman Liar">
-            <a href="#"><img src="{{ asset('images/seed1.png') }}" alt="Nama Benih 5">
-            <p>Nama Benih 5</p></a>
-        </div>
-        <div class="seed-item" data-name="Nama Benih 6" data-category="Tanaman Obat (TOGA)">
-            <a href="tanaman/detail"><img src="{{ asset('images/lidahbuaya.jpeg') }}" alt="Nama Benih 6">
-            <p>Lidah Buaya</p></a>
-        </div>
-        <div class="seed-item" data-name="Nama Benih 7" data-category="Mamalia">
-            <a href="#"><img src="{{ asset('images/seed2.png') }}" alt="Nama Benih 7">
-            <p>Nama Benih 7</p></a>
-        </div>
-        <div class="seed-item" data-name="Nama Benih 8" data-category="Pisces">
-            <a href="#"><img src="{{ asset('images/seed2.png') }}" alt="Nama Benih 8">
-            <p>Nama Benih 8</p></a>
-        </div>
+        @foreach ($tanaman as $tm)
+            <div class="seed-item" data-name="{{ $tm->nama }}" data-category="{{ $tm->jenis->nama }}">
+                <a href="{{ route('tanaman.detail', Crypt::encryptString($tm->id)) }}"><img src="{{ asset('images/kangkung.jpeg') }}" alt="{{ $tm->nama }}">
+                <p>{{ $tm->nama }}</p></a>
+            </div>
+        @endforeach
     </div>
 </div>
 <script>

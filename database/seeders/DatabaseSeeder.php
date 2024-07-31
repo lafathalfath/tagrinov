@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
             EntitasSeeder::class,
             JenisPengunjungSeeder::class,
             KategoriKunjunganSeeder::class,
+            ProvinsiSeeder::class,
         ]);
     }
 }

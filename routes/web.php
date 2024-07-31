@@ -27,15 +27,14 @@ Route::get('/', function () {
 });
 Route::get('/testimoni/create', [TestimoniController::class, 'create'])->name('testimoni.create');
 
-// Route::get('/tanaman', function () {
-//     return view('guest.tanaman.tanaman');
-// });
-
 Route::get('/stokbenih', function () {
     return view('guest.stokbenih.stokbenih');
 });
 
-Route::get('/stokbenih/detail/{name}', [DetailBenihController::class, 'show'])->name('benih.show');
+Route::get('/stokbenih/detailbenih', function () {
+    return view('guest.stokbenih.detailbenih');
+});
+
 
 
 Route::get('/kunjungan', function () {
@@ -53,13 +52,11 @@ Route::get('/testimoni/create', [FeedbackController::class, 'create']);
 Route::post('/testimoni', [FeedbackController::class, 'store']);
 
 
-Route::get('/stokbenih', function () {
-    return view('stokbenih');
-});
-
 Route::get('/tanaman', [TanamanController::class, 'index'])->name('tanaman.index');
-// Route::get('/tanaman/{id}/detail', [TanamanController::class, 'detail'])->name('tanaman.detail');
-Route::get('/tanaman/detail', [TanamanController::class, 'detail'])->name('tanaman.detail');
+Route::get('/tanaman/{id}/detail', [TanamanController::class, 'detail'])->name('tanaman.detail');
+Route::get('/tanaman/qr/generate', [TanamanController::class, 'generateQrAll'])->name('tanaman.generate.qr');
+Route::get('/tanaman/qr/view', [TanamanController::class, 'viewQr'])->name('tanaman.view.qr');
+// Route::get('/tanaman/detail', [TanamanController::class, 'detail'])->name('tanaman.detail');
 
 Route::get('/events', [EventController::class, 'index']);
 
