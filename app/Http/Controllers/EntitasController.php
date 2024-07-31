@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Entitas;
+use App\Models\EntitasDetail;
 use Illuminate\Http\Request;
 
 class EntitasController extends Controller
@@ -54,7 +55,8 @@ class EntitasController extends Controller
             'kategori_id.numeric' => 'tipe data tidak sesuai',
         ]);
         $entitas = Entitas::create($request->except('_token'));
-        if (!$entitas) return response()->json(['status' => 'error', 'message' => "internal server error"], 500);
+        $entitas_detail = EntitasDetail::create(['entitas_id' => $entitas->id]);
+        if (!$entitas && !$entitas_detail) return response()->json(['status' => 'error', 'message' => "internal server error"], 500);
         return response()->json([
             'status' => 'created',
             'payload' => $entitas,
