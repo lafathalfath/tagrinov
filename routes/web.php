@@ -35,8 +35,8 @@ Route::get('/kunjungan', [PermohonanController::class, 'kunjungan'])->name('perm
 Route::get('/benih', [PermohonanController::class, 'benih'])->name('permohonan.benih.index');
 
 Route::prefix('/testimoni')->group(function () {
-    Route::get('/', [FeedbackController::class, 'index']);
-    Route::post('/', [FeedbackController::class, 'store']);
+    Route::get('/', [FeedbackController::class, 'index'])->name('testimoni.index');
+    Route::post('/', [FeedbackController::class, 'store'])->name('testimoni.store');
 });
 
 Route::prefix('/tanaman')->group(function () {
