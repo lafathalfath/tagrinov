@@ -8,6 +8,7 @@ use App\Http\Controllers\Guest\FeedbackController;
 use App\Http\Controllers\Guest\HomeController;
 use App\Http\Controllers\Guest\PermohonanController;
 use App\Http\Controllers\Guest\StokBenihController;
+use App\Http\Controllers\Guest\QrcodeController;
 use App\Http\Controllers\JenisController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Guest\Controllers\EventController;
@@ -33,6 +34,8 @@ Route::get('/stokbenih/{id}/detail', [StokBenihController::class, 'detail'])->na
 Route::get('/kunjungan', [PermohonanController::class, 'kunjungan'])->name('permohonan.kunjungan.index');
 
 Route::get('/benih', [PermohonanController::class, 'benih'])->name('permohonan.benih.index');
+
+Route::get('tanaman/qrcode', [QrcodeController::class, 'qrcode'])->name('tanaman.qrcode');
 
 Route::prefix('/testimoni')->group(function () {
     Route::get('/', [FeedbackController::class, 'index'])->name('testimoni.index');
