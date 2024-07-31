@@ -2,91 +2,128 @@
 
 @section('content')
 <style>
-    .containern {
-        padding: 20px 100px;
-    }
-    h2 {
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+
+        .banner {
+            background-color: #00452C;
+            color: #fff;
+            padding: 2rem;
+            border-radius: 0px;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: #fff;
+        }
+
+        form {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 3rem; 
+        }
+        .col-md-6 {
+            margin-bottom: 1rem !important;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        textarea {
+            resize: none;
+        }
+
+        .btn-green {
+            background-color: #00452C;
+            color: #fff;
+            border: 1px solid #00452C;
+        }
+
+        .btn-green:hover {
+            background-color: #00342a;
+            border-color: #00342a;
+        }
+
+        .form-check-inline {
+            margin-right: 1rem;
+        }
+
+        .date-picker-container {
+            display: none;
+            margin-top: 1rem;
+        }
+
+        .date-picker-container label {
+            margin-right: 1rem;
+        }
+
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .btn-group .btn {
+            border-radius: 0.375rem; 
+        }
+
+        .file-input-container:last-of-type {
+            margin-bottom: 2rem; 
+        }
+
+        .submit-btn-container {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+    h3 {
         background-color: #00573d;
         color: white;
         padding: 15px;
         text-align: center;
         margin-top: 100px;
     }
-    .form-section {
-        padding: 20px 0px;
-    }
-    .form-group {
-        margin-bottom: 20px;
-        display: flex;
-        flex-direction: column;
-    }
-    .form-group label {
-        margin-bottom: 5px;
-        font-weight: 600;
-    }
-    .form-group input, .form-group textarea, .form-group select {
-        width: 100%;
-        padding: 10px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        font-size: 16px;
-    }
-    .form-group .rating {
+    .rating {
         display: flex;
         gap: 10px;
         font-size: 30px;
         flex-direction: row-reverse;
-        width: 30%;
+        justify-content: left;
     }
-    .form-group .rating input {
+    .rating input {
         display: none;
     }
-    .form-group .rating label {
+    .rating label {
         cursor: pointer;
         color: #ccc;
     }
-    .form-group .rating input:checked ~ label {
+    .rating input:checked ~ label {
         color: gold;
     }
-    .form-group .rating input:hover ~ label {
+    .rating input:hover ~ label {
         color: gold;
     }
-    .form-group .rating input:checked ~ label:hover {
+    .rating input:checked ~ label:hover {
         color: gold;
-    }
-    .btn-feedback {
-        display: inline-block;
-        padding: 10px 20px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
-        font-size: 16px;
-        background-color: #28a745;
-        color: white;
-        width: 100%;
-    }
-    .form-group.half {
-        width: 48%;
-    }
-    .form-group.full {
-        width: 100%;
-    }
-    .form-row {
-        display: flex;
-        justify-content: space-between;
-        flex-wrap: wrap;
     }
     .feedback {
-        margin: 20px 0px;
-        padding: 20px;
+        margin-bottom: 20px;
+        padding: 15px;
         border: 1px solid #ddd;
         border-radius: 8px;
         background-color: #f9f9f9;
         display: flex;
         align-items: center;
-    }
-    .feedback .info {
-        margin-left: 8px;
     }
     .feedback .feedback-name {
         font-size: 18px;
@@ -99,13 +136,12 @@
     }
     .feedback .info .rating {
         color: gold;
-        margin: 5px 0;
     }
     .feedback .info p {
         margin: 0;
     }
     .foto-kunjungan {
-        margin: 10px 0px;
+        margin-top: 10px;
         width: auto;
         height: 200px;
         border-radius: 10px;
@@ -114,21 +150,21 @@
 </head>
 <body>
     <div class="container">
-        <h2>Testimoni</h2>
+        <h3>Berikan Ulasanmu</h3>
         @if (session('success'))
             <div class="alert alert-success">
                 {{ session('success') }}
             </div>
         @endif
-        <div class="form-section">
             <form action="{{ url('/testimoni') }}" method="post" enctype="multipart/form-data">
                 @csrf
-                <div class="form-row">
-                    <div class="form-group half">
-                        <label for="nama">Nama Lengkap/Instansi</label>
-                        <input type="text" id="nama" name="nama" placeholder="Nama atau Instansi" required>
+                <div class="row">
+                    <div class="form group col-md-6">
+                        <label for="nama" class="form-label">Nama Lengkap/Instansi</label>
+                        <input type="text" class="form-control" id="nama" name="nama" placeholder="Nama atau Instansi" required>
                     </div>
-                    <div class="form-group half">
+
+                    <div class="form-group col-md-6">
                         <label for="rating">Rating</label>
                         <div class="rating">
                             <input type="radio" id="star5" name="rating" value="5" required><label for="star5">&#9733;</label>
@@ -139,32 +175,28 @@
                         </div>
                     </div>
                 </div>
-                <div class="form-row">
-                    <div class="form-group half">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" placeholder="Email Pengunjung" required>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Email Pengunjung" required>
                     </div>
-                    <div class="form-group half">
-                        <label for="tanggal">Tanggal Kunjungan</label>
-                        <input type="date" id="tanggal" name="tanggal" placeholder="dd/mm/yyyy" required>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group full">
-                        <label for="foto">Foto (Opsional)</label>
-                        <input type="file" id="foto" name="foto" accept="image/*">
+                    <div class="form-group col-md-6">
+                        <label for="tanggal" class="form-label">Tanggal Kunjungan</label>
+                        <input type="date" class="form-control" id="tanggal" name="tanggal" placeholder="dd/mm/yyyy" required>
                     </div>
                 </div>
-                <div class="form-row">
-                    <div class="form-group full">
-                        <label for="pesan">Kesan dan Pesan</label>
-                        <textarea id="pesan" name="pesan" rows="4" placeholder="Isikan kesan dan pesan anda"></textarea>
-                    </div>
+                <div class="file-input-container mb-3">
+                    <label for="foto" class="form-label">Foto (Opsional)</label>
+                    <input type="file" class="form-control" id="foto" name="foto" accept="image/*">
                 </div>
-                <button type="submit" class="btn-feedback">Kirim</button>
+                <div class="mb-3">
+                    <label for="pesan" class="form-label">Kesan dan Pesan</label>
+                    <textarea id="pesan" class="form-control" name="pesan" rows="4" placeholder="Isikan kesan dan pesan anda"></textarea>
+                </div>
+                <button type="submit" class="btn btn-success btn-feedback">Kirim</button>
             </form>
-        </div>
-        <h2>Ulasan</h2>
+        <h3>Ulasan</h3>
+        <form>
         @foreach($feedbacks as $feedback)
             <div class="feedback">
                 <div class="info">
@@ -185,7 +217,6 @@
                 </div>
             </div>
         @endforeach
+</form>
     </div>
 @endsection
-{{-- </body>
-    </html> --}}
