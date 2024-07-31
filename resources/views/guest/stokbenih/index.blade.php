@@ -20,7 +20,7 @@
     .search-bar input {
         margin-right: 10px;
     }
-    h2 {
+    h3 {
         background-color: #00573d;
         color: white;
         padding: 15px;
@@ -64,7 +64,7 @@
     }
 </style>
 <div class="container">
-    <h2>Stok Benih</h2>
+    <h3>Stok Benih</h3>
     <div class="search-bar">
         <input type="text" id="search-input" placeholder="Cari">
         <select id="category-select">
