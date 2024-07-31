@@ -9,10 +9,10 @@ use Illuminate\Support\Facades\Storage;
 
 class FeedbackController extends Controller
 {
-    public function create()
+    public function index()
     {
         $feedbacks = Feedback::all();
-        return view('guest.testimoni.create', compact('feedbacks'));
+        return view('guest.testimoni.index', compact('feedbacks'));
     }
 
     public function store(Request $request)
