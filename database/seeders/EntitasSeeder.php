@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\EntitasDetail;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
@@ -139,5 +140,8 @@ class EntitasSeeder extends Seeder
         ];
 
         DB::table('entitas')->insert($entitas);
+        foreach ($entitas as $en) {
+            EntitasDetail::create(['entitas_id' => $en['id']]);
+        }
     }
 }
