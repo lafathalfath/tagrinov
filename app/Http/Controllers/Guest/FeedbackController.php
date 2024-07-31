@@ -40,7 +40,7 @@ class FeedbackController extends Controller
             'foto' => $path,
         ]);
 
-        return redirect()->back()->with('success', 'Feedback has been submitted.');
+        return redirect()->back()->with('success', 'Ulasanmu telah dikirim.');
     }
 }
 
