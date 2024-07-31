@@ -148,19 +148,19 @@
     <p class="bottom-text">&copy; 2024 Balai Besar Penerapan Standar Instrumen Pertanian. All Rights Reserved</p>
 </footer>
     <script>
-        document.getElementById('search-input').addEventListener('input', function() {
-            const searchQuery = this.value.toLowerCase();
-            const seedItems = document.querySelectorAll('.seed-item');
+        // document.getElementById('search-input').addEventListener('input', function() {
+        //     const searchQuery = this.value.toLowerCase();
+        //     const seedItems = document.querySelectorAll('.seed-item');
 
-            seedItems.forEach(item => {
-                const itemName = item.getAttribute('data-name').toLowerCase();
-                if (itemName.includes(searchQuery)) {
-                    item.style.display = 'block';
-                } else {
-                    item.style.display = 'none';
-                }
-            });
-        });
+        //     seedItems.forEach(item => {
+        //         const itemName = item.getAttribute('data-name').toLowerCase();
+        //         if (itemName.includes(searchQuery)) {
+        //             item.style.display = 'block';
+        //         } else {
+        //             item.style.display = 'none';
+        //         }
+        //     });
+        // });
     </script>
 </body>
 </html>
