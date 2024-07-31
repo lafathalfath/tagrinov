@@ -80,7 +80,7 @@
     <!--navbar-->
     <nav class="navbar navbar-expand-lg navbar-dark py-2 fixed-top bg-light shadow">
         <div class="container">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="{{ route('home.index') }}">
                 <img src="{{ asset('assets/icons/logo.png') }}" height="55" width="55" alt="">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -99,18 +99,18 @@
                             Permohonan
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="{{ url('/kunjungan') }}">Permohonan Kunjungan</a></li>
-                            <li><a class="dropdown-item" href="{{ url('/benih') }}">Permohonan Benih</a></li>
+                            <li><a class="dropdown-item" href="{{ route('permohonan.kunjungan.index') }}">Permohonan Kunjungan</a></li>
+                            <li><a class="dropdown-item" href="{{ route('permohonan.benih.index') }}">Permohonan Benih</a></li>
                         </ul>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/stokbenih') }}">Stok Benih</a>
+                    <li class="nav-item {{ request()->url()==route('stokBenih.index')?'active':'' }}">
+                        <a class="nav-link" href="{{ route('stokBenih.index') }}">Stok Benih</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Event</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/testimoni/create') }}">Testimoni</a>
+                    <li class="nav-item {{ request()->url()==route('testimoni.index')?'active':'' }}">
+                        <a class="nav-link" href="{{ route('testimoni.index') }}">Testimoni</a>
                     </li>
                 </ul>
             </div>
