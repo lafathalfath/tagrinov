@@ -107,7 +107,7 @@
                         <a class="nav-link" href="#">Stok Benih</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Event</a>
+                        <a class="nav-link" href="{{ url('/event') }}">Event</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url('/testimoni/create') }}">Testimoni</a>

@@ -46,6 +46,7 @@ Route::get('/benih', function () {
     return view('guest.permohonan.benih.benih');
 });
 
+
 // Route::get('/kunjungan', [KunjunganController::class, 'index']);
 // Route::post('/kunjungan', [KunjunganController::class, 'store']);
 
