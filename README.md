@@ -92,5 +92,3 @@
 3. **Note**
    - Merge from **master** to **your branch** if the last merge to **master** was **not** from **your branch**.
    - You can merge from **your branch** to **master** if the last merge to **master** was from **your branch**.
-
-write by husni

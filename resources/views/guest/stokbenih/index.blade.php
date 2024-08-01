@@ -20,7 +20,7 @@
     .search-bar input {
         margin-right: 10px;
     }
-    h2 {
+    h3 {
         background-color: #00573d;
         color: white;
         padding: 15px;
@@ -64,7 +64,7 @@
     }
 </style>
 <div class="container">
-    <h2>Stok Benih</h2>
+    <h3>Stok Benih</h3>
     <div class="search-bar">
         <input type="text" id="search-input" placeholder="Cari">
         <select id="category-select">
@@ -86,44 +86,8 @@
             </div>
         @endforeach --}}
         <div class="seed-item" data-name="Kangkung" data-category="Tanaman Sayur">
-            <a href="stokbenih/detailbenih"><img src="{{ asset('images/kangkung.jpeg') }}" alt="Kangkung">
+            <a href="{{ route('stokBenih.detail', Crypt::encryptString(1)) }}"><img src="{{ asset('images/kangkung.jpeg') }}" alt="Kangkung">
             <p>Benih Kangkung</p></a>
-        </div>
-        <div class="seed-item" data-name="Bawang Merah" data-category="Tanaman Sayur">
-            <a href="#"><img src="{{ asset('images/seed2.png') }}" alt="Bawang Merah">
-            <p>Benih Bawang Merah</p></a>
-        </div>
-        <div class="seed-item" data-name="Nama Benih 3" data-category="Tanaman Buah">
-            <a href="#"><img src="{{ asset('images/seed1.png') }}" alt="Nama Benih 3">
-            <p>Nama Benih 3</p></a>
-        </div>
-        <div class="seed-item" data-name="Nama Benih 4" data-category="Tanaman Hias">
-            <a href="#"><img src="{{ asset('images/seed2.png') }}" alt="Nama Benih 4">
-            <p>Nama Benih 4</p></a>
-        </div>
-        <div class="seed-item" data-name="Nama Benih 5" data-category="Tanaman Liar">
-            <a href="#"><img src="{{ asset('images/seed1.png') }}" alt="Nama Benih 5">
-            <p>Nama Benih 5</p></a>
-        </div>
-        <div class="seed-item" data-name="Nama Benih 6" data-category="Tanaman Obat (TOGA)">
-            <a href="tanaman/detail"><img src="{{ asset('images/lidahbuaya.jpeg') }}" alt="Nama Benih 6">
-            <p>Lidah Buaya</p></a>
-        </div>
-        <div class="seed-item" data-name="Nama Benih 7" data-category="Mamalia">
-            <a href="#"><img src="{{ asset('images/seed2.png') }}" alt="Nama Benih 7">
-            <p>Nama Benih 7</p></a>
-        </div>
-        <div class="seed-item" data-name="Nama Benih 8" data-category="Pisces">
-            <a href="#"><img src="{{ asset('images/seed2.png') }}" alt="Nama Benih 8">
-            <p>Nama Benih 8</p></a>
-        </div>
-        <div class="seed-item" data-name="Nama Benih 9" data-category="Mamalia">
-            <a href="#"><img src="{{ asset('images/seed2.png') }}" alt="Nama Benih 7">
-            <p>Nama Benih 9</p></a>
-        </div>
-        <div class="seed-item" data-name="Nama Benih 10" data-category="Pisces">
-            <a href="#"><img src="{{ asset('images/seed2.png') }}" alt="Nama Benih 8">
-            <p>Nama Benih 10</p></a>
         </div>
     </div>
 </div>
