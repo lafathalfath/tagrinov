@@ -17,76 +17,77 @@
                 background-color: #f0eaa7 !important;
                 display: flex !important;
                 flex-direction: row !important;
-                /* justify-content: space-between !important;
-                align-items: center !important; */
+                justify-content: space-between !important;
+                align-items: center !important;
                 width: 175mm !important;
                 height: 68mm !important;
                 padding: 20px !important;
                 margin: 5mm 0 5mm 0 !important;
+                box-sizing: border-box !important;
+                background-image: url('/images/background-qr.png') !important;
+                background-size: cover !important;
+                background-position: center !important;
             }
-            h1 {
+            .text {
+                width: 100% !important;
+                flex: 1 !important;
+            }
+            .text h1 {
                 width: fit-content !important;
                 margin: 0 !important;
                 font-size: 30px !important;
                 color: #333 !important;
-                word-break: none;
-                word-wrap: break-word;
             }
-            h2 {
+            .text h2 {
                 width: fit-content !important;
                 margin: 10px 0 0 0 !important;
                 font-size: 20px !important;
                 color: #555 !important;
-                word-break: none;
-                word-wrap: nowrap;
+            }
+            .qrcode-container {
+                width: 100% !important;
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: center !important;
+                align-items: center !important;
             }
             .qrcode {
-                width: 80mm !important;
+                width: 60% !important;
                 display: flex !important;
                 justify-content: center !important;
                 align-items: center !important;
             }
             .qrcode img {
-                max-width: 65% !important;
-                max-height: 65% !important;
+                max-width: 100% !important;
+                max-height: 100% !important;
             }
             .link {
-                padding: 0 !important;
-                margin: 1mm 0 0 0 !important;
-                width: 60mm !important;
+                /* padding: 0 !important; */
+                /* margin: -30px 0 0 0 !important; */
+                width: 60% !important;
                 font-size: 10px !important;
                 color: #000 !important;
                 word-break: break-all !important;
-                word-wrap: break-word !important;
-                text-align: left !important;
+                text-align: right !important;
             }
-            tr, td {
-                height: 100%;
-            }
-            
         </style>
     </head>
     <body>
         @foreach ($tanaman as $tm)
             <div class="container">
-                <table style="width: 100%;height: 100%;">
-                    <tbody>
-                        <tr>
-                            <td style="width: 100mm !important;">
-                                <h1>{{ $tm->nama }}</h1>
-                                <h2>{{ $tm->nama_latin }}</h2>
-                            </td>
-                            <td>
-                                <div class="qrcode">
-                                    <img src="{{ storage_path('app/public/qr/' . $tm->qrPath) }}" alt="QR Code">
-                                </div>
-                                <p class="link">
-                                    {{ $tm->url }}
-                                </p>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="text">
+                    <h1>{{ $tm->nama }}</h1>
+                    <h2>{{ $tm->nama_latin }}</h2>
+                </div>
+                <div class="qrcode-container">
+                    <div class="qrcode">
+                        <img src="{{ storage_path('app/public/qr/' . $tm->qrPath) }}" alt="QR Code">
+                        {{-- {!! $tm->qr !!} --}}
+                    </div>
+                    <div class="link">
+                        {{ $tm->url }}
+                    </div>
+                </div>
             </div>
         @endforeach
     </body>

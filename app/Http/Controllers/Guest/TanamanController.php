@@ -27,25 +27,26 @@ class TanamanController extends Controller
     }
 
     public function detail($id) { //$id
-        $id = Crypt::decryptString($id);
+        $id = Crypt::decrypt($id);
         $tanaman = Entitas::find($id);
+        if (!$tanaman) return abort(404);
         return view('guest.tanaman.detail', ['tanaman' => $tanaman]);
     }
 
     public function generateQrAll()
     {
+        $filename = 'qr_tanaman.pdf';
+        $storage_path = storage_path("/app/public/qr");
+        
         $tanaman = Entitas::where('kategori_id', 1)->get();
         foreach ($tanaman as $t) {
             $qrPath = 'qr_' . $t->id . '.png';
             $qrFullPath = storage_path('app/public/qr/' . $qrPath);
-            $url = route('tanaman.detail', Crypt::encryptString($t->id));
-            QrCode::size(300)->generate($url, $qrFullPath);
+            $url = route('tanaman.detail', Crypt::encrypt($t->id));
+            $qr = QrCode::size(300)->generate($url, $qrFullPath);
             $t->qrPath = $qrPath;
             $t->url = $url;
         }
-
-        $filename = time().'.pdf';
-        $storage_path = storage_path("/app/public/qr");
 
         $pdf = PDF::loadView('pdf_loader.qr', ['tanaman' => $tanaman]);
         if (!File::exists($storage_path)) {
@@ -54,5 +55,19 @@ class TanamanController extends Controller
         File::put("$storage_path/$filename", $pdf->output());
 
         return response()->json(['status' => 'ok', 'file' => "/storage/qr/$filename"]);
+    }
+
+    public function viewQr() {
+        $tanaman = Entitas::where('kategori_id', 1)->get();
+        foreach ($tanaman as $t) {
+            $qrPath = 'qr_' . $t->id . '.png';
+            $qrFullPath = storage_path('app/public/qr/' . $qrPath);
+            $url = route('tanaman.detail', Crypt::encrypt($t->id));
+            $qr = QrCode::size(300)->generate($url);
+            $t->qr = $qr;
+            $t->qrPath = $qrPath;
+            $t->url = $url;
+        }
+        return view('pdf_loader.qr', ['tanaman' => $tanaman]);
     }
 }
