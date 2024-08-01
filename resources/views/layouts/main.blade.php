@@ -107,7 +107,7 @@
                         <a class="nav-link" href="{{ route('stokBenih.index') }}">Stok Benih</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Event</a>
+                        <a class="nav-link" href="{{ url('/event') }}">Event</a>
                     </li>
                     <li class="nav-item {{ request()->url()==route('testimoni.index')?'active':'' }}">
                         <a class="nav-link" href="{{ route('testimoni.index') }}">Testimoni</a>
