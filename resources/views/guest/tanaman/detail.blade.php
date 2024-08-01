@@ -26,7 +26,9 @@
         <h1>Kangkung</h1>
         <div class="image-detail">
             <img src="{{ asset('images/tumis.jpg') }}" alt="Kangkung">
-            <img src="{{ $tanaman->url_gambar }}" alt="{{ $tanaman->url_gambar }}">
+            @if ($tanaman->url_gambar)
+                <img src="{{ $tanaman->url_gambar }}" alt="{{ $tanaman->url_gambar }}">
+            @endif
             <div class="detail-text">
                 <h2>Detail Tanaman {{ $tanaman->nama }}</h2>
                 <p><strong>Nama Ilmiah:</strong> {{ $tanaman->nama_latin }}</p>
