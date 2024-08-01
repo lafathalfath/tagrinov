@@ -31,9 +31,10 @@ Route::get('/', [HomeController::class, 'index'])->name('home.index');
 Route::get('/stokbenih', [StokBenihController::class, 'index'])->name('stokBenih.index');
 Route::get('/stokbenih/{id}/detail', [StokBenihController::class, 'detail'])->name('stokBenih.detail');
 
+//permohonan
 Route::get('/kunjungan', [PermohonanController::class, 'kunjungan'])->name('permohonan.kunjungan.index');
-
 Route::get('/benih', [PermohonanController::class, 'benih'])->name('permohonan.benih.index');
+//end permohonan
 
 Route::get('tanaman/qrcode', [QrcodeController::class, 'qrcode'])->name('tanaman.qrcode');
 
