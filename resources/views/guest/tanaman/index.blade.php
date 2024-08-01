@@ -1,37 +1,34 @@
 @extends('layouts.main')
 @section('content')
 <style>
-    .container-tanaman {
-        padding: 20px 100px;
-        text-align: center;
-    }
     .search-bar {
-        margin-bottom: 30px;
+        margin: 20px 0px;
         display: flex;
         justify-content: space-between;
         align-items: center;
     }
     .search-bar input, .search-bar select {
-        padding: 10px;
-        font-size: 16px;
+        padding: 5px;
+        font-size: 17px;
         border: 1px solid #ccc;
         border-radius: 20px;
     }
     .search-bar input {
         margin-right: 10px;
     }
-    h2 {
+    h3 {
         background-color: #00573d;
         color: white;
         padding: 15px;
         text-align: center;
-        margin-top: 10px;
+        margin-top: 100px;
     }
     .seed-grid {
         display: grid;
         grid-template-columns: repeat(5, 1fr);
         gap: 20px;
         justify-items: center;
+        margin-bottom: 20px;
     }
     .seed-item {
         border: 1px solid #ccc;
@@ -62,8 +59,8 @@
         color: inherit;
     }
 </style>
-<div class="container-tanaman">
-    <h2>Koleksi Tanaman</h2>
+<div class="container">
+    <h3>Koleksi Tanaman</h3>
     <div class="search-bar">
         <input type="text" id="search-input" placeholder="Cari">
         <select id="category-select">

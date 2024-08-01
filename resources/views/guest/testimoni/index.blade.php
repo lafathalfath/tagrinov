@@ -3,11 +3,8 @@
 @section('content')
 <style>
         body {
-            font-family: 'Poppins', sans-serif;
-            color: #333;
             background-color: #f8f9fa;
         }
-
         .banner {
             background-color: #00452C;
             color: #fff;
