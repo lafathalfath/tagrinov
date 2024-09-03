@@ -15,7 +15,7 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 class TanamanController extends Controller
 {
     public function index(Request $request) {
-        $tanaman = Entitas::where('kategori_id', 1)->get();
+        $tanaman = Entitas::where('kategori_id', 1)->paginate(10);
         $jenis_kategori = Jenis::get();
         // if ($request->kategori) {
         //     $tanaman = Entitas::where('kategori_id', $request->kategori)->get();
