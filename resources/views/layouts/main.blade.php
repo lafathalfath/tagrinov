@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="{{ asset('assets/icons/logo.png') }}">
     <title>Taman Agro Standar</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
@@ -33,11 +34,39 @@
         flex-direction: column;
         text-decoration: underline;
     }
+    .navbar {
+        transition: background-color 0.3s ease;
+    }
+
+    .navbar.scrolled {
+        background-color: rgba(255, 255, 255, 1);
+    }
+
+    .navbar.scrolled .nav-link,
+    .navbar.scrolled .navbar-brand {
+        color: black !important;
+    }
+
+    .navbar-dark .navbar-nav .nav-link {
+        color: white;
+    }
+
+    .navbar-dark .navbar-brand {
+        color: white;
+    }
     footer {
-    background-color: #00573d;
     color: white;
     padding: 30px 0px 20px 0px;
+    background-color: #00452C;
     }
+    .footer h5 {
+        margin-top: 0;
+    }
+
+    .footer .social-media a {
+        margin-right: 10px;
+    }
+
     footer .map iframe {
         border: 0;
         width: 100%;
@@ -88,7 +117,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark py-2 fixed-top bg-light shadow">
         <div class="container">
             <a class="navbar-brand" href="{{ route('home.index') }}">
-                <img src="{{ asset('assets/icons/logo.png') }}" height="55" width="55" alt="">
+                <img src="{{ asset('assets/icons/logotype.png') }}" height="55" alt="">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -154,5 +183,7 @@
     </div>
     <p class="bottom-text">&copy; 2024 Balai Besar Penerapan Standar Instrumen Pertanian. All Rights Reserved</p>
 </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

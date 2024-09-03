@@ -79,11 +79,60 @@
         @endforeach --}}
         @foreach ($tanaman as $tm)
             <div class="seed-item" data-name="{{ $tm->nama }}" data-category="{{ $tm->jenis->nama }}">
-                <a href="{{ route('tanaman.detail', Crypt::encrypt($tm->id)) }}"><img src="{{ asset('images/kangkung.jpeg') }}" alt="{{ $tm->nama }}">
-                <p>{{ $tm->nama }}</p></a>
+                <a href="{{ route('tanaman.detail', Crypt::encrypt($tm->id)) }}">
+                    <img src="{{ asset('images/kangkung.jpeg') }}" alt="{{ $tm->nama }}">
+                    <p>{{ $tm->nama }}</p>
+                </a>
             </div>
         @endforeach
     </div>
+
+    <!-- Pagination -->
+    <div class="d-flex justify-content-center mt-4">
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                <!-- "First" link -->
+                @if ($tanaman->currentPage() > 1)
+                    <li class="page-item">
+                        <a class="page-link" href="{{ $tanaman->url(1) }}" aria-label="First">
+                            <span aria-hidden="true">First</span>
+                        </a>
+                    </li>
+                @endif
+
+                <!-- Previous Page Link -->
+                @if ($tanaman->onFirstPage())
+                    <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
+                @else
+                    <li class="page-item"><a class="page-link" href="{{ $tanaman->previousPageUrl() }}" rel="prev">&laquo;</a></li>
+                @endif
+
+                <!-- Pagination Links -->
+                @foreach ($tanaman->getUrlRange(max(1, $tanaman->currentPage() - 2), min($tanaman->lastPage(), $tanaman->currentPage() + 2)) as $page => $url)
+                    <li class="page-item {{ $page == $tanaman->currentPage() ? 'active' : '' }}">
+                        <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                    </li>
+                @endforeach
+
+                <!-- Next Page Link -->
+                @if ($tanaman->hasMorePages())
+                    <li class="page-item"><a class="page-link" href="{{ $tanaman->nextPageUrl() }}" rel="next">&raquo;</a></li>
+                @else
+                    <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
+                @endif
+
+                <!-- "Last" link -->
+                @if ($tanaman->currentPage() < $tanaman->lastPage())
+                    <li class="page-item">
+                        <a class="page-link" href="{{ $tanaman->url($tanaman->lastPage()) }}" aria-label="Last">
+                            <span aria-hidden="true">Last</span>
+                        </a>
+                    </li>
+                @endif
+            </ul>
+        </nav>
+    </div>
+   
 </div>
 <script>
     document.getElementById('search-input').addEventListener('input', filterItems);
@@ -107,6 +156,7 @@
             }
         });
     }
+
 </script>
 
 @endsection
