@@ -1,13 +1,6 @@
 @extends('layouts.main')
 @section('content')
 <style>    
-h3 {
-        background-color: #00573d;
-        color: white;
-        padding: 15px;
-        text-align: center;
-        margin-top: 100px;
-    }
     .seed-item {
         border: 1px solid #ccc;
         padding: 10px;
