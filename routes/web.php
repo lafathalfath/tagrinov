@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EntitasController;
 use App\Http\Controllers\FamilyController;
 use App\Http\Controllers\Guest\TanamanController;
@@ -56,6 +57,8 @@ Route::get('/events', [EventController::class, 'index']);
 
 // admin start
 Route::prefix('/admin')->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    
     Route::prefix('/family')->group(function () {
         Route::get('/', [FamilyController::class, 'getAll'])->name('family.getAll');
         Route::get('/{id}', [FamilyController::class, 'getById'])->name('family.getById');
