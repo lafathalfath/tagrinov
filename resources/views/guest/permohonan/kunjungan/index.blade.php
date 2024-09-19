@@ -1,30 +1,9 @@
 @extends('layouts.main')
-
 @section('content')
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-
-    <style>
+<style>
         body {
-            font-family: 'Poppins', sans-serif;
-            color: #333;
             background-color: #f8f9fa;
         }
-
-        .banner {
-            background-color: #00452C;
-            color: #fff;
-            padding: 2rem;
-            border-radius: 0px;
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: #fff;
-        }
-
         form {
             background: #fff;
             padding: 2rem;
@@ -40,22 +19,6 @@
         textarea {
             resize: none;
         }
-
-        .btn-green {
-            background-color: #00452C;
-            color: #fff;
-            border: 1px solid #00452C;
-        }
-
-        .btn-green:hover {
-            background-color: #00342a;
-            border-color: #00342a;
-        }
-
-        .form-check-inline {
-            margin-right: 1rem;
-        }
-
         .date-picker-container {
             display: none;
             margin-top: 1rem;
@@ -90,10 +53,8 @@
         }
     </style>
 
-    <div class="container my-5">
-        <div class="banner">
-            <h2>Rencanakan Kunjunganmu</h2>
-        </div>
+    <div class="container">
+        <h3>Rencanakan Kunjunganmu</h3>
         <form id="visitForm" enctype="multipart/form-data">
             <!-- Form fields remain unchanged -->
 
@@ -232,7 +193,7 @@
             </div>
 
             <div class="submit-btn-container">
-                <button type="submit" class="btn btn-green">Kirim Permohonan</button>
+                <button type="submit" class="btn btn-success">Kirim Permohonan</button>
             </div>
         </form>
     </div>
