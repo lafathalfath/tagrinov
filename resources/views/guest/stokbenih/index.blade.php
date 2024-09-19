@@ -1,10 +1,6 @@
 @extends('layouts.main')
 @section('content')
 <style>
-    .container-stokbenih {
-        padding: 20px 120px;
-        text-align: center;
-    }
     .search-bar {
         margin: 20px 0px;
         display: flex;

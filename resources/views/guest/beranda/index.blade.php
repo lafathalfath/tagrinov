@@ -1,35 +1,6 @@
 @extends('layouts.main')
 @section('content')
     <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
-
-    body {
-        font-family: 'Poppins', sans-serif;
-        margin: 0;
-        padding: 0;
-    }
-
-    .navbar {
-        transition: background-color 0.3s ease;
-    }
-
-    .navbar.scrolled {
-        background-color: rgba(255, 255, 255, 1);
-    }
-
-    .navbar.scrolled .nav-link,
-    .navbar.scrolled .navbar-brand {
-        color: black !important;
-    }
-
-    .navbar-dark .navbar-nav .nav-link {
-        color: white;
-    }
-
-    .navbar-dark .navbar-brand {
-        color: white;
-    }
-
     .scroll-btn {
         display: inline-flex;
         align-items: center;
@@ -115,18 +86,6 @@
     .whatsapp-button img {
         width: 50px;
         height: 50px;
-    }
-
-    .footer {
-        background-color: #00452C;
-    }
-
-    .footer h5 {
-        margin-top: 0;
-    }
-
-    .footer .social-media a {
-        margin-right: 10px;
     }
 
     .modal-header {
@@ -300,9 +259,6 @@
             </div>
         </div>
     </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
     <script>
         window.addEventListener('scroll', function() {

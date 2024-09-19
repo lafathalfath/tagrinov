@@ -14,6 +14,19 @@
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 </head>
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+    body {
+        font-family: 'Poppins', sans-serif;
+        margin: 0;
+        padding: 0;
+    }
+    h3 {
+        background-color: #00573d;
+        color: white;
+        padding: 15px;
+        text-align: center;
+        margin-top: 100px;
+    }
     .nav-link {
         color: green !important;
     }
@@ -26,11 +39,39 @@
         flex-direction: column;
         text-decoration: underline;
     }
+    .navbar {
+        transition: background-color 0.3s ease;
+    }
+
+    .navbar.scrolled {
+        background-color: rgba(255, 255, 255, 1);
+    }
+
+    .navbar.scrolled .nav-link,
+    .navbar.scrolled .navbar-brand {
+        color: black !important;
+    }
+
+    .navbar-dark .navbar-nav .nav-link {
+        color: white;
+    }
+
+    .navbar-dark .navbar-brand {
+        color: white;
+    }
     footer {
-    background-color: #00573d;
     color: white;
     padding: 30px 0px 20px 0px;
+    background-color: #00452C;
     }
+    .footer h5 {
+        margin-top: 0;
+    }
+
+    .footer .social-media a {
+        margin-right: 10px;
+    }
+
     footer .map iframe {
         border: 0;
         width: 100%;
@@ -81,7 +122,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark py-2 fixed-top bg-light shadow">
         <div class="container">
             <a class="navbar-brand" href="{{ route('home.index') }}">
-                <img src="{{ asset('assets/icons/logo.png') }}" height="55" width="55" alt="">
+                <img src="{{ asset('assets/icons/logotype.png') }}" height="55" alt="">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -147,20 +188,9 @@
     </div>
     <p class="bottom-text">&copy; 2024 Balai Besar Penerapan Standar Instrumen Pertanian. All Rights Reserved</p>
 </footer>
-    <script>
-        // document.getElementById('search-input').addEventListener('input', function() {
-        //     const searchQuery = this.value.toLowerCase();
-        //     const seedItems = document.querySelectorAll('.seed-item');
 
-        //     seedItems.forEach(item => {
-        //         const itemName = item.getAttribute('data-name').toLowerCase();
-        //         if (itemName.includes(searchQuery)) {
-        //             item.style.display = 'block';
-        //         } else {
-        //             item.style.display = 'none';
-        //         }
-        //     });
-        // });
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    
 </body>
 </html>
