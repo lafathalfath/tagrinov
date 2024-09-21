@@ -10,7 +10,7 @@
         <div class="col-md-5">
             <form method="GET" action="{{ route('jenis.getAll') }}">
                 <div class="input-group">
-                    <input type="text" name="search" class="form-control col-md-4" placeholder="Cari jenis" value="{{ request()->get('search') }}">
+                    <input type="text" name="search" class="form-control col-md-4" placeholder="Cari jenis" value="{{ request('search') }}">
                     <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
                     <a href="{{ route('jenis.getAll') }}" class="btn btn-danger"><i class="fa fa-eraser"></i></a>
                 </div>
