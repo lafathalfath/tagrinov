@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\TestimoniAdminController;
+use App\Http\Controllers\Admin\WelcomeTextController;
 use App\Http\Controllers\EntitasController;
 use App\Http\Controllers\FamilyController;
 use App\Http\Controllers\Guest\TanamanController;
@@ -58,6 +59,8 @@ Route::prefix('/tanaman')->group(function () {
 // admin start
 Route::prefix('/admin')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('welcome/edit', [WelcomeTextController::class, 'edit'])->name('admin.welcome.edit');
+    Route::post('welcome/update/{id}', [WelcomeTextController::class, 'update'])->name('admin.welcome.update');
 
     Route::prefix('/testimoni')->name('admin.testimoni.')->group(function () {
         Route::get('/', [TestimoniAdminController::class, 'index'])->name('index');
