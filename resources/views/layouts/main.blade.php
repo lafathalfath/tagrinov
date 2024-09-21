@@ -29,6 +29,7 @@
     }
     .nav-link {
         color: green !important;
+        
     }
     .nav-link:hover {
         font-weight: bold !important;
@@ -37,7 +38,7 @@
         font-weight: bold !important;
         display: flex;
         flex-direction: column;
-        text-decoration: underline;
+        /* text-decoration: underline; */
     }
     .navbar {
         transition: background-color 0.3s ease;
@@ -46,12 +47,6 @@
     .navbar.scrolled {
         background-color: rgba(255, 255, 255, 1);
     }
-
-    .navbar.scrolled .nav-link,
-    .navbar.scrolled .navbar-brand {
-        color: black !important;
-    }
-
     .navbar-dark .navbar-nav .nav-link {
         color: white;
     }

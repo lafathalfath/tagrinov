@@ -52,7 +52,7 @@ Route::prefix('/tanaman')->group(function () {
     Route::get('/qr/view', [TanamanController::class, 'viewQr']);
 });
 
-// Route::get('/events', [EventController::class, 'index']);
+Route::get('/events', [EventController::class, 'index']);
 // guest end
 
 
@@ -64,10 +64,10 @@ Route::prefix('/admin')->group(function () {
 
     Route::prefix('/testimoni')->name('admin.testimoni.')->group(function () {
         Route::get('/', [TestimoniAdminController::class, 'index'])->name('index');
-        Route::get('/{id}/detail', [TestimoniAdminController::class, 'detail'])->name('detail'); // Detail
-        Route::get('/{id}/approve', [TestimoniAdminController::class, 'approve'])->name('approve'); // Setujui
-        Route::get('/{id}/reject', [TestimoniAdminController::class, 'reject'])->name('reject'); // Tolak
-        Route::delete('/{id}', [TestimoniAdminController::class, 'destroy'])->name('destroy'); // Hapus
+        Route::get('/{id}/detail', [TestimoniAdminController::class, 'detail'])->name('detail'); 
+        Route::get('/{id}/approve', [TestimoniAdminController::class, 'approve'])->name('approve'); 
+        Route::get('/{id}/reject', [TestimoniAdminController::class, 'reject'])->name('reject');
+        Route::delete('/{id}', [TestimoniAdminController::class, 'destroy'])->name('destroy');
     });
 
     Route::prefix('/family')->group(function () {

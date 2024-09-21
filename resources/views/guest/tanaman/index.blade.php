@@ -40,18 +40,32 @@
     <h3>Koleksi Tanaman</h3>
     <div class="row mb-3 mt-3 search-bar">
         <div class="col-12 col-md-6 mb-2">
-            <div class="input-group">
-                <input type="text" id="search-input" class="form-control" placeholder="Cari">
-            </div>
+            <form action="{{ route('tanaman.index') }}" method="GET">
+                <div class="input-group">
+                    <input type="text" name="search" class="form-control" placeholder="Cari" value="{{ request()->get('search') }}">
+                    <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
+                    <a href="{{ route('tanaman.index') }}" class="btn btn-danger"><i class="fa fa-eraser"></i></a>
+                </div>
+            </form>
         </div>
         <div class="col-12 col-md-6">
+            <form method="GET" action="{{ route('tanaman.index') }}" id="categoryForm">
+                <select id="category-select" class="form-select" name="jenis_id" onchange="document.getElementById('categoryForm').submit();">
+                    <option value="">Semua Jenis</option>
+                    @foreach ($jenis_kategori as $jenis)
+                        <option value="{{ $jenis->id }}" {{ request('jenis_id') == $jenis->id ? 'selected' : '' }}>{{ $jenis->nama }}</option>
+                    @endforeach
+                </select>
+            </form>
+        </div>
+        {{-- <div class="col-12 col-md-6">
             <select id="category-select" class="form-select">
                 <option value="">Semua Kategori</option>
                 @foreach ($jenis_kategori as $kat)
                     <option value="{{ $kat->nama }}">{{ $kat->nama }}</option>
                 @endforeach
             </select>
-        </div>
+        </div> --}}
     </div>
     <div class="row" id="seed-grid">
         @foreach ($tanaman as $tm)
@@ -69,50 +83,7 @@
     </div>
 
     <!-- Pagination -->
-    <div class="d-flex justify-content-center mt-4">
-        <nav aria-label="Page navigation">
-            <ul class="pagination">
-                <!-- "First" link -->
-                @if ($tanaman->currentPage() > 1)
-                    <li class="page-item">
-                        <a class="page-link" href="{{ $tanaman->url(1) }}" aria-label="First">
-                            <span aria-hidden="true">First</span>
-                        </a>
-                    </li>
-                @endif
-
-                <!-- Previous Page Link -->
-                @if ($tanaman->onFirstPage())
-                    <li class="page-item disabled"><span class="page-link">&laquo;</span></li>
-                @else
-                    <li class="page-item"><a class="page-link" href="{{ $tanaman->previousPageUrl() }}" rel="prev">&laquo;</a></li>
-                @endif
-
-                <!-- Pagination Links -->
-                @foreach ($tanaman->getUrlRange(max(1, $tanaman->currentPage() - 2), min($tanaman->lastPage(), $tanaman->currentPage() + 2)) as $page => $url)
-                    <li class="page-item {{ $page == $tanaman->currentPage() ? 'active' : '' }}">
-                        <a class="page-link" href="{{ $url }}">{{ $page }}</a>
-                    </li>
-                @endforeach
-
-                <!-- Next Page Link -->
-                @if ($tanaman->hasMorePages())
-                    <li class="page-item"><a class="page-link" href="{{ $tanaman->nextPageUrl() }}" rel="next">&raquo;</a></li>
-                @else
-                    <li class="page-item disabled"><span class="page-link">&raquo;</span></li>
-                @endif
-
-                <!-- "Last" link -->
-                @if ($tanaman->currentPage() < $tanaman->lastPage())
-                    <li class="page-item">
-                        <a class="page-link" href="{{ $tanaman->url($tanaman->lastPage()) }}" aria-label="Last">
-                            <span aria-hidden="true">Last</span>
-                        </a>
-                    </li>
-                @endif
-            </ul>
-        </nav>
-    </div>
+    {{ $tanaman->links('pagination::bootstrap-5') }}
    
 </div>
 <script>
