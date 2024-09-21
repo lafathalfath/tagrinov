@@ -170,7 +170,7 @@
             </div>
             <div class="col-lg-6 col-md-12 contact-info">
                 <h4>KONTAK</h4>
-                <p><i class="fas fa-phone"></i> (0251) 8351277 / WA : 085218339006</p>
+                <p><i class="fas fa-phone"></i> (0251) 8351277 / WA : 085183071943</p>
                 <p><i class="fas fa-fax"></i> (0251) 8350928</p>
                 <p><i class="fas fa-envelope"></i> <a href="mailto:bsip.bbpsip@pertanian.go.id">bsip.bbpsip@pertanian.go.id</a></p>
                 <p>Jl. Tentara Pelajar No.10, RT.01/RW.07, Ciwaringin, Kecamatan Bogor Tengah, Kota Bogor, Jawa Barat 16124</p>

@@ -107,7 +107,7 @@
                 <h1>Tagrinov</h1>
             </div>
             <ul class="sidebar-menu">
-                <li><a href="{{ route('admin.dashboard') }}" class="">Dashboard</a></li>
+                <li><a href="{{ route('admin.dashboard') }}" class="{{ request()->url() == route('admin.dashboard') ? 'active' : '' }}">Dashboard</a></li>
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                       Kelola Tanaman
@@ -135,7 +135,16 @@
                       </li>
                   </ul>
               </li>
-              
+              <li><a href="#" class="">Stok Benih</a></li>
+              <li>
+                <a href="{{ route('admin.testimoni.index') }}" class="{{ request()->is('admin/testimoni') ? 'active' : '' }}">
+                    Testimoni 
+                    @if($pendingCount > 0)
+                        <span class="badge bg-warning">{{ $pendingCount }}</span>
+                    @endif
+                </a>
+              </li>
+
                 {{-- <li><a href="{{ route('admin.verifikasiPj') }}" class="{{ request()->url() == route('admin.verifikasiPj') ? 'active' : '' }}">Verifikasi <br>Penanggungjawab</a></li> --}}
 
             </ul>
@@ -182,6 +191,12 @@
             </div>
         </div>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+
+
     </body>
 </html>

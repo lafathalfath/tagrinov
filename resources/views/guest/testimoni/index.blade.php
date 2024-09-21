@@ -92,7 +92,7 @@
                 {{ session('success') }}
             </div>
         @endif
-            <form action="{{ url('/testimoni') }}" method="post" enctype="multipart/form-data">
+            <form action="{{ route('testimoni.store') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     <div class="form group col-md-6">
