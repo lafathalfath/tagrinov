@@ -135,7 +135,7 @@
                       </li>
                   </ul>
               </li>
-              <li><a href="#" class="">Stok Benih</a></li>
+              <li><a href="{{ route('admin.welcome.edit') }}" class="">Welcome edit text</a></li>
               <li>
                 <a href="{{ route('admin.testimoni.index') }}" class="{{ request()->is('admin/testimoni') ? 'active' : '' }}">
                     Testimoni 
