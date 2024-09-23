@@ -25,6 +25,6 @@ class WelcomeTextController extends Controller
         $welcomeText = WelcomeText::findOrFail($id);
         $welcomeText->update($request->only(['title1', 'title2', 'description']));
 
-        return back()->with('success', 'Welcome text updated successfully.');
+        return back()->with('success', 'Teks Berhasil diedit!');
     }
 }

@@ -20,6 +20,8 @@ class DatabaseSeeder extends Seeder
             JenisPengunjungSeeder::class,
             KategoriKunjunganSeeder::class,
             ProvinsiSeeder::class,
+            WelcomeTextSeeder::class,
+
         ]);
     }
 }
