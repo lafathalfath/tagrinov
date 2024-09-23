@@ -59,8 +59,8 @@ Route::get('/events', [EventController::class, 'index']);
 // admin start
 Route::prefix('/admin')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-    Route::get('welcome/edit', [WelcomeTextController::class, 'edit'])->name('admin.welcome.edit');
-    Route::post('welcome/update/{id}', [WelcomeTextController::class, 'update'])->name('admin.welcome.update');
+    Route::get('slide_edit', [WelcomeTextController::class, 'edit'])->name('admin.welcome.edit');
+    Route::post('slide_edit/{id}', [WelcomeTextController::class, 'update'])->name('admin.welcome.update');
 
     Route::prefix('/testimoni')->name('admin.testimoni.')->group(function () {
         Route::get('/', [TestimoniAdminController::class, 'index'])->name('index');

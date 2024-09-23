@@ -8,7 +8,6 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-        
         <style>
             body {
                 font-family: Poppins, sans-serif;
@@ -135,7 +134,6 @@
                       </li>
                   </ul>
               </li>
-              <li><a href="{{ route('admin.welcome.edit') }}" class="">Welcome edit text</a></li>
               <li>
                 <a href="{{ route('admin.testimoni.index') }}" class="{{ request()->is('admin/testimoni') ? 'active' : '' }}">
                     Testimoni 
@@ -143,6 +141,18 @@
                         <span class="badge bg-warning">{{ $pendingCount }}</span>
                     @endif
                 </a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Main
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li>
+                        <a class="dropdown-item {{ request()->url() == route('admin.welcome.edit') ? 'active' : '' }}" href="{{ route('admin.welcome.edit') }}">
+                            Slide
+                        </a>
+                    </li>
+                </ul>
               </li>
 
                 {{-- <li><a href="{{ route('admin.verifikasiPj') }}" class="{{ request()->url() == route('admin.verifikasiPj') ? 'active' : '' }}">Verifikasi <br>Penanggungjawab</a></li> --}}
@@ -196,7 +206,6 @@
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-
 
     </body>
 </html>

@@ -72,7 +72,12 @@
             <div class="col-6 col-md-4 col-lg-3 col-xl-custom mb-4" data-category="{{ $tm->jenis->nama }}">
                 <div class="seed-item">
                     <a href="{{ route('tanaman.detail', Crypt::encrypt($tm->id)) }}">
-                        <img src="{{ asset('images/kangkung.jpeg') }}" class="card-img-top" alt="{{ $tm->nama }}">
+                        @if ($tm->url_gambar)
+                            <img src="{{ $tm->url_gambar }}" class="card-img-top" alt="{{ $tm->nama }}">
+                        @else
+                            <img src="{{ asset('assets/image/no_image.png') }}" alt="No image available">
+                        @endif
+                        {{-- <img src="{{ asset('images/kangkung.jpeg') }}" class="card-img-top" alt="{{ $tm->nama }}"> --}}
                         <div class="card-body">
                             <p class="card-text">{{ $tm->nama }}</p>
                         </div>
