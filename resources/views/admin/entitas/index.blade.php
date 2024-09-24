@@ -5,7 +5,7 @@
     title.innerHTML += ' | Kelola Entitas';
 </script>
 <div class="container">
-    <h2 class="mb-4">Manajemen Entitas</h2>
+    <h2 class="mb-4">Kelola Entitas</h2>
     {{-- <!-- Search Form -->
     <form method="GET" action="{{ route('entitas.getAll') }}" class="mb-4">
         <div class="input-group">
@@ -103,8 +103,8 @@
     
             <!-- Tombol Filter dan Reset -->
             <div class="col-md-3 mt-3">
-                <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i> Filter</button>
-                <a href="{{ route('entitas.getAll') }}" class="btn btn-danger ms-2"><i class="fa fa-eraser"></i> Reset</a>
+                <button class="btn btn-primary btn-sm" type="submit"><i class="fa fa-search"></i> Filter</button>
+                <a href="{{ route('entitas.getAll') }}" class="btn btn-danger ms-2 btn-sm"><i class="fa fa-eraser"></i> Reset</a>
             </div>
         </div>
     </form>
@@ -138,13 +138,13 @@
                 <td>
                     <!-- Edit Button -->
                     {{-- <a href="{{ route('entitas.getById', $item->id) }}" class="btn btn-warning">Edit</a> --}}
-                    <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editEntitasModal{{ $item->id }}">Edit</button>
+                    <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editEntitasModal{{ $item->id }}">Edit</button>
 
                     <!-- Modal Edit -->
                     <div class="modal fade" id="editEntitasModal{{ $item->id }}" tabindex="-1" aria-labelledby="editEntitasModalLabel{{ $item->id }}" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
-                                <form action="{{ route('entitas.update', $item->id) }}" method="POST">
+                                <form action="{{ route('entitas.update', $item->id) }}" method="POST"  enctype="multipart/form-data">
                                     @csrf
                                     @method('PUT')
                                     <div class="modal-header">
@@ -194,6 +194,19 @@
                                                 @endforeach
                                             </select>
                                         </div>
+                                        <!-- Display current image (if available) -->
+                                        @if ($item->url_gambar)
+                                            <div class="mb-3">
+                                                <label for="current_image" class="form-label">Gambar</label><br>
+                                                <img src="{{ $item->url_gambar }}" alt="{{ $item->nama }}" width="100">
+                                            </div>
+                                        @endif
+
+                                        <!-- File input for new image -->
+                                        <div class="mb-3">
+                                            <label for="url_gambar" class="form-label">Unggah gambar <small class="text-danger">(PNG, JPEG, JPG - Max 2MB)</small></label>
+                                            <input type="file" class="form-control" name="url_gambar">
+                                        </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="submit" class="btn btn-primary">Simpan</button>
@@ -204,7 +217,7 @@
                     </div>
 
                     <!-- Delete Button with Modal -->
-                    <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $item->id }}">Hapus</button>
+                    <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $item->id }}">Hapus</button>
                     
                     <!-- Delete Confirmation Modal -->
                     <div class="modal fade" id="deleteModal-{{ $item->id }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
@@ -245,7 +258,7 @@
                     <h5 class="modal-title" id="createModalLabel">Tambah Entitas</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('entitas.store') }}" method="POST">
+                <form action="{{ route('entitas.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
                         <div class="mb-3">
@@ -287,9 +300,13 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div class="mb-3">
+                            <label for="url_gambar" class="form-label">Unggah Gambar <small class="text-danger">(PNG, JPEG, JPG - Max 2MB)</small></label>
+                            <input type="file" class="form-control" id="url_gambar" name="url_gambar">
+                        </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="submit" class="btn btn-success">Simpan</button>
+                        <button type="submit" class="btn btn-success">Tambahkan</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
                     </div>
                 </form>
