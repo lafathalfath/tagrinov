@@ -20,14 +20,16 @@
     }
 </style>
     <div class="container">
-        <h1>Detail {{ $tanaman->nama }}</h1>
+        <h3 class="mb-4"> {{ $tanaman->nama }}</h3>
         <div class="image-detail">
-            <img src="{{ asset('images/tumis.jpg') }}" alt="Kangkung">
+            {{-- <img src="{{ asset('images/tumis.jpg') }}" alt="Kangkung"> --}}
             @if ($tanaman->url_gambar)
                 <img src="{{ $tanaman->url_gambar }}" alt="{{ $tanaman->url_gambar }}">
+            @else
+                <img src="{{ asset('assets/image/no_image.png') }}" alt="No image available">
             @endif
             <div class="detail-text">
-                <h2>Detail Tanaman {{ $tanaman->nama }}</h2>
+                <p><strong>Nama Tanaman:</strong> {{ $tanaman->nama }}</p>
                 <p><strong>Nama Ilmiah:</strong> {{ $tanaman->nama_latin }}</p>
                 <p><strong>Nama Daerah:</strong> {{ $tanaman->nama_daerah }}</p>
                 @if ($tanaman->entitas_detail->varietas)
@@ -35,22 +37,22 @@
                 @endif
                 <p><strong>Deskripsi:</strong> {{ $tanaman->entitas_detail->deskripsi }}</p>
                 @if ($tanaman->entitas_detail->manfaat)
-                    <p><strong>Manfaat:</strong>{{ $tanaman->entitas_detail->manfaat }}</p>
+                    <p><strong>Manfaat:</strong> {{ $tanaman->entitas_detail->manfaat }}</p>
                 @endif
                 @if ($tanaman->entitas_detail->kandungan)
-                    <p><strong>Manfaat:</strong>{{ $tanaman->entitas_detail->kandungan }}</p>
+                    <p><strong>Kandungan:</strong>{{ $tanaman->entitas_detail->kandungan }}</p>
                 @endif
                 @if ($tanaman->entitas_detail->keunggulan)
-                    <p><strong>Potensi Hasil:</strong> {{ $tanaman->entitas_detail->keunggulan }}</p>
+                    <p><strong>Keunggulan:</strong> {{ $tanaman->entitas_detail->keunggulan }}</p>
                 @endif
                 @if ($tanaman->entitas_detail->potensi_hasil)
                     <p><strong>Potensi Hasil:</strong> {{ $tanaman->entitas_detail->potensi_hasil }}</p>
                 @endif
                 @if ($tanaman->entitas_detail->agroekosistem)
-                    <p><strong>Potensi Hasil:</strong> {{ $tanaman->entitas_detail->agroekosistem }}</p>
+                    <p><strong>Agroekosistem:</strong> {{ $tanaman->entitas_detail->agroekosistem }}</p>
                 @endif
                 @if ($tanaman->entitas_detail->syarat_tumbuh)
-                    <p><strong>Potensi Hasil:</strong> {{ $tanaman->entitas_detail->syarat_tumbuh }}</p>
+                    <p><strong>Syarat Tumbuh:</strong> {{ $tanaman->entitas_detail->syarat_tumbuh }}</p>
                 @endif
                 
                 {{-- <ul>

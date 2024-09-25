@@ -23,18 +23,18 @@
             font-size: 1.5rem;
         }
 
-        .carousel-caption {
-            text-align: left;
-            left: 10%;
-            bottom: 15%;
-            right: 20%;
-            max-width: 50%;
-        }
+    .carousel-caption {
+        text-align: left;
+        left: 10%;
+        bottom: 15%;
+        right: 20%;
+        max-width: 50%;
+    }
 
-        .hero-title h1 {
-            font-size: 2.5rem;
-            font-weight: 700;
-        }
+    .hero-title h1 {
+        font-size: 2.5rem;
+        font-weight: 700;
+    }
 
         .text-green {
             color: #28a745;
@@ -114,7 +114,7 @@
     </style>
 
     <section id="hero" class="px-0">
-        <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
             <div class="carousel-inner">
                 <!-- Slide 1 -->
                 <div class="carousel-item active">
@@ -142,7 +142,7 @@
             <div class="hero-title">
                 <h1 class="text-white">Selamat Datang di</h1>
                 <h1 class="text-green">Taman Agro Standar</h1>
-                <p class="lead mt-3">Nikmati keindahan alam dan belajar lebih banyak tentang berbagai jenis tanaman yang ada di taman kami.</p>
+                <p class="lead mt-3">Nikmati keindahan alam dan belajar lebih banyak tentang berbagai jenis tanaman yang ada di taman kami. Dengan berbagai fitur interaktif, Anda bisa memindai barcode pada setiap tanaman untuk mendapatkan informasi lebih detail, serta memantau stok benih yang tersedia.</p>
                 <a href="#denah" class="btn btn-light btn-lg mt-4 scroll-btn">
                     <span>Denah Taman</span>
                     <i class="bi bi-arrow-down-circle"></i>
