@@ -153,7 +153,7 @@
         </div>
     </nav>
     <!-- Navbar -->
-    <div style="margin-top: 80px;">
+    <div style="margin-top: 80px; margin-bottom: 20px;">
         @yield('content')
     </div>
 

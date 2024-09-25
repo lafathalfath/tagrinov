@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\TestimoniAdminController;
 use App\Http\Controllers\Admin\WelcomeTextController;
 use App\Http\Controllers\EntitasController;
+use App\Http\Controllers\EntitasDetailController;
 use App\Http\Controllers\FamilyController;
 use App\Http\Controllers\Guest\TanamanController;
 use App\Http\Controllers\Guest\FeedbackController;
@@ -100,6 +101,17 @@ Route::prefix('/admin')->group(function () {
         Route::post('/', [EntitasController::class, 'store'])->name('entitas.store');
         Route::put('/{id}', [EntitasController::class, 'update'])->name('entitas.update');
         Route::delete('/{id}', [EntitasController::class, 'destroy'])->name('entitas.destroy');
+
+        // Route for EntitasDetail
+        Route::prefix('/detail')->group(function () {
+            // Route::get('/{id}', [EntitasDetailController::class, 'show'])->name('entitas.detail.show'); // Show form
+            // Route::post('/{id}', [EntitasDetailController::class, 'storeOrUpdate'])->name('entitas.detail.storeOrUpdate'); // Submit form
+            // Route::get('/{id}', [EntitasDetailController::class, 'show'])->name('entitas.detail.show');
+            // Route::post('/{id}', [EntitasDetailController::class, 'storeOrUpdate'])->name('entitas.detail.storeOrUpdate');
+            Route::get('/{id}', [EntitasDetailController::class, 'show'])->name('entitas.detail.show'); // Show form
+            Route::post('/{id}', [EntitasDetailController::class, 'storeOrUpdate'])->name('entitas.detail.storeOrUpdate'); // Submit form
+            Route::put('/{id}', [EntitasDetailController::class, 'storeOrUpdate'])->name('entitas.detail.update'); // Update form
+        });
     });
 });
 // admin end
