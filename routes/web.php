@@ -11,8 +11,9 @@ use App\Http\Controllers\Guest\StokBenihController;
 use App\Http\Controllers\Guest\QrcodeController;
 use App\Http\Controllers\JenisController;
 use App\Http\Controllers\KategoriController;
-use App\Http\Guest\Controllers\EventController;
+use App\Http\Controllers\EventController;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -33,8 +34,6 @@ Route::get('/stokbenih/{id}/detail', [StokBenihController::class, 'detail'])->na
 
 Route::get('/kunjungan', [PermohonanController::class, 'kunjungan'])->name('permohonan.kunjungan.index');
 
-Route::get('/benih', [PermohonanController::class, 'benih'])->name('permohonan.benih.index');
-
 Route::get('tanaman/qrcode', [QrcodeController::class, 'qrcode'])->name('tanaman.qrcode');
 
 Route::prefix('/testimoni')->group(function () {
@@ -46,17 +45,6 @@ Route::prefix('/tanaman')->group(function () {
     Route::get('/', [TanamanController::class, 'index'])->name('tanaman.index');
     Route::get('/{id}/detail', [TanamanController::class, 'detail'])->name('tanaman.detail');
     Route::get('/qr/generate', [TanamanController::class, 'generateQrAll'])->name('tanaman.generate.qr');
-});
-
-<<<<<<< HEAD
-
-
-Route::get('/kunjungan', function () {
-    return view('guest.permohonan.kunjungan.kunjungan');
-});
-
-Route::get('/benih', function () {
-    return view('guest.permohonan.benih.benih');
 });
 
 
@@ -73,9 +61,7 @@ Route::get('/tanaman/qr/generate', [TanamanController::class, 'generateQrAll'])-
 Route::get('/tanaman/qr/view', [TanamanController::class, 'viewQr'])->name('tanaman.view.qr');
 // Route::get('/tanaman/detail', [TanamanController::class, 'detail'])->name('tanaman.detail');
 
-=======
->>>>>>> d5f88884c833fe28761238575012adaab67ee7af
-Route::get('/events', [EventController::class, 'index']);
+Route::get('/events', [EventController::class, 'index'])->name('events.index');
 // guest end
 
 
