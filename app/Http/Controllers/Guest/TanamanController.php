@@ -15,11 +15,21 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 class TanamanController extends Controller
 {
     public function index(Request $request) {
-        $tanaman = Entitas::where('kategori_id', 1)->paginate(10);
+        // $tanaman = Entitas::where('kategori_id', 1)->paginate(10);
+        $search = $request->input('search');
+        $jenisId = $request->input('jenis_id');
+        $query = Entitas::where('kategori_id', 1);
+        if ($search) {
+            $query->where('nama', 'like', '%' . $search . '%');
+        }
+        if ($jenisId) {
+            $query->where('jenis_id', $jenisId);
+        }
+        $tanaman = $query->paginate(10)->appends([
+            'search' => $search,
+            'jenis_id' => $jenisId,
+        ]);
         $jenis_kategori = Jenis::get();
-        // if ($request->kategori) {
-        //     $tanaman = Entitas::where('kategori_id', $request->kategori)->get();
-        // }
         return view('guest.tanaman.index', [
             'jenis_kategori' => $jenis_kategori,
             'tanaman' => $tanaman,

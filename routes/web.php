@@ -1,10 +1,11 @@
 <?php
 
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\TestimoniAdminController;
+use App\Http\Controllers\Admin\WelcomeTextController;
 use App\Http\Controllers\EntitasController;
 use App\Http\Controllers\FamilyController;
 use App\Http\Controllers\Guest\TanamanController;
-use App\Http\Controllers\Guest\TestimoniController;
 use App\Http\Controllers\Guest\FeedbackController;
 use App\Http\Controllers\Guest\HomeController;
 use App\Http\Controllers\Guest\PermohonanController;
@@ -58,7 +59,17 @@ Route::get('/events', [EventController::class, 'index']);
 // admin start
 Route::prefix('/admin')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-    
+    Route::get('slide_edit', [WelcomeTextController::class, 'edit'])->name('admin.welcome.edit');
+    Route::post('slide_edit/{id}', [WelcomeTextController::class, 'update'])->name('admin.welcome.update');
+
+    Route::prefix('/testimoni')->name('admin.testimoni.')->group(function () {
+        Route::get('/', [TestimoniAdminController::class, 'index'])->name('index');
+        Route::get('/{id}/detail', [TestimoniAdminController::class, 'detail'])->name('detail'); 
+        Route::get('/{id}/approve', [TestimoniAdminController::class, 'approve'])->name('approve'); 
+        Route::get('/{id}/reject', [TestimoniAdminController::class, 'reject'])->name('reject');
+        Route::delete('/{id}', [TestimoniAdminController::class, 'destroy'])->name('destroy');
+    });
+
     Route::prefix('/family')->group(function () {
         Route::get('/', [FamilyController::class, 'getAll'])->name('family.getAll');
         Route::get('/{id}', [FamilyController::class, 'getById'])->name('family.getById');
@@ -91,5 +102,6 @@ Route::prefix('/admin')->group(function () {
         Route::delete('/{id}', [EntitasController::class, 'destroy'])->name('entitas.destroy');
     });
 });
-
 // admin end
+
+Route::view('/auth/login', 'auth.login')->name('auth.login');
