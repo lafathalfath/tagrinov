@@ -1,18 +1,18 @@
 @extends('layouts.main')
 @section('content')
     <style>
-    .scroll-btn {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        font-size: 1.2rem;
-        color: #00452C;
-        border: 2px solid #333333;
-        border-radius: 30px;
-        padding: 10px 20px;
-        text-decoration: none;
-        transition: background-color 0.3s ease, color 0.3s ease;
-    }
+        .scroll-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.2rem;
+            color: #00452C;
+            border: 2px solid #333333;
+            border-radius: 30px;
+            padding: 10px 20px;
+            text-decoration: none;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
 
         .scroll-btn:hover {
             background-color: #00452C;
@@ -23,18 +23,18 @@
             font-size: 1.5rem;
         }
 
-    .carousel-caption {
-        text-align: left;
-        left: 10%;
-        bottom: 15%;
-        right: 20%;
-        max-width: 50%;
-    }
+        .carousel-caption {
+            text-align: left;
+            left: 10%;
+            bottom: 15%;
+            right: 20%;
+            max-width: 50%;
+        }
 
-    .hero-title h1 {
-        font-size: 2.5rem;
-        font-weight: 700;
-    }
+        .hero-title h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
 
         .text-green {
             color: #28a745;
@@ -83,10 +83,10 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
 
-    .whatsapp-button img {
-        width: 50px;
-        height: 50px;
-    }
+        .whatsapp-button img {
+            width: 50px;
+            height: 50px;
+        }
 
         .modal-header {
             background-color: #00452C;
@@ -98,33 +98,29 @@
             color: #333;
         }
 
-        /* CSS for the box and highlight effect */
         .highlight-area {
             position: absolute;
-            border: 2px solid red; /* Warna kotak diubah menjadi merah */
+            border: 2px solid red;
             opacity: 0.3;
             transition: all 0.3s ease;
-            background-color: rgba(255, 0, 0, 0.1); /* Warna transparan merah */
+            background-color: rgba(255, 0, 0, 0.1);
         }
 
         .highlight-area:hover {
             opacity: 1;
-            background-color: rgba(255, 0, 0, 0.4); /* Warna transparan merah saat hover */
+            background-color: rgba(255, 0, 0, 0.4);
         }
     </style>
 
     <section id="hero" class="px-0">
         <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
             <div class="carousel-inner">
-                <!-- Slide 1 -->
                 <div class="carousel-item active">
                     <img src="{{ asset('assets/image/gambar_header1.png') }}" class="d-block w-100" alt="Slide 1">
                 </div>
-                <!-- Slide 2 -->
                 <div class="carousel-item">
                     <img src="{{ asset('assets/image/hero2.jpg') }}" class="d-block w-100" alt="Slide 2">
                 </div>
-                <!-- Slide 3 -->
                 <div class="carousel-item">
                     <img src="{{ asset('assets/image/hero3.webp') }}" class="d-block w-100" alt="Slide 3">
                 </div>
@@ -151,23 +147,17 @@
         </div>
     </section>
 
-    <!-- Denah Taman -->
     <section id="denah" class="py-5">
         <div class="container text-center">
             <h2>Denah Taman</h2>
             <div class="position-relative">
                 <img src="{{ asset('assets/image/denahTaman.png') }}" class="img-fluid mt-4" alt="Denah Taman">
-
-                <!-- Highlight Areas with boxes -->
                 <div class="highlight-area" style="top: 10%; left: 50%; width: 200px; height: 150px;"></div>
                 <div class="highlight-area" style="top: 30%; left: 20%; width: 150px; height: 100px;"></div>
                 <div class="highlight-area" style="top: 50%; left: 70%; width: 180px; height: 120px;"></div>
-
-                <!-- Location Icons -->
                 <div class="location-icon" style="top: 20%; left: 57%;" data-detail="<b>Area hortikultura</b><br>Lorem ipsum dolor sit amet." data-audio="{{ asset('assets/sound/vo_ikon1.mp3') }}">
                     <i class="bi bi-geo-alt-fill"></i>
                 </div>
-
                 <div class="location-icon" style="top: 30%; left: 5%;" data-detail="<b>Kafe</b><br>Lorem ipsum dolor sit amet." data-audio="{{ asset('assets/sound/sound2.mp3') }}">
                     <i class="bi bi-geo-alt-fill"></i>
                 </div>
@@ -175,12 +165,10 @@
         </div>
     </section>
 
-    <!-- WhatsApp Button -->
     <a href="https://wa.me/6285218339006" class="whatsapp-button" target="_blank">
         <img src="{{ asset('assets/icons/whatsapp.png') }}" alt="WhatsApp">
     </a>
 
-    <!-- Modal -->
     <div class="modal fade" id="locationModal" tabindex="-1" aria-labelledby="locationModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -194,7 +182,6 @@
             </div>
         </div>
     </div>
-@endsection
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
