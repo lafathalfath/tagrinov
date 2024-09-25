@@ -54,8 +54,9 @@ Route::prefix('/tanaman')->group(function () {
 
 
 Route::get('/kunjungan', function () {
-    return view('guest.permohonan.kunjungan.kunjungan');
+    return view('guest.permohonan.kunjungan.index'); // Update here to point to inde.blade.php
 });
+
 
 Route::get('/benih', function () {
     return view('guest.permohonan.benih.benih');
@@ -76,7 +77,7 @@ Route::get('/tanaman/qr/view', [TanamanController::class, 'viewQr'])->name('tana
 // Route::get('/tanaman/detail', [TanamanController::class, 'detail'])->name('tanaman.detail');
 
 
-Route::get('/events', [EventController::class, 'index']);
+Route::get('/events', [EventController::class, 'index'])->name('events.index');
 // guest end
 
 
