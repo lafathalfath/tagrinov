@@ -1,9 +1,6 @@
 @extends('layouts.main')
 @section('content')
 <style>
-    .container-tanaman {
-        padding: 20px 100px;
-    }
     .image-detail {
         display: flex;
         justify-content: center;
@@ -22,11 +19,13 @@
         margin-top: 0;
     }
 </style>
-    <div class="container-tanaman">
-        <h1>Kangkung</h1>
+    <div class="container">
+        <h1>Detail {{ $tanaman->nama }}</h1>
         <div class="image-detail">
             <img src="{{ asset('images/tumis.jpg') }}" alt="Kangkung">
-            <img src="{{ $tanaman->url_gambar }}" alt="{{ $tanaman->url_gambar }}">
+            @if ($tanaman->url_gambar)
+                <img src="{{ $tanaman->url_gambar }}" alt="{{ $tanaman->url_gambar }}">
+            @endif
             <div class="detail-text">
                 <h2>Detail Tanaman {{ $tanaman->nama }}</h2>
                 <p><strong>Nama Ilmiah:</strong> {{ $tanaman->nama_latin }}</p>

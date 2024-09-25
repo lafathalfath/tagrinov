@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\EntitasController;
 use App\Http\Controllers\FamilyController;
 use App\Http\Controllers\Guest\TanamanController;
@@ -32,7 +33,10 @@ Route::get('/', [HomeController::class, 'index'])->name('home.index');
 Route::get('/stokbenih', [StokBenihController::class, 'index'])->name('stokBenih.index');
 Route::get('/stokbenih/{id}/detail', [StokBenihController::class, 'detail'])->name('stokBenih.detail');
 
+//permohonan
 Route::get('/kunjungan', [PermohonanController::class, 'kunjungan'])->name('permohonan.kunjungan.index');
+
+Route::get('/benih', [PermohonanController::class, 'benih'])->name('permohonan.benih.index');
 
 Route::get('tanaman/qrcode', [QrcodeController::class, 'qrcode'])->name('tanaman.qrcode');
 
@@ -45,6 +49,15 @@ Route::prefix('/tanaman')->group(function () {
     Route::get('/', [TanamanController::class, 'index'])->name('tanaman.index');
     Route::get('/{id}/detail', [TanamanController::class, 'detail'])->name('tanaman.detail');
     Route::get('/qr/generate', [TanamanController::class, 'generateQrAll'])->name('tanaman.generate.qr');
+});
+
+
+Route::get('/kunjungan', function () {
+    return view('guest.permohonan.kunjungan.kunjungan');
+});
+
+Route::get('/benih', function () {
+    return view('guest.permohonan.benih.benih');
 });
 
 
@@ -61,12 +74,15 @@ Route::get('/tanaman/qr/generate', [TanamanController::class, 'generateQrAll'])-
 Route::get('/tanaman/qr/view', [TanamanController::class, 'viewQr'])->name('tanaman.view.qr');
 // Route::get('/tanaman/detail', [TanamanController::class, 'detail'])->name('tanaman.detail');
 
-Route::get('/events', [EventController::class, 'index'])->name('events.index');
+
+Route::get('/events', [EventController::class, 'index']);
 // guest end
 
 
 // admin start
 Route::prefix('/admin')->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    
     Route::prefix('/family')->group(function () {
         Route::get('/', [FamilyController::class, 'getAll'])->name('family.getAll');
         Route::get('/{id}', [FamilyController::class, 'getById'])->name('family.getById');
