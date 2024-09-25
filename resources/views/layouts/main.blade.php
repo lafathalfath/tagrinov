@@ -130,20 +130,14 @@
                     <li class="nav-item {{ request()->url()==route('tanaman.index')?'active':'' }}">
                         <a class="nav-link" href="{{ route('tanaman.index') }}">Koleksi Tanaman</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Permohonan
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="{{ route('permohonan.kunjungan.index') }}">Permohonan Kunjungan</a></li>
-                            <li><a class="dropdown-item" href="{{ route('permohonan.benih.index') }}">Permohonan Benih</a></li>
-                        </ul>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/kunjungan">Permohonan Kunjungan</a>
                     </li>
                     <li class="nav-item {{ request()->url()==route('stokBenih.index')?'active':'' }}">
                         <a class="nav-link" href="{{ route('stokBenih.index') }}">Stok Benih</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/event') }}">Event</a>
+                    <li class="nav-item {{ request()->url()==route('events.index')?'active':'' }}">
+                        <a class="nav-link" a href="{{ route('events.index') }}">Event</a>
                     </li>
                     <li class="nav-item {{ request()->url()==route('testimoni.index')?'active':'' }}">
                         <a class="nav-link" href="{{ route('testimoni.index') }}">Testimoni</a>
