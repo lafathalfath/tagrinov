@@ -5,7 +5,13 @@
     title.innerHTML += ' | Kelola Family';
 </script>
 <div class="container">
-    <h2 class="mb-4">Kelola Family</h2>
+    <h2>Kelola Family</h2>
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+          <li class="breadcrumb-item" aria-current="page">Kelola Family</li>
+        </ol>
+    </nav>
     <div class="row mb-4">
         <div class="col-md-5">
             <form method="GET" action="{{ route('family.getAll') }}">

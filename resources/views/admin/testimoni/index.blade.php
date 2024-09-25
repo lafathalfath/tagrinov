@@ -6,7 +6,13 @@
     title.innerHTML += ' | Testimoni';
 </script>
 <div class="container">
-    <h2 class="mb-4">Daftar Testimoni</h2>
+    <h2>Daftar Testimoni</h2>
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+          <li class="breadcrumb-item" aria-current="page">Daftar Testimoni</li>
+        </ol>
+    </nav>
     <table class="table table-bordered">
         <thead>
             <tr>

@@ -2,10 +2,16 @@
 @section('content')
 <script>
     const title = document.getElementsByTagName('title')[0];
-    title.innerHTML += ' | Kelola Entitas';
+    title.innerHTML += ' | Entitas';
 </script>
 <div class="container">
-    <h2 class="mb-4">Kelola Entitas</h2>
+    <h2>Daftar Koleksi</h2>
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+          <li class="breadcrumb-item" aria-current="page">Daftar Koleksi</li>
+        </ol>
+    </nav>
     {{-- <!-- Search Form -->
     <form method="GET" action="{{ route('entitas.getAll') }}" class="mb-4">
         <div class="input-group">
@@ -241,6 +247,8 @@
                             </div>
                         </div>
                     </div>
+
+                    <a href="{{ route('entitas.detail.show', $item->id) }}" class="btn btn-success btn-sm">Detail</a>
                 </td>
             </tr>
             @endforeach
