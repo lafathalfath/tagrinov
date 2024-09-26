@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 
 class EntitasDetailController extends Controller
 {
-    public function show($id) {
+    public function getById($id) {
         // Cari data entitas berdasarkan id
         $entitas = Entitas::find($id); 
     
@@ -24,8 +24,7 @@ class EntitasDetailController extends Controller
         return view('admin.entitas.detail', compact('entitas', 'entitasDetail'));
     }
 
-    public function storeOrUpdate(Request $request, $id) {
-        // Validasi input dari form
+    public function update(Request $request, $id) {
         $request->validate([
             'deskripsi' => 'nullable|string',
             'varietas' => 'nullable|string',
@@ -37,13 +36,12 @@ class EntitasDetailController extends Controller
             'syarat_tumbuh' => 'nullable|string',
         ]);
     
-        // Buat atau update entitas detail berdasarkan entitas_id
-        $entitasDetail = EntitasDetail::updateOrCreate(
-            ['entitas_id' => $id],
-            $request->except('_token')
-        );
-    
-        return back()->with('success', 'Data berhasil disimpan');
+        // Cari entitas detail berdasarkan entitas_id
+        $entitasDetail = EntitasDetail::where('entitas_id', $id)->firstOrFail();
+
+        $entitasDetail->update($request->except('_token'));
+
+        return back()->with('success', 'Data berhasil diperbarui');
     }
     
     

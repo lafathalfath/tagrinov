@@ -64,13 +64,6 @@ Route::get('/benih', function () {
 });
 
 
-// Route::get('/kunjungan', [KunjunganController::class, 'index']);
-// Route::post('/kunjungan', [KunjunganController::class, 'store']);
-
-Route::get('/testimoni/create', [FeedbackController::class, 'create']);
-Route::post('/testimoni', [FeedbackController::class, 'store']);
-
-
 Route::get('/tanaman', [TanamanController::class, 'index'])->name('tanaman.index');
 Route::get('/tanaman/{id}/detail', [TanamanController::class, 'detail'])->name('tanaman.detail');
 Route::get('/tanaman/qr/generate', [TanamanController::class, 'generateQrAll'])->name('tanaman.generate.qr');
@@ -129,13 +122,8 @@ Route::prefix('/admin')->group(function () {
 
         // Route for EntitasDetail
         Route::prefix('/detail')->group(function () {
-            // Route::get('/{id}', [EntitasDetailController::class, 'show'])->name('entitas.detail.show'); // Show form
-            // Route::post('/{id}', [EntitasDetailController::class, 'storeOrUpdate'])->name('entitas.detail.storeOrUpdate'); // Submit form
-            // Route::get('/{id}', [EntitasDetailController::class, 'show'])->name('entitas.detail.show');
-            // Route::post('/{id}', [EntitasDetailController::class, 'storeOrUpdate'])->name('entitas.detail.storeOrUpdate');
-            Route::get('/{id}', [EntitasDetailController::class, 'show'])->name('entitas.detail.show'); // Show form
-            Route::post('/{id}', [EntitasDetailController::class, 'storeOrUpdate'])->name('entitas.detail.storeOrUpdate'); // Submit form
-            Route::put('/{id}', [EntitasDetailController::class, 'storeOrUpdate'])->name('entitas.detail.update'); // Update form
+            Route::get('/{id}', [EntitasDetailController::class, 'getById'])->name('entitas.detail.getById');
+            Route::put('/{id}', [EntitasDetailController::class, 'update'])->name('entitas.detail.update');
         });
     });
 });
