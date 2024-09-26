@@ -14,14 +14,14 @@ return new class extends Migration
         Schema::create('entitas_detail', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('entitas_id')->unsigned();
-            $table->string('deskripsi')->nullable();
-            $table->string('varietas')->nullable();
-            $table->string('potensi_hasil')->nullable();
-            $table->string('keunggulan')->nullable();
-            $table->string('manfaat')->nullable();
-            $table->string('agroekosistem')->nullable();
-            $table->string('kandungan')->nullable();
-            $table->string('syarat_tumbuh')->nullable();
+            $table->text('deskripsi')->nullable();
+            $table->text('varietas')->nullable();
+            $table->text('potensi_hasil')->nullable();
+            $table->text('keunggulan')->nullable();
+            $table->text('manfaat')->nullable();
+            $table->text('agroekosistem')->nullable();
+            $table->text('kandungan')->nullable();
+            $table->text('syarat_tumbuh')->nullable();
             $table->timestamps();
 
             $table->foreign('entitas_id')->references('id')->on('entitas')->onDelete('cascade');

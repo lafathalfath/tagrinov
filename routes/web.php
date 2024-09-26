@@ -1,10 +1,12 @@
 <?php
 
-use App\Http\Controllers\AdminController;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\TestimoniAdminController;
+use App\Http\Controllers\Admin\WelcomeTextController;
 use App\Http\Controllers\EntitasController;
+use App\Http\Controllers\EntitasDetailController;
 use App\Http\Controllers\FamilyController;
 use App\Http\Controllers\Guest\TanamanController;
-use App\Http\Controllers\Guest\TestimoniController;
 use App\Http\Controllers\Guest\FeedbackController;
 use App\Http\Controllers\Guest\HomeController;
 use App\Http\Controllers\Guest\PermohonanController;
@@ -12,8 +14,9 @@ use App\Http\Controllers\Guest\StokBenihController;
 use App\Http\Controllers\Guest\QrcodeController;
 use App\Http\Controllers\JenisController;
 use App\Http\Controllers\KategoriController;
-use App\Http\Guest\Controllers\EventController;
+use App\Http\Controllers\EventController;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -34,8 +37,8 @@ Route::get('/stokbenih/{id}/detail', [StokBenihController::class, 'detail'])->na
 
 //permohonan
 Route::get('/kunjungan', [PermohonanController::class, 'kunjungan'])->name('permohonan.kunjungan.index');
+
 Route::get('/benih', [PermohonanController::class, 'benih'])->name('permohonan.benih.index');
-//end permohonan
 
 Route::get('tanaman/qrcode', [QrcodeController::class, 'qrcode'])->name('tanaman.qrcode');
 
@@ -48,17 +51,51 @@ Route::prefix('/tanaman')->group(function () {
     Route::get('/', [TanamanController::class, 'index'])->name('tanaman.index');
     Route::get('/{id}/detail', [TanamanController::class, 'detail'])->name('tanaman.detail');
     Route::get('/qr/generate', [TanamanController::class, 'generateQrAll'])->name('tanaman.generate.qr');
-    Route::get('/qr/view', [TanamanController::class, 'viewQr']);
 });
 
-Route::get('/events', [EventController::class, 'index']);
+
+Route::get('/kunjungan', function () {
+    return view('guest.permohonan.kunjungan.index'); // Update here to point to inde.blade.php
+});
+
+
+Route::get('/benih', function () {
+    return view('guest.permohonan.benih.benih');
+});
+
+
+// Route::get('/kunjungan', [KunjunganController::class, 'index']);
+// Route::post('/kunjungan', [KunjunganController::class, 'store']);
+
+Route::get('/testimoni/create', [FeedbackController::class, 'create']);
+Route::post('/testimoni', [FeedbackController::class, 'store']);
+
+
+Route::get('/tanaman', [TanamanController::class, 'index'])->name('tanaman.index');
+Route::get('/tanaman/{id}/detail', [TanamanController::class, 'detail'])->name('tanaman.detail');
+Route::get('/tanaman/qr/generate', [TanamanController::class, 'generateQrAll'])->name('tanaman.generate.qr');
+Route::get('/tanaman/qr/view', [TanamanController::class, 'viewQr'])->name('tanaman.view.qr');
+// Route::get('/tanaman/detail', [TanamanController::class, 'detail'])->name('tanaman.detail');
+
+
+Route::get('/events', [EventController::class, 'index'])->name('events.index');
 // guest end
 
 
 // admin start
 Route::prefix('/admin')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
-    
+    Route::get('slide_edit', [WelcomeTextController::class, 'edit'])->name('admin.welcome.edit');
+    Route::post('slide_edit/{id}', [WelcomeTextController::class, 'update'])->name('admin.welcome.update');
+
+    Route::prefix('/testimoni')->name('admin.testimoni.')->group(function () {
+        Route::get('/', [TestimoniAdminController::class, 'index'])->name('index');
+        Route::get('/{id}/detail', [TestimoniAdminController::class, 'detail'])->name('detail'); 
+        Route::get('/{id}/approve', [TestimoniAdminController::class, 'approve'])->name('approve'); 
+        Route::get('/{id}/reject', [TestimoniAdminController::class, 'reject'])->name('reject');
+        Route::delete('/{id}', [TestimoniAdminController::class, 'destroy'])->name('destroy');
+    });
+
     Route::prefix('/family')->group(function () {
         Route::get('/', [FamilyController::class, 'getAll'])->name('family.getAll');
         Route::get('/{id}', [FamilyController::class, 'getById'])->name('family.getById');
@@ -89,7 +126,19 @@ Route::prefix('/admin')->group(function () {
         Route::post('/', [EntitasController::class, 'store'])->name('entitas.store');
         Route::put('/{id}', [EntitasController::class, 'update'])->name('entitas.update');
         Route::delete('/{id}', [EntitasController::class, 'destroy'])->name('entitas.destroy');
+
+        // Route for EntitasDetail
+        Route::prefix('/detail')->group(function () {
+            // Route::get('/{id}', [EntitasDetailController::class, 'show'])->name('entitas.detail.show'); // Show form
+            // Route::post('/{id}', [EntitasDetailController::class, 'storeOrUpdate'])->name('entitas.detail.storeOrUpdate'); // Submit form
+            // Route::get('/{id}', [EntitasDetailController::class, 'show'])->name('entitas.detail.show');
+            // Route::post('/{id}', [EntitasDetailController::class, 'storeOrUpdate'])->name('entitas.detail.storeOrUpdate');
+            Route::get('/{id}', [EntitasDetailController::class, 'show'])->name('entitas.detail.show'); // Show form
+            Route::post('/{id}', [EntitasDetailController::class, 'storeOrUpdate'])->name('entitas.detail.storeOrUpdate'); // Submit form
+            Route::put('/{id}', [EntitasDetailController::class, 'storeOrUpdate'])->name('entitas.detail.update'); // Update form
+        });
     });
 });
-
 // admin end
+
+Route::view('/auth/login', 'auth.login')->name('auth.login');

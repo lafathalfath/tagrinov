@@ -5,12 +5,18 @@
     title.innerHTML += ' | Kelola Jenis';
 </script>
 <div class="container">
-    <h2 class="mb-4">Kelola Jenis</h2>
+    <h2>Kelola Jenis</h2>
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+          <li class="breadcrumb-item" aria-current="page">Kelola Jenis</li>
+        </ol>
+    </nav>
     <div class="row mb-4">
         <div class="col-md-5">
             <form method="GET" action="{{ route('jenis.getAll') }}">
                 <div class="input-group">
-                    <input type="text" name="search" class="form-control col-md-4" placeholder="Cari jenis" value="{{ request()->get('search') }}">
+                    <input type="text" name="search" class="form-control col-md-4" placeholder="Cari jenis" value="{{ request('search') }}">
                     <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
                     <a href="{{ route('jenis.getAll') }}" class="btn btn-danger"><i class="fa fa-eraser"></i></a>
                 </div>

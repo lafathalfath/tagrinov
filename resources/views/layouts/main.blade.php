@@ -29,6 +29,7 @@
     }
     .nav-link {
         color: green !important;
+        
     }
     .nav-link:hover {
         font-weight: bold !important;
@@ -37,7 +38,7 @@
         font-weight: bold !important;
         display: flex;
         flex-direction: column;
-        text-decoration: underline;
+        /* text-decoration: underline; */
     }
     .navbar {
         transition: background-color 0.3s ease;
@@ -46,12 +47,6 @@
     .navbar.scrolled {
         background-color: rgba(255, 255, 255, 1);
     }
-
-    .navbar.scrolled .nav-link,
-    .navbar.scrolled .navbar-brand {
-        color: black !important;
-    }
-
     .navbar-dark .navbar-nav .nav-link {
         color: white;
     }
@@ -135,20 +130,14 @@
                     <li class="nav-item {{ request()->url()==route('tanaman.index')?'active':'' }}">
                         <a class="nav-link" href="{{ route('tanaman.index') }}">Koleksi Tanaman</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Permohonan
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" href="{{ route('permohonan.kunjungan.index') }}">Permohonan Kunjungan</a></li>
-                            <li><a class="dropdown-item" href="{{ route('permohonan.benih.index') }}">Permohonan Benih</a></li>
-                        </ul>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/kunjungan">Permohonan Kunjungan</a>
                     </li>
                     <li class="nav-item {{ request()->url()==route('stokBenih.index')?'active':'' }}">
                         <a class="nav-link" href="{{ route('stokBenih.index') }}">Stok Benih</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/event') }}">Event</a>
+                    <li class="nav-item {{ request()->url()==route('events.index')?'active':'' }}">
+                        <a class="nav-link" a href="{{ route('events.index') }}">Event</a>
                     </li>
                     <li class="nav-item {{ request()->url()==route('testimoni.index')?'active':'' }}">
                         <a class="nav-link" href="{{ route('testimoni.index') }}">Testimoni</a>
@@ -158,7 +147,7 @@
         </div>
     </nav>
     <!-- Navbar -->
-    <div style="margin-top: 80px;">
+    <div style="margin-top: 80px; margin-bottom: 20px;">
         @yield('content')
     </div>
 
@@ -170,7 +159,7 @@
             </div>
             <div class="col-lg-6 col-md-12 contact-info">
                 <h4>KONTAK</h4>
-                <p><i class="fas fa-phone"></i> (0251) 8351277 / WA : 085218339006</p>
+                <p><i class="fas fa-phone"></i> (0251) 8351277 / WA : 085183071943</p>
                 <p><i class="fas fa-fax"></i> (0251) 8350928</p>
                 <p><i class="fas fa-envelope"></i> <a href="mailto:bsip.bbpsip@pertanian.go.id">bsip.bbpsip@pertanian.go.id</a></p>
                 <p>Jl. Tentara Pelajar No.10, RT.01/RW.07, Ciwaringin, Kecamatan Bogor Tengah, Kota Bogor, Jawa Barat 16124</p>

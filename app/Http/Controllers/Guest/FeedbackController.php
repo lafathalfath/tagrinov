@@ -11,7 +11,8 @@ class FeedbackController extends Controller
 {
     public function index()
     {
-        $feedbacks = Feedback::all();
+        // Menampilkan hanya feedback yang disetujui
+        $feedbacks = Feedback::where('status', 'Disetujui')->get();
         return view('guest.testimoni.index', compact('feedbacks'));
     }
 
@@ -38,6 +39,7 @@ class FeedbackController extends Controller
             'rating' => $request->rating,
             'pesan' => $request->pesan,
             'foto' => $path,
+            'status' => 'pending',
         ]);
 
         return redirect()->back()->with('success', 'Ulasanmu telah dikirim.');
