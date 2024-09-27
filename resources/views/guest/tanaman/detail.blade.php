@@ -9,7 +9,8 @@
     }
     .image-detail img {
         width: 50%;
-        height: auto;
+        height: 450px;
+        object-fit: cover;
         border-radius: 8px;
     }
     .detail-text {

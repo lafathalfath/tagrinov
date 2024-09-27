@@ -109,9 +109,14 @@
                 <li><a href="{{ route('admin.dashboard') }}" class="{{ request()->url() == route('admin.dashboard') ? 'active' : '' }}">Dashboard</a></li>
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      Kelola Tanaman
+                      Koleksi
                   </a>
                   <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <li>
+                        <a class="dropdown-item {{ request()->url() == route('entitas.getAll') ? 'active' : '' }}" href="{{ route('entitas.getAll') }}">
+                            Daftar Koleksi
+                        </a>
+                    </li>
                       <li>
                           <a class="dropdown-item {{ request()->url() == route('family.getAll') ? 'active' : '' }}" href="{{ route('family.getAll') }}">
                               Kelola Family
@@ -125,11 +130,6 @@
                       <li>
                           <a class="dropdown-item {{ request()->url() == route('kategori.getAll') ? 'active' : '' }}" href="{{ route('kategori.getAll') }}">
                               Kelola Kategori
-                          </a>
-                      </li>
-                      <li>
-                          <a class="dropdown-item {{ request()->url() == route('entitas.getAll') ? 'active' : '' }}" href="{{ route('entitas.getAll') }}">
-                              Kelola Entitas
                           </a>
                       </li>
                   </ul>
