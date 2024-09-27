@@ -22,7 +22,11 @@
         .scroll-btn i {
             font-size: 1.5rem;
         }
-
+        #heroCarousel .carousel-item img {
+            width: 100%;
+            height: 700px; 
+            object-fit: cover;
+        }
         .carousel-caption {
             text-align: left;
             left: 10%;
@@ -136,9 +140,9 @@
         </div>
         <div class="carousel-caption d-none d-md-block">
             <div class="hero-title">
-                <h1 class="text-white">Selamat Datang di</h1>
-                <h1 class="text-green">Taman Agro Standar</h1>
-                <p class="lead mt-3">Nikmati keindahan alam dan belajar lebih banyak tentang berbagai jenis tanaman yang ada di taman kami. Dengan berbagai fitur interaktif, Anda bisa memindai barcode pada setiap tanaman untuk mendapatkan informasi lebih detail, serta memantau stok benih yang tersedia.</p>
+                <h1 class="text-white">{{ $welcomeText->title1 }}</h1>
+                <h1 class="text-green">{{ $welcomeText->title2 }}</h1>
+                <p class="lead mt-3">{{ $welcomeText->description }}</p>
                 <a href="#denah" class="btn btn-light btn-lg mt-4 scroll-btn">
                     <span>Denah Taman</span>
                     <i class="bi bi-arrow-down-circle"></i>

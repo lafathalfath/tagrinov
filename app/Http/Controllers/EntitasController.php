@@ -109,11 +109,17 @@ class EntitasController extends Controller
         // Simpan data entitas ke database
         $entitas = Entitas::create($data);
     
-        if (!$entitas) {
+        // Jika entitas berhasil disimpan, buat entitas detail
+        if ($entitas) {
+            // Buat entitas detail dengan hanya entitas_id yang terisi
+            EntitasDetail::create([
+                'entitas_id' => $entitas->id,
+            ]);
+
+            return back()->with('success', 'Entitas berhasil ditambahkan!');
+        } else {
             return back()->withErrors('Gagal menambahkan entitas');
         }
-    
-        return back()->with('success', 'Entitas berhasil ditambahkan!');
     }
 
     public function update(Request $request, $id) {
