@@ -107,6 +107,7 @@
             </div>
             <ul class="sidebar-menu">
                 <li><a href="{{ route('admin.dashboard') }}" class="{{ request()->url() == route('admin.dashboard') ? 'active' : '' }}">Dashboard</a></li>
+                <li><a href="{{ route('kunjungan.getAll') }}" class="{{ request()->url() == route('kunjungan.getAll') ? 'active' : '' }}">Permohonan Kunjungan</a></li>
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                       Koleksi

@@ -14,11 +14,9 @@ class JenisPengunjungSeeder extends Seeder
     public function run(): void
     {
         $jenis_pengunjung = [
-            ['id' => 1, 'nama' => 'Pelajar'],
-            ['id' => 2, 'nama' => 'Umum'],
-            ['id' => 3, 'nama' => 'Peneliti'],
+            ['id' => 1, 'nama' => 'Perorangan'],
+            ['id' => 2, 'nama' => 'Perkelompok'],
         ];
-
         DB::table('jenis_pengunjung')->insert($jenis_pengunjung);
     }
 }

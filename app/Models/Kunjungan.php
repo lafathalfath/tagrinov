@@ -11,24 +11,49 @@ class Kunjungan extends Model
     use HasFactory;
     protected $table = 'kunjungan';
     protected $guarded = [];
+    protected $fillable = [
+        'nama_lengkap',
+        'no_hp',
+        'usia_id',
+        'jenis_kelamin_id',
+        'asal_instansi',
+        'pekerjaan_id',
+        'kategori_informasi_id',
+        'pilihan_pertanian_id',
+        'pendidikan_id',
+        'jenis_pengunjung_id',
+        'jumlah_orang',
+        'tanggal_kunjungan',
+        'tujuan_kunjungan',
+        'url_foto_ktp',
+        'url_foto_selfie',
+    ];
 
-    public function kategori_kunjungan() : BelongsTo {
-        return $this->belongsTo(KategoriKunjungan::class);
+    public function usia(): BelongsTo {
+        return $this->belongsTo(Usia::class);
     }
-
-    public function alamat() : BelongsTo {
-        return $this->belongsTo(Alamat::class);
+    
+    public function jenis_kelamin(): BelongsTo {
+        return $this->belongsTo(JenisKelamin::class);
     }
-
-    public function jenis_pengunjung() : BelongsTo {
+    
+    public function pekerjaan(): BelongsTo {
+        return $this->belongsTo(Pekerjaan::class);
+    }
+    
+    public function kategori_informasi(): BelongsTo {
+        return $this->belongsTo(KategoriInformasi::class);
+    }
+    
+    public function pilihan_pertanian(): BelongsTo {
+        return $this->belongsTo(PilihanPertanian::class);
+    }
+    
+    public function pendidikan(): BelongsTo {
+        return $this->belongsTo(Pendidikan::class);
+    }
+    
+    public function jenis_pengunjung(): BelongsTo {
         return $this->belongsTo(JenisPengunjung::class);
-    }
-
-    public function hari_kunjungan() : BelongsTo {
-        return $this->belongsTo(HariKunjungan::class);
-    }
-
-    public function waktu_kunjungan() : BelongsTo {
-        return $this->belongsTo(WaktuKunjungan::class);
     }
 }
