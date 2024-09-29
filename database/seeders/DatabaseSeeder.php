@@ -17,11 +17,15 @@ class DatabaseSeeder extends Seeder
             JenisSeeder::class,
             kategoriSeeder::class,
             EntitasSeeder::class,
-            JenisPengunjungSeeder::class,
-            KategoriKunjunganSeeder::class,
             ProvinsiSeeder::class,
             WelcomeTextSeeder::class,
-
+            UsiaSeeder::class,
+            JenisKelaminSeeder::class,
+            PekerjaanSeeder::class,
+            KategoriInformasiSeeder::class,
+            PilihanPertanianSeeder::class,
+            PendidikanSeeder::class,
+            JenisPengunjungSeeder::class,
         ]);
     }
 }

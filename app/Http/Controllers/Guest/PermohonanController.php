@@ -11,7 +11,7 @@ class PermohonanController extends Controller
         return view('guest.permohonan.benih.index');
     }
 
-    public function kunjungan() {
-        return view('guest.permohonan.kunjungan.index');
-    }
+    // public function kunjungan() {
+    //     return view('guest.permohonan.kunjungan.index');
+    // }
 }

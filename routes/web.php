@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\WelcomeTextController;
 use App\Http\Controllers\EntitasController;
 use App\Http\Controllers\EntitasDetailController;
 use App\Http\Controllers\FamilyController;
+use App\Http\Controllers\KunjunganController;
 use App\Http\Controllers\Guest\TanamanController;
 use App\Http\Controllers\Guest\FeedbackController;
 use App\Http\Controllers\Guest\HomeController;
@@ -36,9 +37,10 @@ Route::get('/stokbenih', [StokBenihController::class, 'index'])->name('stokBenih
 Route::get('/stokbenih/{id}/detail', [StokBenihController::class, 'detail'])->name('stokBenih.detail');
 
 //permohonan
-Route::get('/kunjungan', [PermohonanController::class, 'kunjungan'])->name('permohonan.kunjungan.index');
+// Route::get('/kunjungan', [PermohonanController::class, 'kunjungan'])->name('permohonan.kunjungan.index');
+// Route::post('/kunjungan', [KunjunganController::class, 'store'])->name('kunjungan.store');
 
-Route::get('/benih', [PermohonanController::class, 'benih'])->name('permohonan.benih.index');
+// Route::get('/benih', [PermohonanController::class, 'benih'])->name('permohonan.benih.index');
 
 Route::get('tanaman/qrcode', [QrcodeController::class, 'qrcode'])->name('tanaman.qrcode');
 
@@ -53,16 +55,14 @@ Route::prefix('/tanaman')->group(function () {
     Route::get('/qr/generate', [TanamanController::class, 'generateQrAll'])->name('tanaman.generate.qr');
 });
 
-
-Route::get('/kunjungan', function () {
-    return view('guest.permohonan.kunjungan.index'); // Update here to point to inde.blade.php
+Route::prefix('/kunjungan')->group(function () {
+    Route::get('/', [KunjunganController::class, 'index'])->name('guest.permohonan.kunjungan.index');
+    Route::post('/', [KunjunganController::class, 'store'])->name('kunjungan.store');
 });
-
 
 Route::get('/benih', function () {
     return view('guest.permohonan.benih.benih');
 });
-
 
 Route::get('/tanaman', [TanamanController::class, 'index'])->name('tanaman.index');
 Route::get('/tanaman/{id}/detail', [TanamanController::class, 'detail'])->name('tanaman.detail');
@@ -74,12 +74,18 @@ Route::get('/tanaman/qr/view', [TanamanController::class, 'viewQr'])->name('tana
 Route::get('/events', [EventController::class, 'index'])->name('events.index');
 // guest end
 
-
 // admin start
 Route::prefix('/admin')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('slide_edit', [WelcomeTextController::class, 'edit'])->name('admin.welcome.edit');
     Route::post('slide_edit/{id}', [WelcomeTextController::class, 'update'])->name('admin.welcome.update');
+
+    Route::prefix('/kunjungan')->group(function () {
+        Route::get('/', [KunjunganController::class, 'getAll'])->name('kunjungan.getAll'); // Route untuk melihat semua kunjungan
+        Route::get('/{id}', [KunjunganController::class, 'getById'])->name('kunjungan.getById'); // Route untuk melihat kunjungan berdasarkan ID
+        // Route::post('/', [KunjunganController::class, 'store'])->name('kunjungan.store'); // Route untuk menyimpan data kunjungan baru
+        Route::delete('/{id}', [KunjunganController::class, 'destroy'])->name('kunjungan.destroy'); // Route untuk menghapus kunjungan
+    });
 
     Route::prefix('/testimoni')->name('admin.testimoni.')->group(function () {
         Route::get('/', [TestimoniAdminController::class, 'index'])->name('index');
