@@ -70,126 +70,100 @@
 
 <div class="container">
     <h3>Rencanakan Kunjunganmu</h3>
-    <form id="visitForm" enctype="multipart/form-data">
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    @if(session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+    <form action="{{ route('kunjungan.store') }}" method="POST" enctype="multipart/form-data">
+        @csrf
         <!-- Nama Lengkap -->
         <div class="mb-3">
             <label for="namaLengkap" class="form-label">Nama Lengkap</label>
-            <input type="text" class="form-control" id="namaLengkap" name="namaLengkap" required>
+            <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap" placeholder="Nama Lengkap" required>
         </div>
 
         <!-- No HP -->
         <div class="mb-3">
-            <label for="noHp" class="form-label">No HP</label>
-            <input type="tel" class="form-control" id="noHp" name="noHp" required>
+            <label for="no_hp" class="form-label">No HP</label>
+            <input type="tel" class="form-control" id="no_hp" name="no_hp" placeholder="Nomor HP" required>
         </div>
 
         <!-- Usia -->
         <fieldset class="mb-3">
             <legend class="col-form-label" style="font-weight: bold;">Usia (tahun)</legend>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" id="usia1" name="usia" value="<20" required>
-                <label class="form-check-label" for="usia1">&lt;20</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" id="usia2" name="usia" value="20-29">
-                <label class="form-check-label" for="usia2">20-29</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" id="usia3" name="usia" value="30-39">
-                <label class="form-check-label" for="usia3">30-39</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" id="usia4" name="usia" value="40-49">
-                <label class="form-check-label" for="usia4">40-49</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" id="usia5" name="usia" value=">50">
-                <label class="form-check-label" for="usia5">&gt;50</label>
-            </div>
+            @foreach($usia as $item)
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="usia{{ $item->id }}" name="usia_id" value="{{ $item->id }}" required>
+                    <label class="form-check-label" for="usia{{ $item->id }}">{{ $item->nama }}</label>
+                </div>
+            @endforeach
         </fieldset>
 
         <!-- Jenis Kelamin -->
         <fieldset class="mb-3">
             <legend class="col-form-label" style="font-weight: bold;">Jenis Kelamin</legend>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" id="lakiLaki" name="jenisKelamin" value="Laki-laki" required>
-                <label class="form-check-label" for="lakiLaki">Laki-laki</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" id="perempuan" name="jenisKelamin" value="Perempuan">
-                <label class="form-check-label" for="perempuan">Perempuan</label>
-            </div>
+            @foreach($jenis_kelamin as $item)
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="jenis_kelamin{{ $item->id }}" name="jenis_kelamin_id" value="{{ $item->id }}" required>
+                    <label class="form-check-label" for="jenis_kelamin{{ $item->id }}">{{ $item->nama }}</label>
+                </div>
+            @endforeach
         </fieldset>
 
         <!-- Asal Instansi -->
         <div class="mb-3">
-            <label for="asalInstansi" class="form-label">Asal Instansi</label>
-            <input type="text" class="form-control" id="asalInstansi" name="asalInstansi" placeholder="Masukkan asal instansi" required>
+            <label for="asal_instansi" class="form-label">Asal Instansi</label>
+            <input type="text" class="form-control" id="asal_instansi" name="asal_instansi" placeholder="Masukkan asal instansi" required>
         </div>
 
         <!-- Pekerjaan -->
         <div class="mb-3">
             <label for="pekerjaan" class="form-label">Pekerjaan</label>
-            <select class="form-select" id="pekerjaan" name="pekerjaan" required>
-                <option value="PNS">PNS</option>
-                <option value="TNI">TNI</option>
-                <option value="POLRI">POLRI</option>
-                <option value="Swasta">Swasta</option>
-                <option value="Wirausaha">Wirausaha</option>
-                <option value="Guru">Guru</option>
-                <option value="Siswa">Siswa</option>
-                <option value="Mahasiswa">Mahasiswa</option>
-                <option value="Lainnya">Lainnya</option>
+            <select class="form-select" id="pekerjaan" name="pekerjaan_id" required>
+                <option value="" disabled selected>Pilih Pekerjaan</option>
+                @foreach($pekerjaan as $item)
+                    <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                @endforeach
             </select>
         </div>
 
         <!-- Kategori Informasi Publik -->
         <div class="mb-3">
-            <label for="kategoriInformasi" class="form-label">Kategori Informasi Publik</label>
-            <select class="form-select" id="kategoriInformasi" name="kategoriInformasi" required>
-                <option value="">-- Pilih Kategori Informasi Publik --</option>
-                <option value="Pertanian">Pertanian</option>
-                <option value="Anggaran dan Keuangan">Anggaran dan Keuangan</option>
-                <option value="Kepegawaian">Kepegawaian</option>
-                <option value="Hukum dan Perundang-undangan">Hukum dan Perundang-undangan</option>
-                <option value="Pengadaan Barang dan Jasa">Pengadaan Barang dan Jasa</option>
-                <option value="Lain-lain">Lain-lain</option>
+            <label for="kategori_informasi" class="form-label">Kategori Informasi Publik</label>
+            <select class="form-select" id="kategori_informasi" name="kategori_informasi_id" required>
+                <option value="" disabled selected>Pilih Kategori Informasi Publik</option>
+                @foreach($kategori_informasi as $item)
+                    <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                @endforeach
             </select>
         </div>
 
         <!-- Pilihan Tambahan untuk Pertanian -->
-        <div class="mb-3" id="pilihanPertanianContainer">
+        <div class="mb-3" id="pilihanPertanianContainer" style="display:none;">
             <label class="form-label">Pilihan Pertanian</label>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" id="konsul" name="pilihanPertanian" value="Konsul">
-                <label class="form-check-label" for="konsul">Konsul</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" id="agroeduw" name="pilihanPertanian" value="Agroeduw">
-                <label class="form-check-label" for="agroeduw">Agroeduw</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" id="pelatihan" name="pilihanPertanian" value="Pelatihan/Bimtek">
-                <label class="form-check-label" for="pelatihan">Pelatihan/Bimtek</label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" id="magang" name="pilihanPertanian" value="Magang">
-                <label class="form-check-label" for="magang">Magang</label>
-            </div>
+            @foreach($pilihan_pertanian as $item)
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" id="pilihan_pertanian{{ $item->id }}" name="pilihan_pertanian_id" value="{{ $item->id }}">
+                    <label class="form-check-label" for="pilihan_pertanian{{ $item->id }}">{{ $item->nama }}</label>
+                </div>
+            @endforeach
         </div>
 
         <!-- Pendidikan Terakhir -->
         <div class="mb-3">
-            <label for="pendidikanTerakhir" class="form-label">Pendidikan Terakhir</label>
-            <select class="form-select" id="pendidikanTerakhir" name="pendidikanTerakhir" required>
-                <option value="SD">SD</option>
-                <option value="SMP">SMP</option>
-                <option value="SMA">SMA</option>
-                <option value="D3">D3</option>
-                <option value="D4">D4</option>
-                <option value="S1">S1</option>
-                <option value="S2">S2</option>
-                <option value="S3">S3</option>
+            <label for="pendidikan" class="form-label">Pendidikan Terakhir</label>
+            <select class="form-select" id="pendidikan" name="pendidikan_id" required>
+                <option value="" disabled selected>Pilih Pendidikan Terakhir</option>
+                @foreach($pendidikan as $item)
+                    <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                @endforeach
             </select>
         </div>
 
@@ -197,91 +171,116 @@
         <div class="mb-3">
             <label class="form-label">Jenis Pengunjung</label>
             <div class="btn-group-custom mb-3" role="group" aria-label="Jenis Pengunjung">
-                <input type="radio" class="btn-check" id="perorangan" name="jenisPengunjung" value="Perorangan" required>
-                <label class="btn btn-outline-success" for="perorangan">Perorangan</label>
-
-                <input type="radio" class="btn-check" id="perkelompok" name="jenisPengunjung" value="Perkelompok">
-                <label class="btn btn-outline-success" for="perkelompok">Perkelompok</label>
+                @foreach($jenis_pengunjung as $item)
+                    <input type="radio" class="btn-check" id="jenis_pengunjung{{ $item->id }}" name="jenis_pengunjung_id" value="{{ $item->id }}" required>
+                    <label class="btn btn-outline-success" for="jenis_pengunjung{{ $item->id }}">{{ $item->nama }}</label>
+                @endforeach
             </div>
             <!-- Input untuk jumlah orang, muncul hanya jika Perkelompok dipilih -->
-            <div class="mb-3" id="jumlahOrangContainer">
-                <label for="jumlahOrang" class="form-label">Jumlah Orang</label>
-                <input type="number" class="form-control" id="jumlahOrang" name="jumlahOrang" min="2" placeholder="Masukkan jumlah orang">
+            <div id="jumlah_orang" class="mb-3" style="display:none;">
+                <label for="jumlah" class="form-label">Jumlah Orang</label>
+                <input type="number" class="form-control" id="jumlah_orang" name="jumlah_orang" min="1" placeholder="Masukkan Jumlah Orang">
             </div>
         </div>
 
+
         <!-- Tanggal Kunjungan -->
         <div class="mb-3">
-            <label for="tanggalKunjungan" class="form-label">Tanggal Kunjungan</label>
-            <input type="date" class="form-control" id="tanggalKunjungan" name="tanggalKunjungan" required>
+            <label for="tanggal_kunjungan" class="form-label">Tanggal Kunjungan</label>
+            <input type="date" class="form-control" id="tanggal_kunjungan" name="tanggal_kunjungan" required>
         </div>
 
         <!-- Tujuan Kunjungan -->
         <div class="mb-3">
-            <label for="tujuanKunjungan" class="form-label">Tujuan Kunjungan</label>
-            <textarea class="form-control" id="tujuanKunjungan" name="tujuanKunjungan" rows="3" required></textarea>
+            <label for="tujuan_kunjungan" class="form-label">Tujuan Kunjungan</label>
+            <textarea class="form-control" id="tujuan_kunjungan" name="tujuan_kunjungan" rows="3" placeholder="Tulis Tujuan Kunjungan" required></textarea>
         </div>
 
         <!-- Unggah Foto KTP -->
         <div class="file-input-container">
-            <label for="fotoKTP" class="form-label">Unggah Foto KTP</label>
-            <input type="file" class="form-control" id="fotoKTP" name="fotoKTP" accept="image/*" required>
+            <label for="fotoKTP" class="form-label">Unggah Foto KTP <small class="text-danger">(PNG, JPEG, JPG - Max 2MB)</small></label>
+            <input type="file" class="form-control" id="fotoKTP" name="url_foto_ktp" accept="image/*" required>
         </div>
 
         <!-- Unggah Foto Selfie -->
         <div class="file-input-container">
-            <label for="fotoSelfie" class="form-label">Unggah Foto Selfie</label>
-            <input type="file" class="form-control" id="fotoSelfie" name="fotoSelfie" accept="image/*" required>
+            <label for="fotoSelfie" class="form-label">Unggah Foto Selfie <small class="text-danger">(PNG, JPEG, JPG - Max 2MB)</small></label>
+            <input type="file" class="form-control" id="fotoSelfie" name="url_foto_selfie" accept="image/*" required>
         </div>
+        <button type="submit" class="btn btn-success">Kirim</button>
 
         <!-- Tombol Submit -->
-        <div class="submit-btn-container">
+        {{-- <div class="submit-btn-container">
             <button type="submit" class="btn btn-success">Kirim Permohonan</button>
-        </div>
+        </div> --}}
     </form>
 </div>
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         // Menangani tampilan input jumlah orang berdasarkan jenis pengunjung
-        var jenisPengunjungRadios = document.querySelectorAll('input[name="jenisPengunjung"]');
-        var jumlahOrangContainer = document.getElementById('jumlahOrangContainer');
+        var jenisPengunjungRadios = document.querySelectorAll('input[name="jenis_pengunjung_id"]');
+        var jumlahOrangContainer = document.getElementById('jumlah_orang');
 
         jenisPengunjungRadios.forEach(function (radio) {
             radio.addEventListener('change', function () {
                 if (this.value === 'Perkelompok') {
                     jumlahOrangContainer.style.display = 'block';
-                    document.getElementById('jumlahOrang').setAttribute('required', 'required');
+                    jumlahOrangContainer.querySelector('input').setAttribute('required', 'required');
                 } else {
                     jumlahOrangContainer.style.display = 'none';
-                    document.getElementById('jumlahOrang').removeAttribute('required');
-                    document.getElementById('jumlahOrang').value = ''; // Reset nilai input
+                    jumlahOrangContainer.querySelector('input').removeAttribute('required');
+                    jumlahOrangContainer.querySelector('input').value = ''; // Reset nilai input
                 }
             });
         });
 
         // Menangani tampilan pilihan tambahan untuk kategori informasi publik Pertanian
-        var kategoriInformasiSelect = document.getElementById('kategoriInformasi');
+        var kategoriInformasiSelect = document.getElementById('kategori_informasi');
         var pilihanPertanianContainer = document.getElementById('pilihanPertanianContainer');
+        pilihanPertanianContainer.style.display = 'none'; // Sembunyikan secara default
 
         kategoriInformasiSelect.addEventListener('change', function () {
-            if (this.value === 'Pertanian') {
+            if (this.value == '1') { // Gantilah '1' dengan ID kategori Pertanian yang sesuai
                 pilihanPertanianContainer.style.display = 'block';
-                // Menambahkan atribut required pada pilihanPertanian radios
-                var pilihanRadios = document.querySelectorAll('input[name="pilihanPertanian"]');
+                var pilihanRadios = document.querySelectorAll('input[name="pilihan_pertanian"]');
                 pilihanRadios.forEach(function (radio) {
                     radio.setAttribute('required', 'required');
                 });
             } else {
                 pilihanPertanianContainer.style.display = 'none';
-                // Menghapus atribut required pada pilihanPertanian radios
-                var pilihanRadios = document.querySelectorAll('input[name="pilihanPertanian"]');
+                var pilihanRadios = document.querySelectorAll('input[name="pilihan_pertanian"]');
                 pilihanRadios.forEach(function (radio) {
                     radio.removeAttribute('required');
                     radio.checked = false; // Reset pilihan radio
                 });
             }
         });
+
+        // Memastikan tampilan yang benar pada load awal
+        jenisPengunjungRadios.forEach(function (radio) {
+            radio.addEventListener('change', function () {
+                if (this.value === '2') { // Gantilah '2' dengan ID yang sesuai untuk Perkelompok
+                    jumlahOrangContainer.style.display = 'block';
+                    jumlahOrangContainer.querySelector('input').setAttribute('required', 'required');
+                } else {
+                    jumlahOrangContainer.style.display = 'none';
+                    jumlahOrangContainer.querySelector('input').removeAttribute('required');
+                    jumlahOrangContainer.querySelector('input').value = ''; // Reset nilai input
+                }
+            });
+        });
+
+        // Memastikan tampilan yang benar pada load awal
+        jenisPengunjungRadios.forEach(function (radio) {
+            if (radio.checked && radio.value === '2') { // Gantilah '2' dengan ID yang sesuai untuk Perkelompok
+                jumlahOrangContainer.style.display = 'block';
+            } else {
+                jumlahOrangContainer.style.display = 'none';
+            }
+        });
     });
 </script>
+
+
 @endsection

@@ -6,18 +6,17 @@ use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class KategoriKunjunganSeeder extends Seeder
+class JenisKelaminSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        $kategori_kunjungan = [
-            ['id' => 1, 'nama' => 'Perorangan'],
-            ['id' => 2, 'nama' => 'Rombongan'],
+        $jenis_kelamin = [
+            ['id' => 1, 'nama' => 'Laki-laki'],
+            ['id' => 2, 'nama' => 'Perempuan'],
         ];
-
-        DB::table('kategori_kunjungan')->insert($kategori_kunjungan);
+        DB::table('jenis_kelamin')->insert($jenis_kelamin);
     }
 }
