@@ -18,10 +18,11 @@
             <tr>
                 <th>No</th>
                 <th>Nama Lengkap</th>
+                <th>Tanggal Kunjungan</th>
                 <th>Nomor HP</th>
                 <th>Usia</th>
                 <th>Jenis Kelamin</th>
-                <th>Tanggal Kunjungan</th>
+                <th>Status</th>
                 <th>Aksi</th>
             </tr>
         </thead>
@@ -30,12 +31,19 @@
                 <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $item->nama_lengkap }}</td>
-                    <td>{{ $item->no_hp }}</td>
-                    <td>{{ $item->usia->nama }}</td>
-                    <td>{{ $item->jenis_kelamin->nama }}</td>
                     <td>{{ $item->tanggal_kunjungan }}</td>
+                    <td>{{ $item->no_hp }}</td>
+                    <td>{{ $item->usia->nama }} Tahun</td>
+                    <td>{{ $item->jenis_kelamin->nama }}</td>
                     <td>
-                        <a href="{{ route('kunjungan.getById', $item->id) }}" class="btn btn-info btn-sm">Detail</a>
+                        @if($item->status_setujui)
+                            <span class="badge bg-success">Disetujui</span>
+                        @else
+                            <span class="badge bg-warning text-dark">Pending</span>
+                        @endif
+                    </td>
+                    <td>
+                        <a href="{{ route('kunjungan.getById', $item->id) }}" class="btn btn-primary btn-sm">Detail</a>
                         <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $item->id }}">
                             Hapus
                         </button>

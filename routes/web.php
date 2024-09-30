@@ -72,6 +72,8 @@ Route::get('/tanaman/qr/view', [TanamanController::class, 'viewQr'])->name('tana
 
 
 Route::get('/events', [EventController::class, 'index'])->name('events.index');
+Route::get('/events', [EventController::class, 'showEvents'])->name('events.index');
+
 // guest end
 
 // admin start
@@ -85,6 +87,7 @@ Route::prefix('/admin')->group(function () {
         Route::get('/{id}', [KunjunganController::class, 'getById'])->name('kunjungan.getById'); // Route untuk melihat kunjungan berdasarkan ID
         // Route::post('/', [KunjunganController::class, 'store'])->name('kunjungan.store'); // Route untuk menyimpan data kunjungan baru
         Route::delete('/{id}', [KunjunganController::class, 'destroy'])->name('kunjungan.destroy'); // Route untuk menghapus kunjungan
+        Route::get('/setujui/{id}', [KunjunganController::class, 'setujui'])->name('kunjungan.setujui');
     });
 
     Route::prefix('/testimoni')->name('admin.testimoni.')->group(function () {
