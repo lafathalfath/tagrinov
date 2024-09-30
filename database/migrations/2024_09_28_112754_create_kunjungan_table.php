@@ -28,6 +28,7 @@ return new class extends Migration
             $table->text('tujuan_kunjungan');
             $table->string('url_foto_ktp');
             $table->string('url_foto_selfie');
+            $table->boolean('status_setujui')->default(false);
             $table->timestamps();            
     
             // Definisi Foreign Key

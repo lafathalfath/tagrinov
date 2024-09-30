@@ -91,8 +91,8 @@
 
         <!-- No HP -->
         <div class="mb-3">
-            <label for="no_hp" class="form-label">No HP</label>
-            <input type="tel" class="form-control" id="no_hp" name="no_hp" placeholder="Nomor HP" required>
+            <label for="no_hp" class="form-label">Nomor HP / WhatsApp <small class="text-danger">(yang dapat dihubungi)</small></label>
+            <input type="tel" class="form-control" id="no_hp" name="no_hp" placeholder="Nomor HP / WhatsApp" required>
         </div>
 
         <!-- Usia -->
@@ -207,12 +207,11 @@
             <label for="fotoSelfie" class="form-label">Unggah Foto Selfie <small class="text-danger">(PNG, JPEG, JPG - Max 2MB)</small></label>
             <input type="file" class="form-control" id="fotoSelfie" name="url_foto_selfie" accept="image/*" required>
         </div>
-        <button type="submit" class="btn btn-success">Kirim</button>
 
         <!-- Tombol Submit -->
-        {{-- <div class="submit-btn-container">
+        <div class="submit-btn-container">
             <button type="submit" class="btn btn-success">Kirim Permohonan</button>
-        </div> --}}
+        </div>
     </form>
 </div>
 
@@ -279,6 +278,36 @@
                 jumlahOrangContainer.style.display = 'none';
             }
         });
+    });
+    
+
+    // Fungsi Tanggal
+    const dateInput = document.getElementById('tanggal_kunjungan');
+
+    // Mendapatkan tanggal hari ini
+    const today = new Date();
+    const todayISO = today.toISOString().split('T')[0];
+
+    // Mengatur tanggal minimum sebagai besok
+    today.setDate(today.getDate() + 1);
+    const minDate = today.toISOString().split('T')[0];
+    dateInput.setAttribute('min', minDate);
+
+    // Fungsi untuk memeriksa apakah hari Sabtu atau Minggu
+    function isWeekend(date) {
+        const day = new Date(date).getDay();
+        return (day === 6 || day === 0); // 6 = Sabtu, 0 = Minggu
+    }
+
+    // Event listener untuk memblokir Sabtu, Minggu, dan hari ini
+    dateInput.addEventListener('input', function() {
+        const selectedDate = this.value;
+
+        // Jika hari Sabtu atau Minggu, reset value dan tampilkan alert
+        if (isWeekend(selectedDate)) {
+            alert('Kunjungan tidak dapat dilakukan pada hari Sabtu atau Minggu.');
+            this.value = '';
+        }
     });
 </script>
 
