@@ -20,8 +20,8 @@
                 <th>Nama Lengkap</th>
                 <th>Tanggal Kunjungan</th>
                 <th>Nomor HP</th>
-                <th>Usia</th>
-                <th>Jenis Kelamin</th>
+                <th>Asal Instansi</th>
+                <th>Jenis</th>
                 <th>Status</th>
                 <th>Aksi</th>
             </tr>
@@ -33,13 +33,13 @@
                     <td>{{ $item->nama_lengkap }}</td>
                     <td>{{ $item->tanggal_kunjungan }}</td>
                     <td>{{ $item->no_hp }}</td>
-                    <td>{{ $item->usia->nama }} Tahun</td>
-                    <td>{{ $item->jenis_kelamin->nama }}</td>
+                    <td>{{ $item->asal_instansi }}</td>
+                    <td>{{ $item->jenis_pengunjung->nama }}</td>
                     <td>
                         @if($item->status_setujui)
-                            <span class="badge bg-success">Disetujui</span>
+                            <span class="badge bg-success fs-6 fw-normal text-capitalize">Disetujui</span>
                         @else
-                            <span class="badge bg-warning text-dark">Pending</span>
+                            <span class="badge bg-warning fs-6 fw-normal text-capitalize">Pending</span>
                         @endif
                     </td>
                     <td>

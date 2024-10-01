@@ -20,9 +20,9 @@ class KunjunganController extends Controller
         $kunjungan = Kunjungan::get();
         // if (!$kunjungan) return response()->json(['status' => 'error', 'message' => 'cannot found any data'], 404);
         // return response()->json(['status' => 'success', 'payload' => $kunjungan], 200);
-        if ($kunjungan->isEmpty()) {
-            return back()->with('error', 'Tidak ada data yang ditemukan.');
-        }
+        // if ($kunjungan->isEmpty()) {
+        //     return back()->with('error', 'Tidak ada data yang ditemukan.');
+        // }
         $kunjungan->each(function($item) {
             $item->tanggal_kunjungan = Carbon::parse($item->tanggal_kunjungan)->locale('id')->translatedFormat('l, d F Y');
         });
@@ -38,7 +38,7 @@ class KunjunganController extends Controller
         if (!$kunjungan) {
             return back()->with('error', 'Data kunjungan tidak ditemukan.');
         }
-        return view('admin.kunjungan.show', compact('kunjungan'));
+        return view('admin.kunjungan.detail', compact('kunjungan'));
     }
 
     public function store(Request $request)
@@ -151,7 +151,7 @@ class KunjunganController extends Controller
         ]);
     }
 
-    public function setujui($id)
+    public function approve($id)
     {
         $kunjungan = Kunjungan::findOrFail($id);
         $kunjungan->status_setujui = true;

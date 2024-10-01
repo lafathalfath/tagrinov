@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\TestimoniAdminController;
 use App\Http\Controllers\Admin\WelcomeTextController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\EntitasController;
 use App\Http\Controllers\EntitasDetailController;
 use App\Http\Controllers\FamilyController;
@@ -70,24 +71,25 @@ Route::get('/tanaman/qr/generate', [TanamanController::class, 'generateQrAll'])-
 Route::get('/tanaman/qr/view', [TanamanController::class, 'viewQr'])->name('tanaman.view.qr');
 // Route::get('/tanaman/detail', [TanamanController::class, 'detail'])->name('tanaman.detail');
 
-
 Route::get('/events', [EventController::class, 'index'])->name('events.index');
-Route::get('/events', [EventController::class, 'showEvents'])->name('events.index');
-
 // guest end
 
+// login route
+Route::view('/login', 'auth.login')->name('auth.login');
+Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
+Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
+
 // admin start
-Route::prefix('/admin')->group(function () {
+Route::middleware(['admin'])->prefix('/admin')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('slide_edit', [WelcomeTextController::class, 'edit'])->name('admin.welcome.edit');
     Route::post('slide_edit/{id}', [WelcomeTextController::class, 'update'])->name('admin.welcome.update');
 
     Route::prefix('/kunjungan')->group(function () {
-        Route::get('/', [KunjunganController::class, 'getAll'])->name('kunjungan.getAll'); // Route untuk melihat semua kunjungan
-        Route::get('/{id}', [KunjunganController::class, 'getById'])->name('kunjungan.getById'); // Route untuk melihat kunjungan berdasarkan ID
-        // Route::post('/', [KunjunganController::class, 'store'])->name('kunjungan.store'); // Route untuk menyimpan data kunjungan baru
-        Route::delete('/{id}', [KunjunganController::class, 'destroy'])->name('kunjungan.destroy'); // Route untuk menghapus kunjungan
-        Route::get('/setujui/{id}', [KunjunganController::class, 'setujui'])->name('kunjungan.setujui');
+        Route::get('/', [KunjunganController::class, 'getAll'])->name('kunjungan.getAll');
+        Route::get('/{id}', [KunjunganController::class, 'getById'])->name('kunjungan.getById');
+        Route::delete('/{id}', [KunjunganController::class, 'destroy'])->name('kunjungan.destroy');
+        Route::get('/approve/{id}', [KunjunganController::class, 'approve'])->name('kunjungan.approve');
     });
 
     Route::prefix('/testimoni')->name('admin.testimoni.')->group(function () {
@@ -138,4 +140,3 @@ Route::prefix('/admin')->group(function () {
 });
 // admin end
 
-Route::view('/auth/login', 'auth.login')->name('auth.login');
