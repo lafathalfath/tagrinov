@@ -135,7 +135,7 @@
 							<div class="modal-footer">
 								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
 								<!-- Tombol untuk konfirmasi setujui -->
-								<a href="{{ route('kunjungan.setujui', $kunjungan->id) }}" class="btn btn-primary">Ya, Setujui</a>
+								<a href="{{ route('kunjungan.approve', $kunjungan->id) }}" class="btn btn-primary">Ya, Setujui</a>
 							</div>
 						</div>
 					</div>
