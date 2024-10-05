@@ -1,9 +1,11 @@
 @extends('layouts.main')
 
 @section('content')
+    <!-- FullCalendar CSS -->
     <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.2/main.min.css' rel='stylesheet' />
     <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.2/theme-bootstrap.min.css' rel='stylesheet' />
 
+    <!-- FullCalendar JS -->
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.2/main.min.js'></script>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.2/theme-bootstrap.min.js'></script>
 
@@ -18,7 +20,6 @@
             background-color: #00452C;
             color: #fff;
             padding: 2rem;
-            border-radius: 0px;
             text-align: center;
             margin-bottom: 2rem;
         }
@@ -30,8 +31,8 @@
         }
 
         #calendar {
-            max-width: 1200px;
             margin: 0 auto;
+            max-width: 90%;
         }
 
         .fc-toolbar {
@@ -40,16 +41,22 @@
             padding: 1rem;
         }
 
-        .fc-daygrid-day {
+        button.fc-button {
+            background-color: #00452C !important;
+            color: #fff !important;
+            border-radius: 5px;
+            padding: 0.5rem 1rem;
+            margin-right: 0.5rem;
+        }
+
+        .fc-toolbar-title {
+            font-size: 1.5rem;
+        }
+
+        .fc-daygrid-day,
+        .fc-timegrid-slot {
             border: 1px solid #ddd;
-        }
-
-        .fc-daygrid-day:hover {
-            background-color: #e0f7f1;
-        }
-
-        .fc-daygrid-day-top {
-            font-weight: bold;
+            padding: 5px;
         }
 
         .fc-event {
@@ -61,43 +68,45 @@
         .fc-event:hover {
             background-color: #00342a;
         }
+
     </style>
 
+    <!-- Banner Section -->
     <div class="banner">
         <h1>Event Calendar</h1>
     </div>
 
+    <!-- Main Calendar -->
     <div id="calendar"></div>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');
+
+            // Main Calendar
             var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth',
+                initialView: 'dayGridMonth',  // Tampilkan kalender bulanan
                 headerToolbar: {
                     left: 'prev,next today',
                     center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                    right: ''
                 },
-                themeSystem: 'bootstrap', 
-                events: @json($event_data), 
+                themeSystem: 'bootstrap',
+                events: @json($event_data), // Data event dari backend
                 editable: true,
                 droppable: true,
-                eventColor: '#00452C', 
-                eventTextColor: '#fff', 
+                eventColor: '#00452C',
+                eventTextColor: '#fff',
                 views: {
                     dayGridMonth: {
-                        titleFormat: { year: 'numeric', month: 'long' } 
+                        titleFormat: { year: 'numeric', month: 'long' }
                     }
                 },
                 buttonText: {
                     today: 'Today',
-                    month: 'Month',
-                    week: 'Week',
-                    day: 'Day'
                 },
                 eventClick: function(info) {
-                    alert('Event: ' + info.event.title + '\nStart: ' + info.event.start.toLocaleString() + '\nEnd: ' + info.event.end.toLocaleString());
+                    alert('Event: ' + info.event.title + '\nStart: ' + info.event.start.toLocaleString() + '\nEnd: ' + (info.event.end ? info.event.end.toLocaleString() : 'N/A'));
                 }
             });
             calendar.render();
