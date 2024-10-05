@@ -53,7 +53,12 @@ class Kunjungan extends Model
         return $this->belongsTo(Pendidikan::class);
     }
     
-    public function jenis_pengunjung(): BelongsTo {
-        return $this->belongsTo(JenisPengunjung::class);
+    // public function jenis_pengunjung(): BelongsTo {
+    //     return $this->belongsTo(JenisPengunjung::class);
+    // }
+    public function jenis_pengunjung(): BelongsTo
+    {
+        return $this->belongsTo(JenisPengunjung::class, 
+        'jenis_pengunjung_id'); 
     }
 }
