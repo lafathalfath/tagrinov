@@ -70,46 +70,86 @@
         }
 
     </style>
+<div class="container">
+    <h3>Kalender Kunjungan</h3>
 
-    <!-- Banner Section -->
-    <div class="banner">
-        <h1>Event Calendar</h1>
+    <div id="calendar" style="max-width: 900px; margin: 0 auto;"></div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title" id="eventModalLabel">Detail Kunjungan</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p><strong>Nama Lengkap:</strong> <span id="modalNama"></span></p>
+                    <p><strong>Tanggal Kunjungan:</strong> <span id="modalTanggal"></span></p>
+                    <p><strong>Asal Instansi:</strong> <span id="modalAsal"></span></p>
+                    <p><strong>Jenis Pengunjung:</strong> <span id="modalJenis"></span></p>
+                    <p id="modalJumlah" style="display:none;"><strong>Jumlah Orang:</strong> <span id="modalJumlahOrang"></span></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
 
-    <!-- Main Calendar -->
-    <div id="calendar"></div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var calendarEl = document.getElementById('calendar');
-
-            // Main Calendar
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                initialView: 'dayGridMonth',  // Tampilkan kalender bulanan
-                headerToolbar: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: ''
-                },
-                themeSystem: 'bootstrap',
-                events: @json($event_data), // Data event dari backend
-                editable: true,
-                droppable: true,
-                eventColor: '#00452C',
-                eventTextColor: '#fff',
-                views: {
-                    dayGridMonth: {
-                        titleFormat: { year: 'numeric', month: 'long' }
-                    }
-                },
-                buttonText: {
-                    today: 'Today',
-                },
-                eventClick: function(info) {
-                    alert('Event: ' + info.event.title + '\nStart: ' + info.event.start.toLocaleString() + '\nEnd: ' + (info.event.end ? info.event.end.toLocaleString() : 'N/A'));
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            locale: 'id',
+            initialView: 'dayGridMonth',
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title', 
+                right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            },
+            themeSystem: 'bootstrap',
+            events: @json($event_data),
+            editable: false,
+            eventStartEditable: false,
+            droppable: false, // Nonaktifkan event dropping
+            eventColor: '#C40C0C',
+            eventTextColor: '#fff',
+            views: {
+                dayGridMonth: {
+                    titleFormat: { year: 'numeric', month: 'long' }
                 }
-            });
-            calendar.render();
+            },
+            buttonText: {
+                today: 'Hari Ini',
+                month: 'Bulan',
+                week: 'Minggu',
+                day: 'Hari'
+            },
+            eventClick: function(info) {
+                // Update modal content
+                document.getElementById('modalNama').textContent = info.event.title;
+                document.getElementById('modalAsal').textContent = info.event.extendedProps.asal_instansi;
+                document.getElementById('modalJenis').textContent = info.event.extendedProps.jenis_pengunjung;
+                
+                if (info.event.extendedProps.jumlah_orang) {
+                    document.getElementById('modalJumlah').style.display = 'block';
+                    document.getElementById('modalJumlahOrang').textContent = info.event.extendedProps.jumlah_orang;
+                } else {
+                    document.getElementById('modalJumlah').style.display = 'none';
+                }
+
+                document.getElementById('modalTanggal').textContent = info.event.start.toLocaleDateString('id-ID', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+                
+                // Show the modal
+                var myModal = new bootstrap.Modal(document.getElementById('eventModal'));
+                myModal.show();
+            }
         });
-    </script>
+        calendar.render();
+    });
+</script>
+
+
 @endsection
