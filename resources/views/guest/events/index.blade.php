@@ -1,9 +1,11 @@
 @extends('layouts.main')
 
 @section('content')
+    <!-- FullCalendar CSS -->
     <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.2/main.min.css' rel='stylesheet' />
     <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.2/theme-bootstrap.min.css' rel='stylesheet' />
 
+    <!-- FullCalendar JS -->
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.2/main.min.js'></script>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.2/theme-bootstrap.min.js'></script>
 
@@ -18,7 +20,6 @@
             background-color: #00452C;
             color: #fff;
             padding: 2rem;
-            border-radius: 0px;
             text-align: center;
             margin-bottom: 2rem;
         }
@@ -30,8 +31,8 @@
         }
 
         #calendar {
-            max-width: 1200px;
             margin: 0 auto;
+            max-width: 90%;
         }
 
         .fc-toolbar {
@@ -40,16 +41,22 @@
             padding: 1rem;
         }
 
-        .fc-daygrid-day {
+        button.fc-button {
+            background-color: #00452C !important;
+            color: #fff !important;
+            border-radius: 5px;
+            padding: 0.5rem 1rem;
+            margin-right: 0.5rem;
+        }
+
+        .fc-toolbar-title {
+            font-size: 1.5rem;
+        }
+
+        .fc-daygrid-day,
+        .fc-timegrid-slot {
             border: 1px solid #ddd;
-        }
-
-        .fc-daygrid-day:hover {
-            background-color: #e0f7f1;
-        }
-
-        .fc-daygrid-day-top {
-            font-weight: bold;
+            padding: 5px;
         }
 
         .fc-event {
@@ -61,6 +68,7 @@
         .fc-event:hover {
             background-color: #00342a;
         }
+
     </style>
 <div class="container">
     <h3>Kalender Kunjungan</h3>
