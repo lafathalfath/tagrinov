@@ -10,7 +10,9 @@ use App\Models\Pekerjaan;
 use App\Models\Pendidikan;
 use App\Models\PilihanPertanian;
 use App\Models\Usia;
+use Illuminate\Validation\Rule;
 use Illuminate\Contracts\Pipeline\Hub;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 
@@ -56,10 +58,16 @@ class KunjunganController extends Controller
             'pendidikan_id' => 'required|string',
             'jenis_pengunjung_id' => 'required|string',
             'jumlah_orang' => 'nullable|integer|min:2',
-            'tanggal_kunjungan' => 'required|date',
+            'tanggal_kunjungan' => [
+                'required',
+                'date',
+                Rule::unique('kunjungan', 'tanggal_kunjungan') 
+            ],
             'tujuan_kunjungan' => 'required|string',
             'url_foto_ktp' => 'required|image|mimes:jpeg,png,jpg|max:2048',
             'url_foto_selfie' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+        ], [
+            'tanggal_kunjungan.unique' => 'Tanggal kunjungan ini sudah terdaftar, silakan pilih tanggal lain.'
         ]);
 
         // Inisialisasi variabel untuk menyimpan path foto
