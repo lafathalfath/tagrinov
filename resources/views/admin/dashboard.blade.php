@@ -65,50 +65,22 @@
     </div>
 
 </div>
-<div class="container mt-5">
-    <h3>Grafik Kunjungan Bulanan</h3>
-    <canvas id="monthlyVisitsChart" width="400" height="200"></canvas>
+<div class="col-md-6">
+    <canvas id="kunjunganChart"></canvas>
 </div>
+<!-- Script untuk Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
-    var ctx = document.getElementById('monthlyVisitsChart').getContext('2d');
-    var monthlyVisitsChart = new Chart(ctx, {
-        type: 'bar', // Tipe grafik bisa bar, line, pie, dll.
+    var ctx = document.getElementById('kunjunganChart').getContext('2d');
+    var kunjunganChart = new Chart(ctx, {
+        type: 'bar', // Bisa diganti dengan 'line' jika ingin chart line
         data: {
-            labels: [
-                'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 
-                'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
-            ],
+            labels: @json(array_values($bulanArray)), // Label bulan hingga bulan saat ini
             datasets: [{
-                label: 'Total Kunjungan',
-                data: @json(array_values($months)),
-                backgroundColor: [
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(75, 192, 192, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(75, 192, 192, 1)'
-                ],
+                label: 'Jumlah Kunjungan',
+                data: @json(array_values($kunjunganPerBulan->toArray())), // Data jumlah kunjungan per bulan
+                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                borderColor: 'rgba(54, 162, 235, 1)',
                 borderWidth: 1
             }]
         },
@@ -121,6 +93,5 @@
         }
     });
 </script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 @endsection

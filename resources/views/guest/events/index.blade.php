@@ -63,9 +63,10 @@
         }
     </style>
 <div class="container">
+    
     <h3>Kalender Kunjungan</h3>
 
-    <div id="calendar" style="max-width: 900px; margin: 0 auto;"></div>
+    <div id="calendar"></div>
 
     <!-- Modal -->
     <div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
