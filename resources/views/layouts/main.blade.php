@@ -54,6 +54,13 @@
     .navbar-dark .navbar-brand {
         color: white;
     }
+    .navbar-toggler {
+        border-color: #00573d; /* Warna border hijau untuk tombol toggle */
+    }
+
+    .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(0, 87, 61, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e"); /* Ikon toggle warna hijau */
+    }
     footer {
     color: white;
     padding: 30px 0px 20px 0px;
@@ -130,12 +137,12 @@
                     <li class="nav-item {{ request()->url()==route('tanaman.index')?'active':'' }}">
                         <a class="nav-link" href="{{ route('tanaman.index') }}">Koleksi Tanaman</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/kunjungan">Permohonan Kunjungan</a>
+                    <li class="nav-item {{ request()->url()==route('guest.permohonan.kunjungan.index')?'active':'' }}">
+                        <a class="nav-link" href="{{ route('guest.permohonan.kunjungan.index') }}">Permohonan Kunjungan</a>
                     </li>
-                    <li class="nav-item {{ request()->url()==route('stokBenih.index')?'active':'' }}">
+                    {{-- <li class="nav-item {{ request()->url()==route('stokBenih.index')?'active':'' }}">
                         <a class="nav-link" href="{{ route('stokBenih.index') }}">Stok Benih</a>
-                    </li>
+                    </li> --}}
                     <li class="nav-item {{ request()->url()==route('events.index')?'active':'' }}">
                         <a class="nav-link" a href="{{ route('events.index') }}">Event</a>
                     </li>

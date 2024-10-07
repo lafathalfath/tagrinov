@@ -3,21 +3,17 @@
 <style>
     .image-detail {
         display: flex;
-        justify-content: center;
-        align-items: flex-start;
-        gap: 20px;
+        flex-wrap: wrap;
+        justify-content: space-between;
     }
     .image-detail img {
-        width: 50%;
-        height: 450px;
+        width: 100%;
+        height: auto;
         object-fit: cover;
         border-radius: 8px;
     }
     .detail-text {
-        max-width: 50%;
-    }
-    .detail-text h2 {
-        margin-top: 0;
+        text-align: justify;
     }
     .qr-code-container {
         display: flex;
@@ -37,27 +33,31 @@
     }
 </style>
     <div class="container">
-        <h3 class="mb-4"> {{ $tanaman->nama }}
-
-            <button type="button" class="btn btn-outline-light mr-2" data-bs-toggle="modal" data-bs-target="#qrCodeModal">
-                Lihat QR <i class="fa-solid fa-qrcode"></i>
+        <h3 class="mb-4 d-flex justify-content-between align-items-center"> 
+            {{ $tanaman->nama }}
+            <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#qrCodeModal">
+                <i class="fa-solid fa-qrcode"></i> Lihat QR 
             </button>
         </h3>
-        <div class="image-detail">
-            {{-- <img src="{{ asset('images/tumis.jpg') }}" alt="Kangkung"> --}}
-            @if ($tanaman->url_gambar)
-                <img src="{{ $tanaman->url_gambar }}" alt="{{ $tanaman->url_gambar }}">
-            @else
-                <img src="{{ asset('assets/image/no_image.png') }}" alt="No image available">
-            @endif
-            <div class="detail-text">
+    
+        <div class="row image-detail">
+            <div class="col-lg-5 col-md-6 mb-4">
+                @if ($tanaman->url_gambar)
+                    <img src="{{ $tanaman->url_gambar }}" class="img-fluid" alt="{{ $tanaman->url_gambar }}">
+                @else
+                    <img src="{{ asset('assets/image/no_image.png') }}" class="img-fluid" alt="No image available">
+                @endif
+            </div>
+            
+            <div class="col-lg-7 col-md-6">
+                <div class="detail-text">
                 <p><strong>Nama Tanaman:</strong> {{ $tanaman->nama }}</p>
                 <p><strong>Nama Ilmiah:</strong> {{ $tanaman->nama_latin }}</p>
                 <p><strong>Nama Daerah:</strong> {{ $tanaman->nama_daerah }}</p>
+                <p><strong>Deskripsi:</strong> {{ $tanaman->entitas_detail->deskripsi }}</p>
                 @if ($tanaman->entitas_detail->varietas)
                     <p><strong>Varietas:</strong> {{ $tanaman->entitas_detail->varietas }}</p>
                 @endif
-                <p><strong>Deskripsi:</strong> {{ $tanaman->entitas_detail->deskripsi }}</p>
                 @if ($tanaman->entitas_detail->manfaat)
                     <p><strong>Manfaat:</strong> {{ $tanaman->entitas_detail->manfaat }}</p>
                 @endif
