@@ -48,13 +48,14 @@
     /* Membuat tombol lebih lebar */
     .btn-group-custom {
         display: flex;
-        gap: 10px;
+        flex-wrap: wrap; /* Memastikan elemen membungkus jika tidak cukup lebar */
+        gap: 0.5rem;
     }
 
     .btn-group-custom .btn {
         flex: 1; /* Membuat tombol mengambil ruang yang tersedia */
         min-width: 150px;
-        padding: 10px;
+        padding: 8px;
     }
 
     /* Styling untuk Pilihan Pertanian */
@@ -65,6 +66,12 @@
 
     #pilihanPertanianContainer .form-check {
         margin-bottom: 0.5rem;
+    }
+    @media (max-width: 768px) {
+        .btn-group-custom label {
+            flex: 1 1 100%; /* Membuat tombol memenuhi lebar layar di mobile */
+            text-align: center;
+        }
     }
 </style>
 
@@ -100,8 +107,8 @@
 
         <!-- No HP -->
         <div class="mb-3">
-            <label for="no_hp" class="form-label">Nomor HP / WhatsApp <small class="text-danger">(yang dapat dihubungi)</small></label>
-            <input type="tel" class="form-control" id="no_hp" name="no_hp" placeholder="Nomor HP / WhatsApp" required>
+            <label for="no_hp" class="form-label">Nomor HP atau WhatsApp</label>
+            <input type="tel" class="form-control" id="no_hp" name="no_hp" placeholder="Nomor HP atau WhatsApp Aktif" required>
         </div>
 
         <!-- Usia -->
@@ -179,7 +186,7 @@
         <!-- Jenis Pengunjung (tombol perorangan dan perkelompok) -->
         <div class="mb-3">
             <label class="form-label">Jenis Pengunjung</label>
-            <div class="btn-group-custom mb-3" role="group" aria-label="Jenis Pengunjung">
+            <div class="btn-group-custom mb-3 col-12" role="group" aria-label="Jenis Pengunjung">
                 @foreach($jenis_pengunjung as $item)
                     <input type="radio" class="btn-check" id="jenis_pengunjung{{ $item->id }}" name="jenis_pengunjung_id" value="{{ $item->id }}" required>
                     <label class="btn btn-outline-success" for="jenis_pengunjung{{ $item->id }}">{{ $item->nama }}</label>

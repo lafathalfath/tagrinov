@@ -81,7 +81,7 @@ Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
 
 // admin start
 Route::middleware(['admin'])->prefix('/admin')->group(function () {
-    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('slide_edit', [WelcomeTextController::class, 'edit'])->name('admin.welcome.edit');
     Route::post('slide_edit/{id}', [WelcomeTextController::class, 'update'])->name('admin.welcome.update');
 

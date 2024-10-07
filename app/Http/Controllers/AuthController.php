@@ -69,7 +69,7 @@ class AuthController extends Controller
         // Melakukan login
         Auth::login($user);
 
-        return redirect('/admin/dashboard'); // Redirect ke dashboard setelah login
+        return redirect('/admin'); // Redirect ke dashboard setelah login
     }
 
     public function logout()

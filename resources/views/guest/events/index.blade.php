@@ -32,7 +32,6 @@
 
         #calendar {
             margin: 0 auto;
-            max-width: 90%;
         }
 
         .fc-toolbar {
@@ -68,12 +67,36 @@
         .fc-event:hover {
             background-color: #00342a;
         }
+        .fc-button {
+        background-color: #fff !important;
+        color: #000 !important;
+        border: 1px solid #ddd;
+    }
+
+    .fc-button:hover {
+        background-color: #f1f1f1 !important;
+        color: #000 !important;
+    }
+            /* Sesuaikan ukuran elemen di mobile */
+    @media (max-width: 768px) {
+        h3 {
+            font-size: 1.2rem;
+        }
+        #calendar {
+            font-size: 0.8rem; /* Sesuaikan ukuran font pada tampilan kalender */
+        }
+        .fc-toolbar-title {
+            font-size: 1rem; /* Ukuran title pada mobile */
+        }
+        .fc-button {
+            font-size: 0.75rem; /* Sesuaikan ukuran tombol */
+            padding: 0.25rem 0.5rem;
+        }
+    }
 
     </style>
 <div class="container">
-    
-    <h3>Kalender Kunjungan</h3>
-
+    <div style="margin-top: 100px;">
     <div id="calendar"></div>
 
     <!-- Modal -->
@@ -97,6 +120,7 @@
             </div>
         </div>
     </div>
+    </div>
 </div>
 
 <script>
@@ -106,9 +130,9 @@
             locale: 'id',
             initialView: 'dayGridMonth',
             headerToolbar: {
-                left: 'prev,next today',
+                left: 'prev,next',
                 center: 'title', 
-                right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                right: 'today'
             },
             themeSystem: 'bootstrap',
             events: @json($event_data),
@@ -146,6 +170,22 @@
                 // Show the modal
                 var myModal = new bootstrap.Modal(document.getElementById('eventModal'));
                 myModal.show();
+            },
+            // Sesuaikan ukuran tombol saat layar di-resize
+            windowResize: function(view) {
+                if (window.innerWidth < 768) {
+                    calendar.setOption('headerToolbar', {
+                        left: 'prev,next',
+                        center: 'title',
+                        right: 'today'
+                    });
+                } else {
+                    calendar.setOption('headerToolbar', {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                    });
+                }
             }
         });
         calendar.render();
