@@ -4,6 +4,7 @@
     const title = document.getElementsByTagName('title')[0];
     title.innerHTML += ' | Dashboard';
 </script>
+
 <div class="container">
     <h2 class="mb-4">Dashboard</h2>
     <div class="row">
@@ -47,9 +48,7 @@
                 <div class="card text-white bg-primary mb-3">
                     <div class="card-body">
                         <h6 class="card-title">Total Ulasan</h6>
-                        <p class="card-text" style="font-size: 30px; font-weight: bold;">
-                            {{ $totaltestimoni }}
-                        </p>
+                        <p class="card-text" style="font-size: 30px; font-weight: bold;">{{ $totaltestimoni }}</p>
                     </div>
                     <div class="card-footer">
                         <span>Lihat Testimoni 
@@ -57,29 +56,44 @@
                                 <span class="badge rounded-pill bg-warning">{{ $totaltestimonipending }}</span>
                             @endif
                         </span>
-                        </span>
                     </div>
                 </div>
             </a>
         </div>
     </div>
+</div>
 
+<div class="container mt-4">
+    
+    <div class="row">
+        <div class="col-md-6">
+            <h5 class="text-center">Kunjungan per Bulan</h5>
+            <canvas id="kunjunganChart" width="100%" height="100px"></canvas>
+        </div>
+
+        <div class="col-md-6">
+            <h5 class="text-center">Distribusi Jenis Tanaman</h5>
+            <canvas id="jenisTanamanChart" width="100%" height="100px"></canvas>
+        </div>
+    </div>
 </div>
-<div class="col-md-6">
-    <canvas id="kunjunganChart"></canvas>
-</div>
-<!-- Script untuk Chart.js -->
+
+<!-- Tambahkan Chart.js dari CDN -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- Kode untuk Bar Chart Kunjungan -->
 <script>
-    var ctx = document.getElementById('kunjunganChart').getContext('2d');
-    var kunjunganChart = new Chart(ctx, {
-        type: 'bar', // Bisa diganti dengan 'line' jika ingin chart line
+    var ctxKunjungan = document.getElementById('kunjunganChart').getContext('2d');
+    var kunjunganPerBulan = @json(array_values($kunjunganPerBulanLengkap));
+
+    var kunjunganChart = new Chart(ctxKunjungan, {
+        type: 'bar',
         data: {
-            labels: @json(array_values($bulanArray)), // Label bulan hingga bulan saat ini
+            labels: ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'],
             datasets: [{
                 label: 'Jumlah Kunjungan',
-                data: @json(array_values($kunjunganPerBulan->toArray())), // Data jumlah kunjungan per bulan
-                backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                data: kunjunganPerBulan,
+                backgroundColor: 'rgba(54, 162, 235, 0.6)',
                 borderColor: 'rgba(54, 162, 235, 1)',
                 borderWidth: 1
             }]
@@ -87,7 +101,46 @@
         options: {
             scales: {
                 y: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    max: 20
+                }
+            }
+        }
+    });
+</script>
+
+<!-- Kode untuk Pie Chart Jenis Tanaman -->
+<script>
+    var ctxJenis = document.getElementById('jenisTanamanChart').getContext('2d');
+    var jenisTanamanLabels = @json(array_keys($jenisTanamanData));
+    var jenisTanamanValues = @json(array_values($jenisTanamanData));
+
+    var jenisTanamanChart = new Chart(ctxJenis, {
+        type: 'pie',
+        data: {
+            labels: jenisTanamanLabels,
+            datasets: [{
+                label: 'Jumlah Jenis Tanaman',
+                data: jenisTanamanValues,
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.6)',
+                    'rgba(54, 162, 235, 0.6)',
+                    'rgba(255, 206, 86, 0.6)',
+                    'rgba(75, 192, 192, 0.6)',
+                    'rgba(153, 102, 255, 0.6)',
+                    'rgba(255, 159, 64, 0.6)'
+                ],
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                title: {
+                    display: true,
+                    text: 'Distribusi Jenis Tanaman'
                 }
             }
         }

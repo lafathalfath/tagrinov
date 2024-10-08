@@ -214,13 +214,17 @@
 
         <!-- Unggah Foto KTP -->
         <div class="file-input-container">
-            <label for="fotoKTP" class="form-label">Unggah Foto KTP <small class="text-danger">(PNG, JPEG, JPG - Max 2MB)</small></label>
+            <label for="fotoKTP" class="form-label">Unggah Foto KTP </label> 
+            <div class="small text-danger">* File diizinkan: JPG, JPEG, PNG</div>
+            <div class="small text-danger">* Ukuran maksimal: 2MB</div>
             <input type="file" class="form-control" id="fotoKTP" name="url_foto_ktp" accept="image/*" required>
         </div>
-
+        
         <!-- Unggah Foto Selfie -->
         <div class="file-input-container">
-            <label for="fotoSelfie" class="form-label">Unggah Foto Selfie <small class="text-danger">(PNG, JPEG, JPG - Max 2MB)</small></label>
+            <label for="fotoSelfie" class="form-label">Unggah Foto Selfie</label>
+            <div class="small text-danger">* File diizinkan: JPG, JPEG, PNG</div>
+            <div class="small text-danger">* Ukuran maksimal: 2MB</div>
             <input type="file" class="form-control" id="fotoSelfie" name="url_foto_selfie" accept="image/*" required>
         </div>
 

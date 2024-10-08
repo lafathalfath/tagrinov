@@ -137,12 +137,7 @@
                 </li>
                 <li><a href="{{ route('kunjungan.getAll') }}" class="{{ request()->url() == route('kunjungan.getAll') ? 'active' : '' }}">Permohonan Kunjungan</a></li>
                 <li>
-                <a href="{{ route('admin.testimoni.index') }}" class="{{ request()->is('admin/testimoni') ? 'active' : '' }}">
-                    Testimoni 
-                    @if($pendingCount > 0)
-                        <span class="badge bg-warning">{{ $pendingCount }}</span>
-                    @endif
-                </a>
+                <a href="{{ route('admin.testimoni.index') }}" class="{{ request()->is('admin/testimoni') ? 'active' : '' }}">Testimoni</a>
               </li>
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
