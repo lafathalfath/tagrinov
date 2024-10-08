@@ -15,6 +15,27 @@
     .detail-text {
         text-align: justify;
     }
+    .detail-text p {
+        font-family: sans-serif;
+    }
+    .font-size-button {
+            position: fixed;
+            right: 20px; /* Jarak dari kanan */
+            bottom: 20px; /* Jarak dari bawah */
+            display: flex;
+            flex-direction: column;
+            gap: 10px; /* Jarak antar tombol */
+        }
+
+        .font-size-button button {
+            background-color: #007b83; /* Warna tombol */
+            color: white; /* Warna teks tombol */
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px; /* Ukuran font tombol */
+        }
     .qr-code-container {
         display: flex;
         flex-direction: column;
@@ -50,7 +71,7 @@
             </div>
             
             <div class="col-lg-7 col-md-6">
-                <div class="detail-text">
+                <div class="detail-text" id="detailText">
                 <p><strong>Nama Tanaman:</strong> {{ $tanaman->nama }}</p>
                 <p><strong>Nama Ilmiah:</strong> {{ $tanaman->nama_latin }}</p>
                 <p><strong>Nama Daerah:</strong> {{ $tanaman->nama_daerah }}</p>
@@ -83,6 +104,10 @@
                     <li>Membantu menjaga kesehatan pencernaan</li>
                 </ul> --}}
                 {{-- <p><strong>Cara Menanam:</strong> Kangkung bisa ditanam dengan cara menyemai benih langsung di tanah yang subur dan cukup air. Perawatan yang baik akan menghasilkan tanaman kangkung yang subur dan siap panen dalam beberapa minggu.</p> --}}
+            </div>
+            <div class="font-size-button">
+                <button id="increaseFont">A+</button>
+                <button id="decreaseFont">A-</button>
             </div>
         </div>
         <!-- Modal -->
@@ -144,5 +169,18 @@
             tooltip.hide();
         }, 2000);
     }
+    
+    const detailText = document.getElementById('detailText');
+        let fontSize = 16; // Ukuran font awal
+
+        document.getElementById('increaseFont').addEventListener('click', function() {
+            fontSize += 2; // Tambah 2px
+            detailText.style.fontSize = fontSize + 'px'; // Terapkan ukuran font baru
+        });
+
+        document.getElementById('decreaseFont').addEventListener('click', function() {
+            fontSize = Math.max(12, fontSize - 2); // Kurangi 2px, minimum 12px
+            detailText.style.fontSize = fontSize + 'px'; // Terapkan ukuran font baru
+        });
 </script>
 @endsection

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Jenis;
 use App\Models\Entitas;
 use App\Models\Kunjungan;
 use App\Models\Feedback;
@@ -19,21 +20,25 @@ class AdminController extends Controller
         $totaltestimoni = Feedback::where('status', 'Disetujui')->count();
         $totaltestimonipending = Feedback::where('status', 'pending')->count();
 
-        // Mendapatkan bulan saat ini
-        $currentMonth = now()->month;
-
-        // Mengambil jumlah kunjungan dari awal tahun hingga bulan ini
+        // Mengambil data kunjungan per bulan
         $kunjunganPerBulan = Kunjungan::selectRaw('MONTH(tanggal_kunjungan) as bulan, COUNT(*) as jumlah')
-            ->whereYear('tanggal_kunjungan', now()->year)
-            ->whereMonth('tanggal_kunjungan', '<=', $currentMonth) // Membatasi hingga bulan ini
+            ->whereYear('tanggal_kunjungan', date('Y')) // Filter tahun sekarang
             ->groupBy('bulan')
-            ->get()
-            ->pluck('jumlah', 'bulan');
+            ->pluck('jumlah', 'bulan')->toArray();
 
-        // Membuat array bulan dari Januari sampai bulan saat ini
-        $bulanArray = [];
-        for ($i = 1; $i <= $currentMonth; $i++) {
-            $bulanArray[$i] = date('F', mktime(0, 0, 0, $i, 1)); // Mengambil nama bulan dalam bahasa Inggris
+        // Lengkapi bulan yang kosong dengan nilai 0
+        $kunjunganPerBulanLengkap = [];
+        for ($i = 1; $i <= 12; $i++) {
+            $kunjunganPerBulanLengkap[$i] = $kunjunganPerBulan[$i] ?? 0;
+        }
+
+        // Mengambil data jenis tanaman
+        $jenis = Jenis::all();
+        $jenisTanamanData = [];
+                
+        foreach ($jenis as $j) {
+        // Menghitung jumlah entitas yang terkait dengan jenis ini
+        $jenisTanamanData[$j->nama] = $j->entitas->count();
         }
 
         return view('admin.dashboard', compact(
@@ -41,9 +46,9 @@ class AdminController extends Controller
             'totalkunjunganpending', 
             'totalKoleksiTanaman',
             'totaltestimoni',
-            'totaltestimonipending', 
-            'kunjunganPerBulan',
-            'bulanArray'
+            'totaltestimonipending',
+            'kunjunganPerBulanLengkap' ,
+            'jenisTanamanData'
          ));
     }
 }
