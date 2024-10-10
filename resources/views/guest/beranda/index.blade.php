@@ -22,11 +22,13 @@
         .scroll-btn i {
             font-size: 1.5rem;
         }
+
         #heroCarousel .carousel-item img {
             width: 100%;
-            height: 700px; 
+            height: 700px;
             object-fit: cover;
         }
+
         .carousel-caption {
             text-align: left;
             left: 10%;
@@ -40,82 +42,119 @@
             font-weight: 700;
         }
 
-        .text-green {
-            color: #28a745;
-        }
-
         .hero-title p {
             font-size: 1.2rem;
             margin-top: 10px;
         }
 
-        #virtual img {
-            width: 100%;
-            height: auto;
-        }
-
-        #denah {
-            position: relative;
-        }
-
-        .location-icon {
-            position: absolute;
-            width: 40px;
-            height: 40px;
-            cursor: pointer;
-        }
-
-        .location-icon i {
-            font-size: 2rem;
-            color: red;
-        }
-
-        #location-detail {
-            background-color: rgba(255, 255, 255, 0.9);
-            padding: 10px;
-            border-radius: 5px;
-            margin-top: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .whatsapp-button {
+        .popup-overlay {
+            display: none;
             position: fixed;
-            bottom: 20px;
-            right: 20px;
-            border-radius: 50%;
-            padding: 10px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
         }
 
-        .whatsapp-button img {
-            width: 50px;
-            height: 50px;
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #ffffff;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+            max-width: 90%;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            opacity: 0;
         }
 
-        .modal-header {
-            background-color: #00452C;
-            color: white;
+        .popup.show {
+            display: block;
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
         }
 
-        .modal-body {
+        .popup h4 {
+            margin: 0;
+            color: #00452C;
+            font-size: 1.5rem;
+            text-align: center;
+        }
+
+        .popup p {
             font-size: 1rem;
             color: #333;
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        .popup button {
+            display: inline-block;
+            margin: 20px auto 0;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            align-items: center;  
+            transition: background-color 0.3s ease;
+        }
+
+        .popup button:hover {
+            background-color: #00452C;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
         }
 
         .highlight-area {
             position: absolute;
-            border: 2px solid white; /* Ganti warna border menjadi putih */
+            border: 2px solid white; 
             opacity: 1;
-            transition: all 0.3s ease;
-            background-color: rgba(255, 255, 255, 0.1); /* Ganti background menjadi putih dengan opasitas */
+            transition: transform 0.3s ease, background-color 0.3s ease; 
+            background-color: rgba(255, 255, 255, 0.1); 
         }
 
         .highlight-area:hover {
-            opacity: 1;
-            background-color: rgba(255, 255, 255, 0.4); /* Ganti background hover menjadi putih dengan opasitas */
+            transform: scale(1.1); 
+            background-color: rgba(255, 255, 255, 0.6);
+        }
+
+        .highlight-area.active {
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.7); 
+        }
+
+        .location-icon {
+            position: absolute;
+            width: 85px;
+            height: 85px;
+            cursor: pointer;
+            color: #FFFFFF; 
+            transition: transform 0.3s ease;
+        }
+
+        .location-icon:hover {
+            transform: scale(1.2) rotate(15deg);
         }
     </style>
 
+    <!-- Hero -->
     <section id="hero" class="px-0">
         <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
             <div class="carousel-inner">
@@ -151,92 +190,111 @@
         </div>
     </section>
 
-    <section id="denah" class="py-5">
+    <!-- Denah -->
+    <section id="denah" class="py-5" data-aos="fade-up">
         <div class="container text-center">
             <h2>Denah Taman</h2>
-            <div class="position-relative">
-                <img src="{{ asset('assets/image/denahTaman.jpg') }}" class="img-fluid mt-4" alt="Denah Taman">
-                <div class="highlight-area" style="top: 15%; left: 56%; width: 345px; height: 200px;"></div>
-                <div class="highlight-area" style="top: 10%; left: 88%; width: 133px; height: 280px;"></div>
-                <div class="highlight-area" style="top: 58%; left: 85%; width: 170px; height: 120px;"></div>
-                <div class="highlight-area" style="top: 55%; left: 69%; width: 170px; height: 140px;"></div>
-                <div class="highlight-area" style="top: 55%; left: 61%; width: 85px; height: 100px;"></div>
-                <div class="highlight-area" style="top: 53%; left: 50%; width: 130px; height: 130px;"></div>
-                <div class="highlight-area" style="top: 15%; left: 15%; width: 435px; height: 375px;"></div>
-                <div class="highlight-area" style="top: 78%; left: 0%; width: 1120px; height: 90px;"></div>
-                <div class="highlight-area" style="top: 26%; left: 0%; width: 150px; height: 275px;"></div>
-                <div class="location-icon" style="top: 20%; left: 57%;" data-detail="<b>Area hortikultura</b><br>Lorem ipsum dolor sit amet." data-audio="{{ asset('assets/sound/vo_ikon1.mp3') }}">
-                    <i class="bi bi-geo-alt-fill"></i>
+            <div class="position-relative" id="panzoom-container">
+                <div id="panzoom" style="overflow: hidden;">
+                    <img src="{{ asset('assets/image/denahTaman.jpg') }}" class="img-fluid mt-4" alt="Denah Taman">
                 </div>
-                <div class="location-icon" style="top: 30%; left: 5%;" data-detail="<b>Kafe</b><br>Lorem ipsum dolor sit amet." data-audio="{{ asset('assets/sound/sound2.mp3') }}">
-                    <i class="bi bi-geo-alt-fill"></i>
+
+                <div class="highlight-area" style="top: 15%; left: 56%; width: 345px; height: 200px;">
+                    <div class="location-icon" data-title="Gap Tanaman Sayuran" data-detail="Gap tanaman sayuran adalah area yang dirancang khusus untuk menanam berbagai jenis sayuran segar. Di sini, pengunjung dapat melihat langsung proses pertumbuhan sayuran dari awal hingga siap panen. Gap ini dilengkapi dengan informasi tentang teknik pertanian modern yang digunakan untuk meningkatkan hasil panen dan menjaga kualitas tanaman.">
+                        <i class="bi bi-geo-alt-fill"></i>
+                    </div>
+                </div>
+
+                <!-- Highlight Area 2 -->
+                <div class="highlight-area" style="top: 10%; left: 88%; width: 133px; height: 280px;">
+                   <div class="location-icon" data-title="Cafe Tagrinov" data-detail="Cafe Tagrinov menawarkan pengalaman bersantai dengan nuansa alam yang segar. Menyajikan berbagai pilihan makanan dan minuman, cafe ini mengutamakan bahan-bahan segar yang dihasilkan langsung dari taman. Pengunjung dapat menikmati hidangan sambil menikmati pemandangan indah taman, menciptakan suasana yang tenang dan menyenangkan.">
+                        <i class="bi bi-geo-alt-fill"></i>
+                    </div>
+                </div>
+
+                <!-- Highlight Area 3 -->
+                <div class="highlight-area" style="top: 58%; left: 85%; width: 170px; height: 120px;">
+                    <div class="location-icon" style="top: 50%; left: 50%;" data-title="Sistem Irigasi Panel Surya" data-detail="Sistem irigasi panel surya merupakan inovasi teknologi yang memanfaatkan energi terbarukan untuk mengairi tanaman. Sistem ini dirancang efisien untuk memastikan tanaman mendapatkan cukup air tanpa tergantung pada sumber energi fosil. Pengunjung dapat belajar tentang cara kerja sistem ini dan manfaatnya untuk keberlanjutan pertanian.">
+                        <i class="bi bi-geo-alt-fill"></i>
+                    </div>
+                </div>
+
+                <!-- Highlight Area 4 -->
+                <div class="highlight-area" style="top: 55%; left: 69%; width: 170px; height: 140px;">
+                    <div class="location-icon" style="top: 50%; left: 50%;" data-title="Kopi" data-detail="<Area kopi di Taman Agro Inovasi menampilkan berbagai jenis kopi yang ditanam dan diolah di lingkungan yang ramah lingkungan. Pengunjung dapat menikmati secangkir kopi segar sambil mempelajari proses pengolahan biji kopi dari pemetikan hingga penyajian. Area ini juga menjadi tempat yang ideal untuk relaksasi dan interaksi sosial.">
+                        <i class="bi bi-geo-alt-fill"></i>
+                    </div>
+                </div>
+
+                <!-- Highlight Area 5 -->
+                <div class="highlight-area" style="top: 55%; left: 61%; width: 85px; height: 100px;">
+                    <div class="location-icon" style="top: 40%; left: 5%;" data-title="Sayuran" data-detail="Bagian ini menampilkan beragam sayuran organik yang ditanam dengan teknik pertanian berkelanjutan. Pengunjung dapat mengenali berbagai jenis sayuran, belajar tentang manfaatnya untuk kesehatan, dan memahami pentingnya pertanian organik dalam menjaga ekosistem. Sayuran segar ini juga tersedia untuk dibeli di lokasi.">
+                        <i class="bi bi-geo-alt-fill"></i>
+                    </div>
+                </div>
+
+                <!-- Highlight Area 6 -->
+                <div class="highlight-area" style="top: 53%; left: 50%; width: 130px; height: 130px;">
+                    <div class="location-icon" style="top: 30%; left: 20%;" data-title="Gazebo" data-detail="Gazebo pertemuan adalah tempat yang ideal untuk berdiskusi dan berinteraksi dengan pengunjung lain. Dikelilingi oleh keindahan alam, gazebo ini menyediakan tempat duduk yang nyaman untuk mengadakan pertemuan, seminar, atau acara sosial. Suasana tenang membuatnya sempurna untuk berkumpul dan berbagi ide.">
+                        <i class="bi bi-geo-alt-fill"></i>
+                    </div>
+                </div>
+
+                <!-- Highlight Area 7 -->
+                <div class="highlight-area" style="top: 15%; left: 15%; width: 435px; height: 375px;">
+                    <div class="location-icon" style="top: 50%; left: 50%;" data-title="Biofarmaka, Sayuran" data-detail="Area biofarmaka menampilkan tanaman yang memiliki khasiat obat serta sayuran yang tumbuh berdampingan. Di sini, pengunjung dapat mempelajari manfaat kesehatan dari tanaman obat dan cara penggunaannya dalam pengobatan alami. Informasi tentang teknik budidaya yang ramah lingkungan juga tersedia untuk meningkatkan kesadaran akan pentingnya keanekaragaman hayati.">
+                        <i class="bi bi-geo-alt-fill"></i>
+                    </div>
+                </div>
+
+                <!-- Highlight Area 8 -->
+                <div class="highlight-area" style="top: 78%; left: 0%; width: 1120px; height: 90px;">
+                    <div class="location-icon" style="top: 50%; left: 50%;" data-title="Rumah Benih" data-detail="Rumah benih adalah fasilitas yang menyimpan berbagai jenis benih unggul untuk pertanian. Di sini, pengunjung dapat belajar tentang pentingnya pemilihan benih berkualitas dan teknik penyimpanan yang tepat. Selain itu, rumah benih ini juga menjadi pusat edukasi tentang budidaya tanaman dan inovasi dalam pertanian.">
+                        <i class="bi bi-geo-alt-fill"></i>
+                    </div>
+                </div>
+
+                <!-- Highlight Area 9 -->
+                <div class="highlight-area" style="top: 26%; left: 0%; width: 150px; height: 275px;">
+                    <div class="location-icon" style="top: 50%; left: 50%;" data-title="Hidroponik" data-detail="Area hidroponik menawarkan metode bercocok tanam tanpa tanah, menggunakan larutan nutrisi untuk memberikan makanan kepada tanaman. Pengunjung dapat melihat berbagai sistem hidroponik yang diterapkan, serta mempelajari kelebihan dan cara perawatannya. Ini adalah contoh nyata dari teknologi pertanian modern yang berpotensi meningkatkan efisiensi produksi tanaman.">
+                        <i class="bi bi-geo-alt-fill"></i>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    
-
-    <a href="https://wa.me/6285218339006" class="whatsapp-button" target="_blank">
-        <img src="{{ asset('assets/icons/whatsapp.png') }}" alt="WhatsApp">
-    </a>
-
-    <div class="modal fade" id="locationModal" tabindex="-1" aria-labelledby="locationModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="locationModalLabel">Detail Lokasi</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div id="location-detail"></div>
-                </div>
-            </div>
-        </div>
+    <!-- Popup -->
+    <div class="popup-overlay"></div>
+    <div class="popup">
+        <h4 class="popup-title"></h4>
+        <p class="popup-detail"></p>
+        <button class="close-popup">Tutup</button>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Navbar Scroll Effect
-            var navbar = document.querySelector('.navbar');
-            window.addEventListener('scroll', function() {
-                if (window.scrollY > 0) {
-                    navbar.classList.add('scrolled');
-                } else {
-                    navbar.classList.remove('scrolled');
-                }
-            });
+        document.querySelectorAll('.location-icon').forEach(icon => {
+            icon.addEventListener('click', function () {
+                const title = this.getAttribute('data-title');
+                const detail = this.getAttribute('data-detail');
 
-            // Location Icon Click Event
-            var locationIcons = document.querySelectorAll('.location-icon');
-            var locationDetail = document.getElementById('location-detail');
-            var audioElement = null;
+                document.querySelector('.popup-title').innerText = title;
+                document.querySelector('.popup-detail').innerText = detail;
 
-            locationIcons.forEach(function(icon) {
-                icon.addEventListener('click', function() {
-                    var detail = this.getAttribute('data-detail');
-                    var audioSrc = this.getAttribute('data-audio');
-                    locationDetail.innerHTML = detail;
-
-                    if (audioElement) {
-                        audioElement.pause();
-                    }
-
-                    audioElement = new Audio(audioSrc);
-                    audioElement.play();
-
-                    var locationModal = new bootstrap.Modal(document.getElementById('locationModal'));
-                    locationModal.show();
-                });
-            });
-
-            // Stop audio when modal is closed
-            var locationModalEl = document.getElementById('locationModal');
-            locationModalEl.addEventListener('hidden.bs.modal', function() {
-                if (audioElement) {
-                    audioElement.pause();
-                }
+                document.querySelector('.popup-overlay').style.display = 'block';
+                document.querySelector('.popup').classList.add('show');
             });
         });
+
+        document.querySelector('.close-popup').addEventListener('click', function () {
+            document.querySelector('.popup').classList.remove('show');
+            document.querySelector('.popup-overlay').style.display = 'none';
+        });
+
+        document.querySelector('.popup-overlay').addEventListener('click', function () {
+            document.querySelector('.popup').classList.remove('show');
+            document.querySelector('.popup-overlay').style.display = 'none';
+        });
     </script>
+
 @endsection
