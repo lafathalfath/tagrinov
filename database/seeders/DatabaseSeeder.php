@@ -18,6 +18,7 @@ class DatabaseSeeder extends Seeder
             JenisSeeder::class,
             kategoriSeeder::class,
             EntitasSeeder::class,
+            EntitasDetailSeeder::class,
             ProvinsiSeeder::class,
             WelcomeTextSeeder::class,
             UsiaSeeder::class,
