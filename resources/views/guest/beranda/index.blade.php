@@ -104,15 +104,15 @@
 
         .highlight-area {
             position: absolute;
-            border: 2px solid red;
-            opacity: 0.3;
+            border: 2px solid white; /* Ganti warna border menjadi putih */
+            opacity: 1;
             transition: all 0.3s ease;
-            background-color: rgba(255, 0, 0, 0.1);
+            background-color: rgba(255, 255, 255, 0.1); /* Ganti background menjadi putih dengan opasitas */
         }
 
         .highlight-area:hover {
             opacity: 1;
-            background-color: rgba(255, 0, 0, 0.4);
+            background-color: rgba(255, 255, 255, 0.4); /* Ganti background hover menjadi putih dengan opasitas */
         }
     </style>
 
@@ -155,10 +155,16 @@
         <div class="container text-center">
             <h2>Denah Taman</h2>
             <div class="position-relative">
-                <img src="{{ asset('assets/image/denahTaman.png') }}" class="img-fluid mt-4" alt="Denah Taman">
-                <div class="highlight-area" style="top: 10%; left: 50%; width: 200px; height: 150px;"></div>
-                <div class="highlight-area" style="top: 30%; left: 20%; width: 150px; height: 100px;"></div>
-                <div class="highlight-area" style="top: 50%; left: 70%; width: 180px; height: 120px;"></div>
+                <img src="{{ asset('assets/image/denahTaman.jpg') }}" class="img-fluid mt-4" alt="Denah Taman">
+                <div class="highlight-area" style="top: 15%; left: 56%; width: 345px; height: 200px;"></div>
+                <div class="highlight-area" style="top: 10%; left: 88%; width: 133px; height: 280px;"></div>
+                <div class="highlight-area" style="top: 58%; left: 85%; width: 170px; height: 120px;"></div>
+                <div class="highlight-area" style="top: 55%; left: 69%; width: 170px; height: 140px;"></div>
+                <div class="highlight-area" style="top: 55%; left: 61%; width: 85px; height: 100px;"></div>
+                <div class="highlight-area" style="top: 53%; left: 50%; width: 130px; height: 130px;"></div>
+                <div class="highlight-area" style="top: 15%; left: 15%; width: 435px; height: 375px;"></div>
+                <div class="highlight-area" style="top: 78%; left: 0%; width: 1120px; height: 90px;"></div>
+                <div class="highlight-area" style="top: 26%; left: 0%; width: 150px; height: 275px;"></div>
                 <div class="location-icon" style="top: 20%; left: 57%;" data-detail="<b>Area hortikultura</b><br>Lorem ipsum dolor sit amet." data-audio="{{ asset('assets/sound/vo_ikon1.mp3') }}">
                     <i class="bi bi-geo-alt-fill"></i>
                 </div>
@@ -168,6 +174,8 @@
             </div>
         </div>
     </section>
+
+    
 
     <a href="https://wa.me/6285218339006" class="whatsapp-button" target="_blank">
         <img src="{{ asset('assets/icons/whatsapp.png') }}" alt="WhatsApp">

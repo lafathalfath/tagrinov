@@ -18,7 +18,7 @@
         Semua isian bersifat opsional, kosongkan bila tidak diperlukan.<br>
         Anda dapat memperbesar/memperkecil kotak isian dengan cara menarik ujung pojok kanan bawah kotak isian.
     </div>
-    <form action="{{ route('entitas.detail.storeOrUpdate', $entitasDetail->entitas_id) }}" method="POST">
+    <form action="{{ route('entitas.detail.update', $entitasDetail->entitas_id) }}" method="POST">
         @csrf {{-- Token CSRF untuk keamanan --}}
 
         {{-- Jika update, tambahkan method PUT --}}

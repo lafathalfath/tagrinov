@@ -103,27 +103,28 @@
                 <a href="#">
                     <img src="/assets/icons/logo.png" alt="Logo" class="logo">
                 </a>
+                <h1>{{ Auth::user()->name }}</h1>
                 <h1>Tagrinov</h1>
             </div>
             <ul class="sidebar-menu">
                 <li><a href="{{ route('admin.dashboard') }}" class="{{ request()->url() == route('admin.dashboard') ? 'active' : '' }}">Dashboard</a></li>
                 <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      Koleksi
-                  </a>
-                  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li>
-                        <a class="dropdown-item {{ request()->url() == route('entitas.getAll') ? 'active' : '' }}" href="{{ route('entitas.getAll') }}">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Koleksi
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li>
+                            <a class="dropdown-item {{ request()->url() == route('entitas.getAll') ? 'active' : '' }}" href="{{ route('entitas.getAll') }}">
                             Daftar Koleksi
                         </a>
                     </li>
                       <li>
                           <a class="dropdown-item {{ request()->url() == route('family.getAll') ? 'active' : '' }}" href="{{ route('family.getAll') }}">
                               Kelola Family
-                          </a>
-                      </li>
-                      <li>
-                          <a class="dropdown-item {{ request()->url() == route('jenis.getAll') ? 'active' : '' }}" href="{{ route('jenis.getAll') }}">
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item {{ request()->url() == route('jenis.getAll') ? 'active' : '' }}" href="{{ route('jenis.getAll') }}">
                               Kelola Jenis
                           </a>
                       </li>
@@ -131,16 +132,12 @@
                           <a class="dropdown-item {{ request()->url() == route('kategori.getAll') ? 'active' : '' }}" href="{{ route('kategori.getAll') }}">
                               Kelola Kategori
                           </a>
-                      </li>
-                  </ul>
-              </li>
-              <li>
-                <a href="{{ route('admin.testimoni.index') }}" class="{{ request()->is('admin/testimoni') ? 'active' : '' }}">
-                    Testimoni 
-                    @if($pendingCount > 0)
-                        <span class="badge bg-warning">{{ $pendingCount }}</span>
-                    @endif
-                </a>
+                        </li>
+                    </ul>
+                </li>
+                <li><a href="{{ route('kunjungan.getAll') }}" class="{{ request()->url() == route('kunjungan.getAll') ? 'active' : '' }}">Permohonan Kunjungan</a></li>
+                <li>
+                <a href="{{ route('admin.testimoni.index') }}" class="{{ request()->is('admin/testimoni') ? 'active' : '' }}">Testimoni</a>
               </li>
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -159,7 +156,7 @@
 
             </ul>
             <br>
-            <a href="#" class="logout" data-bs-toggle="modal" data-bs-target="#logoutModal">Logout</a>
+            <a href="#" class="logout" data-bs-toggle="modal" data-bs-target="#logoutModal"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
         </div>
 
         <!-- Content -->
@@ -186,16 +183,19 @@
         <div class="modal fade" id="logoutModal" tabindex="-1" aria-labelledby="logoutModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="logoutModalLabel">Confirm Logout</h5>
+                    <div class="modal-header bg-danger text-white">
+                        <h5 class="modal-title" id="logoutModalLabel">Konfirmasi Logout</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        Are you sure you want to log out?
+                        Apakah Anda yakin ingin Logout?
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <a href="#" class="btn btn-danger">Logout</a>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                        <form action="{{ route('auth.logout') }}" method="POST" class="d-inline">
+                            @csrf
+                            <button type="submit" class="btn btn-danger">Logout</button>
+                        </form>
                     </div>
                 </div>
             </div>

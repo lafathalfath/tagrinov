@@ -78,11 +78,8 @@
                             </td>
                             <td>
                                 <div class="qrcode">
-                                    <img src="{{ storage_path('app/public/qr/' . $tm->qrPath) }}" alt="QR Code">
+                                    <img src="{{ asset('storage/qr/' . $tm->qrPath) }}" alt="QR Code untuk {{ $tm->nama }}">
                                 </div>
-                                <p class="link">
-                                    {{ $tm->url }}
-                                </p>
                             </td>
                         </tr>
                     </tbody>

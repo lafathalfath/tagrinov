@@ -1,217 +1,335 @@
 @extends('layouts.main')
 @section('content')
 <style>
-        body {
-            background-color: #f8f9fa;
-        }
-        form {
-            background: #fff;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            margin-bottom: 3rem; 
-        }
+    body {
+        background-color: #f8f9fa;
+    }
+    form {
+        background: #fff;
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin-bottom: 3rem; 
+    }
 
-        label {
-            font-weight: bold;
-        }
+    label {
+        font-weight: bold;
+    }
 
-        textarea {
-            resize: none;
-        }
-        .date-picker-container {
-            display: none;
-            margin-top: 1rem;
-        }
+    textarea {
+        resize: none;
+    }
 
-        .date-picker-container label {
-            margin-right: 1rem;
-        }
+    .file-input-container {
+        margin-top: 1rem;
+    }
 
-        .btn-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-        }
+    .file-input-container:last-of-type {
+        margin-bottom: 2rem; 
+    }
 
-        .btn-group .btn {
-            border-radius: 0.375rem; 
-        }
+    .submit-btn-container {
+        text-align: center;
+        margin-top: 2rem;
+    }
 
-        .file-input-container {
-            margin-top: 1rem;
-        }
+    /* Styling tambahan untuk input jumlah orang */
+    #jumlahOrangContainer {
+        display: none;
+        margin-top: 1rem;
+    }
 
-        .file-input-container:last-of-type {
-            margin-bottom: 2rem; 
-        }
+    /* Optional: Styling untuk tombol aktif */
+    .btn-outline-success.active {
+        background-color: #198754;
+        color: white;
+    }
 
-        .submit-btn-container {
+    /* Membuat tombol lebih lebar */
+    .btn-group-custom {
+        display: flex;
+        flex-wrap: wrap; /* Memastikan elemen membungkus jika tidak cukup lebar */
+        gap: 0.5rem;
+    }
+
+    .btn-group-custom .btn {
+        flex: 1; /* Membuat tombol mengambil ruang yang tersedia */
+        min-width: 150px;
+        padding: 8px;
+    }
+
+    /* Styling untuk Pilihan Pertanian */
+    #pilihanPertanianContainer {
+        display: none;
+        margin-top: 1rem;
+    }
+
+    #pilihanPertanianContainer .form-check {
+        margin-bottom: 0.5rem;
+    }
+    @media (max-width: 768px) {
+        .btn-group-custom label {
+            flex: 1 1 100%; /* Membuat tombol memenuhi lebar layar di mobile */
             text-align: center;
-            margin-top: 2rem;
         }
-    </style>
+    }
+</style>
 
-    <div class="container">
-        <h3>Rencanakan Kunjunganmu</h3>
-        <form id="visitForm" enctype="multipart/form-data">
-            <!-- Form fields remain unchanged -->
+<div class="container">
+    <h3>Rencanakan Kunjunganmu</h3>
+    @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
 
-            <div class="mb-3">
-                <label for="namaLengkap" class="form-label">Nama Lengkap</label>
-                <input type="text" class="form-control" id="namaLengkap" name="namaLengkap" required>
-            </div>
+    @if(session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
+        </div>
+    @endif
+    @if($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+    <form action="{{ route('kunjungan.store') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <!-- Nama Lengkap -->
+        <div class="mb-3">
+            <label for="namaLengkap" class="form-label">Nama Lengkap</label>
+            <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap" placeholder="Nama Lengkap" required>
+        </div>
 
-            <div class="mb-3">
-                <label for="noHp" class="form-label">No HP</label>
-                <input type="tel" class="form-control" id="noHp" name="noHp" required>
-            </div>
+        <!-- No HP -->
+        <div class="mb-3">
+            <label for="no_hp" class="form-label">Nomor HP atau WhatsApp</label>
+            <input type="tel" class="form-control" id="no_hp" name="no_hp" placeholder="Nomor HP atau WhatsApp Aktif" required>
+        </div>
 
-            <fieldset class="mb-3">
-                <legend class="col-form-label">Usia (tahun)</legend>
+        <!-- Usia -->
+        <fieldset class="mb-3">
+            <legend class="col-form-label" style="font-weight: bold;">Usia (tahun)</legend>
+            @foreach($usia as $item)
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" id="usia1" name="usia" value="<20" required>
-                    <label class="form-check-label" for="usia1">&lt;20</label>
+                    <input class="form-check-input" type="radio" id="usia{{ $item->id }}" name="usia_id" value="{{ $item->id }}" required>
+                    <label class="form-check-label" for="usia{{ $item->id }}">{{ $item->nama }}</label>
                 </div>
+            @endforeach
+        </fieldset>
+
+        <!-- Jenis Kelamin -->
+        <fieldset class="mb-3">
+            <legend class="col-form-label" style="font-weight: bold;">Jenis Kelamin</legend>
+            @foreach($jenis_kelamin as $item)
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" id="usia2" name="usia" value="20-29">
-                    <label class="form-check-label" for="usia2">20-29</label>
+                    <input class="form-check-input" type="radio" id="jenis_kelamin{{ $item->id }}" name="jenis_kelamin_id" value="{{ $item->id }}" required>
+                    <label class="form-check-label" for="jenis_kelamin{{ $item->id }}">{{ $item->nama }}</label>
                 </div>
+            @endforeach
+        </fieldset>
+
+        <!-- Asal Instansi -->
+        <div class="mb-3">
+            <label for="asal_instansi" class="form-label">Asal Instansi</label>
+            <input type="text" class="form-control" id="asal_instansi" name="asal_instansi" placeholder="Masukkan asal instansi" required>
+        </div>
+
+        <!-- Pekerjaan -->
+        <div class="mb-3">
+            <label for="pekerjaan" class="form-label">Pekerjaan</label>
+            <select class="form-select" id="pekerjaan" name="pekerjaan_id" required>
+                <option value="" disabled selected>Pilih Pekerjaan</option>
+                @foreach($pekerjaan as $item)
+                    <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                @endforeach
+            </select>
+        </div>
+
+        <!-- Kategori Informasi Publik -->
+        <div class="mb-3">
+            <label for="kategori_informasi" class="form-label">Kategori Informasi Publik</label>
+            <select class="form-select" id="kategori_informasi" name="kategori_informasi_id" required>
+                <option value="" disabled selected>Pilih Kategori Informasi Publik</option>
+                @foreach($kategori_informasi as $item)
+                    <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                @endforeach
+            </select>
+        </div>
+
+        <!-- Pilihan Tambahan untuk Pertanian -->
+        <div class="mb-3" id="pilihanPertanianContainer" style="display:none;">
+            <label class="form-label">Pilihan Pertanian</label>
+            @foreach($pilihan_pertanian as $item)
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" id="usia3" name="usia" value="30-39">
-                    <label class="form-check-label" for="usia3">30-39</label>
+                    <input class="form-check-input" type="radio" id="pilihan_pertanian{{ $item->id }}" name="pilihan_pertanian_id" value="{{ $item->id }}">
+                    <label class="form-check-label" for="pilihan_pertanian{{ $item->id }}">{{ $item->nama }}</label>
                 </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" id="usia4" name="usia" value="40-49">
-                    <label class="form-check-label" for="usia4">40-49</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" id="usia5" name="usia" value=">50">
-                    <label class="form-check-label" for="usia5">&gt;50</label>
-                </div>
-            </fieldset>
+            @endforeach
+        </div>
 
-            <fieldset class="mb-3">
-                <legend class="col-form-label">Jenis Kelamin</legend>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" id="lakiLaki" name="jenisKelamin" value="Laki-laki" required>
-                    <label class="form-check-label" for="lakiLaki">Laki-laki</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" id="perempuan" name="jenisKelamin" value="Perempuan">
-                    <label class="form-check-label" for="perempuan">Perempuan</label>
-                </div>
-            </fieldset>
+        <!-- Pendidikan Terakhir -->
+        <div class="mb-3">
+            <label for="pendidikan" class="form-label">Pendidikan Terakhir</label>
+            <select class="form-select" id="pendidikan" name="pendidikan_id" required>
+                <option value="" disabled selected>Pilih Pendidikan Terakhir</option>
+                @foreach($pendidikan as $item)
+                    <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                @endforeach
+            </select>
+        </div>
 
-            <div class="mb-3">
-                <label for="pekerjaan" class="form-label">Pekerjaan</label>
-                <select class="form-select" id="pekerjaan" name="pekerjaan" required>
-                    <option value="PNS">PNS</option>
-                    <option value="TNI">TNI</option>
-                    <option value="POLRI">POLRI</option>
-                    <option value="Swasta">Swasta</option>
-                    <option value="Wirausaha">Wirausaha</option>
-                    <option value="Guru">Guru</option>
-                    <option value="Siswa">Siswa</option>
-                    <option value="Mahasiswa">Mahasiswa</option>
-                    <option value="Lainnya">Lainnya</option>
-                </select>
+        <!-- Jenis Pengunjung (tombol perorangan dan perkelompok) -->
+        <div class="mb-3">
+            <label class="form-label">Jenis Pengunjung</label>
+            <div class="btn-group-custom mb-3 col-12" role="group" aria-label="Jenis Pengunjung">
+                @foreach($jenis_pengunjung as $item)
+                    <input type="radio" class="btn-check" id="jenis_pengunjung{{ $item->id }}" name="jenis_pengunjung_id" value="{{ $item->id }}" required>
+                    <label class="btn btn-outline-success" for="jenis_pengunjung{{ $item->id }}">{{ $item->nama }}</label>
+                @endforeach
             </div>
-
-            <div class="mb-3">
-                <label for="kategoriInformasi" class="form-label">Kategori Informasi Publik</label>
-                <select class="form-select" id="kategoriInformasi" name="kategoriInformasi" required>
-                    <option value="Pertanian">Pertanian</option>
-                    <option value="Anggaran dan Keuangan">Anggaran dan Keuangan</option>
-                    <option value="Kepegawaian">Kepegawaian</option>
-                    <option value="Hukum dan Perundang-undangan">Hukum dan Perundang-undangan</option>
-                    <option value="Pengadaan Barang dan Jasa">Pengadaan Barang dan Jasa</option>
-                    <option value="Lain-lain">Lain-lain</option>
-                </select>
+            <!-- Input untuk jumlah orang, muncul hanya jika Perkelompok dipilih -->
+            <div id="jumlah_orang" class="mb-3" style="display:none;">
+                <label for="jumlah" class="form-label">Jumlah Orang</label>
+                <input type="number" class="form-control" id="jumlah_orang" name="jumlah_orang" min="1" placeholder="Masukkan Jumlah Orang">
             </div>
+        </div>
 
-            <div class="mb-3">
-                <label for="pendidikanTerakhir" class="form-label">Pendidikan Terakhir</label>
-                <select class="form-select" id="pendidikanTerakhir" name="pendidikanTerakhir" required>
-                    <option value="SD">SD</option>
-                    <option value="SMP">SMP</option>
-                    <option value="SMA">SMA</option>
-                    <option value="D3">D3</option>
-                    <option value="D4">D4</option>
-                    <option value="S1">S1</option>
-                    <option value="S2">S2</option>
-                    <option value="S3">S3</option>
-                </select>
-            </div>
 
-            <div class="mb-3">
-                <label class="form-label">Jenis Pengunjung</label>
-                <div class="btn-group mb-3" role="group" aria-label="Jenis Pengunjung">
-                    <input type="radio" class="btn-check" id="pelajar" name="jenisPengunjung" value="Pelajar" required>
-                    <label class="btn btn-outline-success" for="pelajar">Pelajar</label>
+        <!-- Tanggal Kunjungan -->
+        <div class="mb-3">
+            <label for="tanggal_kunjungan" class="form-label">Tanggal Kunjungan</label>
+            <input type="date" class="form-control" id="tanggal_kunjungan" name="tanggal_kunjungan" required>
+        </div>
 
-                    <input type="radio" class="btn-check" id="umum" name="jenisPengunjung" value="Umum">
-                    <label class="btn btn-outline-success" for="umum">Umum</label>
+        <!-- Tujuan Kunjungan -->
+        <div class="mb-3">
+            <label for="tujuan_kunjungan" class="form-label">Tujuan Kunjungan</label>
+            <textarea class="form-control" id="tujuan_kunjungan" name="tujuan_kunjungan" rows="3" placeholder="Tulis Tujuan Kunjungan" required></textarea>
+        </div>
 
-                    <input type="radio" class="btn-check" id="peneliti" name="jenisPengunjung" value="Peneliti">
-                    <label class="btn btn-outline-success" for="peneliti">Peneliti</label>
-                </div>
-            </div>
+        <!-- Unggah Foto KTP -->
+        <div class="file-input-container">
+            <label for="fotoKTP" class="form-label">Unggah Foto KTP </label> 
+            <div class="small text-danger">* File diizinkan: JPG, JPEG, PNG</div>
+            <div class="small text-danger">* Ukuran maksimal: 2MB</div>
+            <input type="file" class="form-control" id="fotoKTP" name="url_foto_ktp" accept="image/*" required>
+        </div>
+        
+        <!-- Unggah Foto Selfie -->
+        <div class="file-input-container">
+            <label for="fotoSelfie" class="form-label">Unggah Foto Selfie</label>
+            <div class="small text-danger">* File diizinkan: JPG, JPEG, PNG</div>
+            <div class="small text-danger">* Ukuran maksimal: 2MB</div>
+            <input type="file" class="form-control" id="fotoSelfie" name="url_foto_selfie" accept="image/*" required>
+        </div>
 
-            <div class="mb-3">
-                <label class="form-label">Hari Kunjungan</label>
-                <div class="btn-group mb-3" role="group" aria-label="Hari Kunjungan">
-                    <input type="radio" class="btn-check" id="hariIni" name="hariKunjungan" value="Hari ini" required>
-                    <label class="btn btn-outline-success" for="hariIni">Hari ini</label>
+        <!-- Tombol Submit -->
+        <div class="submit-btn-container">
+            <button type="submit" class="btn btn-success">Kirim Permohonan</button>
+        </div>
+    </form>
+</div>
 
-                    <input type="radio" class="btn-check" id="besok" name="hariKunjungan" value="Besok">
-                    <label class="btn btn-outline-success" for="besok">Besok</label>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Menangani tampilan input jumlah orang berdasarkan jenis pengunjung
+        var jenisPengunjungRadios = document.querySelectorAll('input[name="jenis_pengunjung_id"]');
+        var jumlahOrangContainer = document.getElementById('jumlah_orang');
 
-                    <input type="radio" class="btn-check" id="lainnya" name="hariKunjungan" value="Lainnya">
-                    <label class="btn btn-outline-success" for="lainnya">Lainnya</label>
-                </div>
-                <div class="date-picker-container" id="datePickerContainer">
-                    <label for="tanggalKunjungan" class="form-label">Tanggal Kunjungan:</label>
-                    <input type="date" class="form-control" id="tanggalKunjungan" name="tanggalKunjungan">
-                </div>
-            </div>
-
-            <div class="mb-3">
-                <label for="tujuanKunjungan" class="form-label">Tujuan Kunjungan</label>
-                <textarea class="form-control" id="tujuanKunjungan" name="tujuanKunjungan" rows="3" required></textarea>
-            </div>
-
-            <div class="file-input-container">
-                <label for="fotoKTP" class="form-label">Unggah Foto KTP</label>
-                <input type="file" class="form-control" id="fotoKTP" name="fotoKTP" accept="image/*" required>
-            </div>
-
-            <div class="file-input-container">
-                <label for="fotoSelfie" class="form-label">Unggah Foto Selfie</label>
-                <input type="file" class="form-control" id="fotoSelfie" name="fotoSelfie" accept="image/*" required>
-            </div>
-
-            <div class="submit-btn-container">
-                <button type="submit" class="btn btn-success">Kirim Permohonan</button>
-            </div>
-        </form>
-    </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var hariKunjunganRadios = document.querySelectorAll('input[name="hariKunjungan"]');
-            var datePickerContainer = document.getElementById('datePickerContainer');
-
-            hariKunjunganRadios.forEach(function (radio) {
-                radio.addEventListener('change', function () {
-                    if (this.value === 'Lainnya') {
-                        datePickerContainer.style.display = 'block';
-                    } else {
-                        datePickerContainer.style.display = 'none';
-                    }
-                });
+        jenisPengunjungRadios.forEach(function (radio) {
+            radio.addEventListener('change', function () {
+                if (this.value === 'Perkelompok') {
+                    jumlahOrangContainer.style.display = 'block';
+                    jumlahOrangContainer.querySelector('input').setAttribute('required', 'required');
+                } else {
+                    jumlahOrangContainer.style.display = 'none';
+                    jumlahOrangContainer.querySelector('input').removeAttribute('required');
+                    jumlahOrangContainer.querySelector('input').value = ''; // Reset nilai input
+                }
             });
         });
-    </script>
+
+        // Menangani tampilan pilihan tambahan untuk kategori informasi publik Pertanian
+        var kategoriInformasiSelect = document.getElementById('kategori_informasi');
+        var pilihanPertanianContainer = document.getElementById('pilihanPertanianContainer');
+        pilihanPertanianContainer.style.display = 'none'; // Sembunyikan secara default
+
+        kategoriInformasiSelect.addEventListener('change', function () {
+            if (this.value == '1') { // Gantilah '1' dengan ID kategori Pertanian yang sesuai
+                pilihanPertanianContainer.style.display = 'block';
+                var pilihanRadios = document.querySelectorAll('input[name="pilihan_pertanian"]');
+                pilihanRadios.forEach(function (radio) {
+                    radio.setAttribute('required', 'required');
+                });
+            } else {
+                pilihanPertanianContainer.style.display = 'none';
+                var pilihanRadios = document.querySelectorAll('input[name="pilihan_pertanian"]');
+                pilihanRadios.forEach(function (radio) {
+                    radio.removeAttribute('required');
+                    radio.checked = false; // Reset pilihan radio
+                });
+            }
+        });
+
+        // Memastikan tampilan yang benar pada load awal
+        jenisPengunjungRadios.forEach(function (radio) {
+            radio.addEventListener('change', function () {
+                if (this.value === '2') { // Gantilah '2' dengan ID yang sesuai untuk Perkelompok
+                    jumlahOrangContainer.style.display = 'block';
+                    jumlahOrangContainer.querySelector('input').setAttribute('required', 'required');
+                } else {
+                    jumlahOrangContainer.style.display = 'none';
+                    jumlahOrangContainer.querySelector('input').removeAttribute('required');
+                    jumlahOrangContainer.querySelector('input').value = ''; // Reset nilai input
+                }
+            });
+        });
+
+        // Memastikan tampilan yang benar pada load awal
+        jenisPengunjungRadios.forEach(function (radio) {
+            if (radio.checked && radio.value === '2') { // Gantilah '2' dengan ID yang sesuai untuk Perkelompok
+                jumlahOrangContainer.style.display = 'block';
+            } else {
+                jumlahOrangContainer.style.display = 'none';
+            }
+        });
+    });
+    
+
+    // Fungsi Tanggal
+    const dateInput = document.getElementById('tanggal_kunjungan');
+
+    // Mendapatkan tanggal hari ini
+    const today = new Date();
+    const todayISO = today.toISOString().split('T')[0];
+
+    // Mengatur tanggal minimum sebagai besok
+    today.setDate(today.getDate() + 1);
+    const minDate = today.toISOString().split('T')[0];
+    dateInput.setAttribute('min', minDate);
+
+    // Fungsi untuk memeriksa apakah hari Sabtu atau Minggu
+    function isWeekend(date) {
+        const day = new Date(date).getDay();
+        return (day === 6 || day === 0); // 6 = Sabtu, 0 = Minggu
+    }
+
+    // Event listener untuk memblokir Sabtu, Minggu, dan hari ini
+    dateInput.addEventListener('input', function() {
+        const selectedDate = this.value;
+
+        // Jika hari Sabtu atau Minggu, reset value dan tampilkan alert
+        if (isWeekend(selectedDate)) {
+            alert('Kunjungan tidak dapat dilakukan pada hari Sabtu atau Minggu.');
+            this.value = '';
+        }
+    });
+</script>
+
+
 @endsection

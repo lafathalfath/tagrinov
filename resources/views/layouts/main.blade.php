@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="{{ asset('assets/icons/logo.png') }}">
+    <meta name="theme-color" content="#38b77a">
     <title>Taman Agro Standar</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -54,63 +55,78 @@
     .navbar-dark .navbar-brand {
         color: white;
     }
+    .navbar-toggler {
+        border-color: #00573d; /* Warna border hijau untuk tombol toggle */
+    }
+
+    .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(0, 87, 61, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e"); /* Ikon toggle warna hijau */
+    }
     footer {
     color: white;
     padding: 30px 0px 20px 0px;
     background-color: #00452C;
-    }
-    .footer h5 {
-        margin-top: 0;
-    }
+}
 
-    .footer .social-media a {
-        margin-right: 10px;
-    }
+footer h4 {
+    margin-top: 0;
+}
 
-    footer .map iframe {
-        border: 0;
-        width: 100%;
-        height: 270px;
-        border-radius: 5px;
-    }
-    footer .contact-info {
-        text-align: left;
-    }
-    footer .contact-info h4 {
-        font-size: 20px;
-        margin-bottom: 15px;
-    }
-    footer .contact-info p {
-        margin: 13px 0;
-        display: flex;
-        align-items: center;
-    }
-    footer .contact-info p a {
-        color: white;
-        text-decoration: none;
-    }
-    footer .contact-info p a:hover {
-        text-decoration: underline;
-    }
-    footer .contact-info i {
-        margin-right: 10px;
-    }
-    footer .social-links {
-        margin-top: 10px;
-    }
-    footer .social-links a {
-        color: white;
-        text-decoration: none;
-        margin: 0 10px;
-    }
-    footer .social-links a:hover {
-        text-decoration: underline;
-    }
-    footer .bottom-text {
-        margin-top: 20px;
-        font-size: 14px;
-        text-align: center;
-    }
+footer .map iframe {
+    border: 0;
+    width: 100%;
+    height: 270px;
+    border-radius: 5px;
+}
+
+footer .contact-info {
+    text-align: left;
+}
+
+footer .contact-info h4 {
+    font-size: 20px;
+    margin-bottom: 15px;
+}
+
+footer .contact-info p {
+    margin: 13px 0;
+    display: flex;
+    align-items: center;
+}
+
+footer .contact-info p a {
+    color: white;
+    text-decoration: none;
+}
+
+footer .contact-info p a:hover {
+    text-decoration: underline;
+}
+
+footer .contact-info i {
+    margin-right: 10px;
+}
+
+footer .social-links {
+    margin-top: 10px;
+}
+
+footer .social-links a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+footer .social-links a:hover {
+    text-decoration: underline;
+}
+
+footer .bottom-text {
+    margin-top: 20px;
+    font-size: 14px;
+    text-align: center;
+}
+
 </style>
 <body>
     <!--navbar-->
@@ -130,12 +146,12 @@
                     <li class="nav-item {{ request()->url()==route('tanaman.index')?'active':'' }}">
                         <a class="nav-link" href="{{ route('tanaman.index') }}">Koleksi Tanaman</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/kunjungan">Permohonan Kunjungan</a>
+                    <li class="nav-item {{ request()->url()==route('guest.permohonan.kunjungan.index')?'active':'' }}">
+                        <a class="nav-link" href="{{ route('guest.permohonan.kunjungan.index') }}">Permohonan Kunjungan</a>
                     </li>
-                    <li class="nav-item {{ request()->url()==route('stokBenih.index')?'active':'' }}">
+                    {{-- <li class="nav-item {{ request()->url()==route('stokBenih.index')?'active':'' }}">
                         <a class="nav-link" href="{{ route('stokBenih.index') }}">Stok Benih</a>
-                    </li>
+                    </li> --}}
                     <li class="nav-item {{ request()->url()==route('events.index')?'active':'' }}">
                         <a class="nav-link" a href="{{ route('events.index') }}">Event</a>
                     </li>
@@ -147,39 +163,37 @@
         </div>
     </nav>
     <!-- Navbar -->
-    <div style="margin-top: 80px; margin-bottom: 20px;">
+    <div style="margin-top: 80px;">
         @yield('content')
     </div>
 
 <footer>
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6 col-md-12 map">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d990.8860998470195!2d106.7875092695418!3d-6.579033999588393!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69c5311ad80031%3A0xae42de3ba17aceb7!2sBalai%20Besar%20Penerapan%20Standar%20Instrumen%20Pertanian%20(BBPSIP)!5e0!3m2!1sen!2sid!4v1721834025093!5m2!1sen!2sid" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-            </div>
-            <div class="col-lg-6 col-md-12 contact-info">
-                <h4>KONTAK</h4>
-                <p><i class="fas fa-phone"></i> (0251) 8351277 / WA : 085183071943</p>
-                <p><i class="fas fa-fax"></i> (0251) 8350928</p>
-                <p><i class="fas fa-envelope"></i> <a href="mailto:bsip.bbpsip@pertanian.go.id">bsip.bbpsip@pertanian.go.id</a></p>
-                <p>Jl. Tentara Pelajar No.10, RT.01/RW.07, Ciwaringin, Kecamatan Bogor Tengah, Kota Bogor, Jawa Barat 16124</p>
-     
-                <p><a href="https://bbpsip.bsip.pertanian.go.id" target="_blank">https://bbpsip.bsip.pertanian.go.id</a></p>
-                <div class="social-links">
-                    <a href="https://www.facebook.com/BSIPPenerapan/" target="_blank"><i class="fab fa-facebook"></i></a>
-                    <a href="https://www.youtube.com/@bsippenerapan" target="_blank"><i class="fab fa-youtube"></i></a>
-                    <a href="https://instagram.com/bsippenerapan" target="_blank"><i class="fab fa-instagram"></i></a>
-                    <a href="https://twitter.com/bsippenerapan" target="_blank"><i class="fab fa-x-twitter"></i></a>
-                    <a href="https://tiktok.com/@bsippenerapan" target="_blank"><i class="fab fa-tiktok"></i></a>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-12 map mb-4 mb-lg-0">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d990.8860998470195!2d106.7875092695418!3d-6.579033999588393!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69c5311ad80031%3A0xae42de3ba17aceb7!2sBalai%20Besar%20Penerapan%20Standar%20Instrumen%20Pertanian%20(BBPSIP)!5e0!3m2!1sen!2sid!4v1721834025093!5m2!1sen!2sid" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                </div>
+                <div class="col-lg-6 col-md-12 contact-info">
+                    <h4>KONTAK</h4>
+                    <p><i class="fas fa-phone"></i> (0251) 8351277 / WA : 085183071943</p>
+                    <p><i class="fas fa-fax"></i> (0251) 8350928</p>
+                    <p><i class="fas fa-envelope"></i> <a href="mailto:bsip.bbpsip@pertanian.go.id">bsip.bbpsip@pertanian.go.id</a></p>
+                    <p>Jl. Tentara Pelajar No.10, RT.01/RW.07, Ciwaringin, Kecamatan Bogor Tengah, Kota Bogor, Jawa Barat 16124</p>
+                    <p><a href="https://bbpsip.bsip.pertanian.go.id" target="_blank">https://bbpsip.bsip.pertanian.go.id</a></p>
+                    <div class="social-links">
+                        <a href="https://www.facebook.com/BSIPPenerapan/" target="_blank"><i class="fab fa-facebook"></i></a>
+                        <a href="https://www.youtube.com/@bsippenerapan" target="_blank"><i class="fab fa-youtube"></i></a>
+                        <a href="https://instagram.com/bsippenerapan" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://twitter.com/bsippenerapan" target="_blank"><i class="fab fa-x-twitter"></i></a>
+                        <a href="https://tiktok.com/@bsippenerapan" target="_blank"><i class="fab fa-tiktok"></i></a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <p class="bottom-text">&copy; 2024 Balai Besar Penerapan Standar Instrumen Pertanian. All Rights Reserved</p>
+        <p class="bottom-text">&copy; 2024 Balai Besar Penerapan Standar Instrumen Pertanian. All Rights Reserved</p>
 </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     
 </body>
 </html>

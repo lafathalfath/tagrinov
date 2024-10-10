@@ -40,40 +40,50 @@ class TanamanController extends Controller
         $id = Crypt::decrypt($id);
         $tanaman = Entitas::find($id);
         if (!$tanaman) return abort(404);
-        return view('guest.tanaman.detail', ['tanaman' => $tanaman]);
+        $url = route('tanaman.detail', Crypt::encrypt($tanaman->id));
+        $qr = QrCode::format('svg')->size(250)->generate($url);
+        return view('guest.tanaman.detail', [
+            'tanaman' => $tanaman,
+            'url' => $url,
+            'qr' => $qr
+        ]);
     }
 
     public function generateQrAll()
     {
         $filename = 'qr_tanaman.pdf';
         $storage_path = storage_path("/app/public/qr");
-        
+    
         $tanaman = Entitas::where('kategori_id', 1)->get();
         foreach ($tanaman as $t) {
-            $qrPath = 'qr_' . $t->id . '.png';
+            $qrPath = 'qr_' . $t->id . '.svg'; 
             $qrFullPath = storage_path('app/public/qr/' . $qrPath);
             $url = route('tanaman.detail', Crypt::encrypt($t->id));
-            $qr = QrCode::size(300)->generate($url, $qrFullPath);
+            
+            QrCode::format('svg')->size(300)->generate($url, $qrFullPath);
+            
             $t->qrPath = $qrPath;
             $t->url = $url;
         }
-
+    
         $pdf = PDF::loadView('pdf_loader.qr', ['tanaman' => $tanaman]);
         if (!File::exists($storage_path)) {
             File::makeDirectory($storage_path, 0755, true, true);
         }
         File::put("$storage_path/$filename", $pdf->output());
-
+    
         return response()->json(['status' => 'ok', 'file' => "/storage/qr/$filename"]);
     }
 
     public function viewQr() {
         $tanaman = Entitas::where('kategori_id', 1)->get();
         foreach ($tanaman as $t) {
-            $qrPath = 'qr_' . $t->id . '.png';
+            $qrPath = 'qr_' . $t->id . '.svg';
             $qrFullPath = storage_path('app/public/qr/' . $qrPath);
             $url = route('tanaman.detail', Crypt::encrypt($t->id));
-            $qr = QrCode::size(300)->generate($url);
+            
+            $qr = QrCode::format('svg')->size(300)->generate($url);
+            
             $t->qr = $qr;
             $t->qrPath = $qrPath;
             $t->url = $url;

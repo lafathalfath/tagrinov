@@ -9,46 +9,72 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    public function register(Request $request) {
+    public function register(Request $request)
+    {
+        // Validasi input
         $request->validate([
             'name' => 'required|string',
             'email' => 'required|string|email|unique:users',
-            'password' => 'required|string|confirmed'
+            'no_hp' => 'required|string|unique:users', // Validasi no_hp
+            'password' => 'required|string|confirmed',
         ], [
             'name.required' => 'Name is required',
             'email.required' => 'Email is required',
             'email.unique' => 'Email already exists',
+            'no_hp.required' => 'No HP is required', // Pesan kesalahan untuk no_hp
+            'no_hp.unique' => 'No HP already exists', // Pesan kesalahan untuk no_hp
             'password.required' => 'Password is required',
-            'password.confirmed' => 'Password confirmation does not match'
+            'password.confirmed' => 'Password confirmation does not match',
         ]);
-        $user = User::create([
+
+        // Membuat pengguna baru
+        User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'no_hp' => $request->no_hp, // Menyimpan no_hp
             'password' => Hash::make($request->password),
         ]);
-        if (!$user) return response()->json(['status' => 'error', 'message' => 'internal server error'], 500);
-        // $token = $user->createToken('auth_token')->plainTextToken;
+
+        // Melakukan login setelah registrasi
         Auth::attempt(['email' => $request->email, 'password' => $request->password]);
-        return response()->json(['status' => 'created', 'payload' => $user], 201);
+
+        return redirect('/admin/dashboard'); // Redirect ke dashboard setelah registrasi
     }
 
-    public function login(Request $request) {
+    public function login(Request $request)
+    {
+        // Validasi input
         $request->validate([
-            'email' => 'required|string|email',
+            'login' => 'required|string', // Ganti menjadi satu field untuk email atau no_hp
             'password' => 'required|string',
         ], [
-            'email.required' => 'Email is required',
+            'login.required' => 'Email or No HP is required',
             'password.required' => 'Password is required',
         ]);
-        $user = User::where('email', $request->email)->first();
-        if (!$user) return response()->json(['status' => 'error', 'message' => 'cannot found any users'], 404);
-        if (!Hash::check($request->password, $user->password)) return response()->json(['status' => 'error', 'message' => 'password invalid']);
-        Auth::attempt(['email' => $request->email, 'password' => $request->password]);
-        return response()->json(['status' => 'success', 'message' => 'login successfully'], 200);
+
+        // Cek apakah pengguna menggunakan email atau no_hp
+        $user = User::where('email', $request->login)
+                    ->orWhere('no_hp', $request->login)
+                    ->first();
+
+        if (!$user) {
+            return redirect()->back()->with('error', 'User not found'); // Redirect dengan error
+        }
+
+        // Memeriksa password
+        if (!Hash::check($request->password, $user->password)) {
+            return redirect()->back()->with('error', 'Invalid password'); // Redirect dengan error
+        }
+
+        // Melakukan login
+        Auth::login($user);
+
+        return redirect('/admin'); // Redirect ke dashboard setelah login
     }
 
-    public function logout() {
+    public function logout()
+    {
         Auth::logout();
-        return response()->json(['status' => 'success', 'message' => 'logout successfully']);
+        return redirect('/login'); // Redirect ke halaman login setelah logout
     }
 }
