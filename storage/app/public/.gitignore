@@ -1,2 +1,6 @@
 *
 !.gitignore
+
+# Mengizinkan Git untuk melacak folder public/storage
+!/public/storage/
+!/public/storage/entitas/
