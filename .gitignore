@@ -2,10 +2,6 @@
 /node_modules
 /public/build
 /public/hot
-!/public/storage
-!/public/storage/*
-!/public/storage/entitas/
-!/public/storage/entitas/*
 /storage/*.key
 /vendor
 .env
@@ -19,3 +15,5 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+/public/storage/*
+!/public/storage/entitas/
