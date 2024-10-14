@@ -6,6 +6,7 @@ use App\Models\EntitasDetail;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class EntitasSeeder extends Seeder
 {
@@ -139,9 +140,37 @@ class EntitasSeeder extends Seeder
             ['id' => 122, 'nama' => 'Kopi Robusta Sukabumi', 'nama_latin' => null, 'nama_daerah' => 'Kopi Robusta Sukabumi', 'family_id' => null, 'jenis_id' => 2, 'kategori_id' => 1, 'url_qr' => null, 'url_gambar' => null],
         ];
 
-        DB::table('entitas')->insert($entitas);
         foreach ($entitas as $en) {
+            // Simpan entitas ke database
+            DB::table('entitas')->insert($en);
+
+            // Cari gambar berdasarkan ID entitas
+            $url_gambar = $this->findImagePath($en['id']);
+
+            // Update entitas dengan URL gambar jika ditemukan
+            if ($url_gambar) {
+                DB::table('entitas')->where('id', $en['id'])->update(['url_gambar' => $url_gambar]);
+            }
+
+            // Simpan entitas detail
             EntitasDetail::create(['entitas_id' => $en['id']]);
         }
+    }
+
+    /**
+     * Mencari path gambar berdasarkan ID.
+     */
+    private function findImagePath($id)
+    {
+        // Format gambar yang didukung
+        $formats = ['jpg', 'jpeg', 'png', 'gif'];
+
+        foreach ($formats as $format) {
+            $path = "public/entitas/gambar_{$id}.{$format}"; // Path yang disesuaikan
+            if (Storage::exists($path)) {
+                return Storage::url($path); // Kembalikan URL gambar
+            }
+        }
+        return null; // Jika tidak ditemukan
     }
 }

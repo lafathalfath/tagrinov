@@ -64,7 +64,7 @@
         <div class="row image-detail">
             <div class="col-lg-5 col-md-6 mb-4">
                 @if ($tanaman->url_gambar)
-                    <img src="{{ $tanaman->url_gambar }}" class="img-fluid" alt="{{ $tanaman->url_gambar }}">
+                    <img src="{{ $tanaman->url_gambar }}" class="img-fluid" alt="{{ $tanaman->nama }}">
                 @else
                     <img src="{{ asset('assets/image/no_image.png') }}" class="img-fluid" alt="No image available">
                 @endif
