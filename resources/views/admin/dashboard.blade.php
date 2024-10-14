@@ -72,7 +72,7 @@
         </div>
 
         <div class="col-md-6">
-            <h5 class="text-center">Distribusi Jenis Tanaman</h5>
+            <h5 class="text-center">Data per Jenis Tanaman</h5>
             <canvas id="jenisTanamanChart" width="100%" height="100px"></canvas>
         </div>
     </div>
@@ -140,7 +140,7 @@
                 },
                 title: {
                     display: true,
-                    text: 'Distribusi Jenis Tanaman'
+                    text: 'Jenis Tanaman'
                 }
             }
         }
