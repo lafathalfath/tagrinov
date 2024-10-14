@@ -83,6 +83,19 @@
             height: 200px;
             border-radius: 10px;
         }
+        @media (max-width: 768px) {
+            .foto-kunjungan {
+                max-width: 100%;
+                margin-bottom: 10px;
+            }
+            .feedback {
+                flex-direction: column; 
+                align-items: flex-start;
+            }
+            .feedback .info {
+                width: 100%;
+            }
+        }
 </style>
 <body>
     <div class="container">
@@ -147,7 +160,7 @@
                                 &#9734;
                             @endfor
                         </div>
-                        <div class="date">{{ \Carbon\Carbon::parse($feedback->tanggal)->format('F j, Y') }}</div>
+                        <div class="date">{{ \Carbon\Carbon::parse($feedback->tanggal)->format('j F Y') }}</div>
                         <p>{{ $feedback->pesan }}</p>
                         @if($feedback->foto)
                             <img class="foto-kunjungan" src="{{ asset('storage/' . $feedback->foto) }}" alt="Foto">
@@ -158,4 +171,9 @@
             </form>
         @endif
     </div>
+    <script>
+        // Set max attribute to today's date
+        var today = new Date().toISOString().split('T')[0];
+        document.getElementById("tanggal").setAttribute('max', today);
+    </script>
 @endsection
