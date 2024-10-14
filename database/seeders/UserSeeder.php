@@ -16,10 +16,10 @@ class UserSeeder extends Seeder
     {
         $user = [
             [
-                'name' => 'Primary Admin', 
-                'email' => 'admin@gmail.com', 
+                'name' => 'BSIP Penerapan', 
+                'email' => 'bsippenerapan@gmail.com', 
                 'no_hp' => '08121212',
-                'password' => Hash::make('password'),
+                'password' => Hash::make('tagrinov2024'),
             ],
         ];
 
