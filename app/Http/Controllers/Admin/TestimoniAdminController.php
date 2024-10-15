@@ -11,8 +11,7 @@ class TestimoniAdminController extends Controller
     public function index()
     {
         $feedbacks = Feedback::all();
-        $pendingCount = Feedback::where('status', 'pending')->count(); // Hitung jumlah pending
-        return view('admin.testimoni.index', compact('feedbacks', 'pendingCount'));
+        return view('admin.testimoni.index', compact('feedbacks'));
     }
 
     public function approve($id)

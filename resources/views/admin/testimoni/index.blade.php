@@ -26,6 +26,11 @@
             </tr>
         </thead>
         <tbody>
+            @if($feedbacks->isEmpty())
+                <tr>
+                    <td colspan="7" class="text-center">Belum ada testimoni yang tersedia.</td>
+                </tr>
+            @else
             @foreach($feedbacks as $feedback)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
@@ -125,5 +130,6 @@
             @endforeach
         </tbody>
     </table>
+    @endif
 </div>
 @endsection
