@@ -11,7 +11,7 @@ class WelcomeTextController extends Controller
     public function edit()
     {
         $welcomeText = WelcomeText::first();
-        return view('admin.welcome_edit', compact('welcomeText'));
+        return view('admin.main.welcome_edit', compact('welcomeText'));
     }
 
     public function update(Request $request, $id)

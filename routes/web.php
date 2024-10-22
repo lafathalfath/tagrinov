@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\TestimoniAdminController;
 use App\Http\Controllers\Admin\WelcomeTextController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\FooterController;
 use App\Http\Controllers\EntitasController;
 use App\Http\Controllers\EntitasDetailController;
 use App\Http\Controllers\FamilyController;
@@ -84,6 +85,8 @@ Route::middleware(['admin'])->prefix('/admin')->group(function () {
     Route::get('/', [AdminController::class, 'dashboard'])->name('admin.dashboard');
     Route::get('slide_edit', [WelcomeTextController::class, 'edit'])->name('admin.welcome.edit');
     Route::post('slide_edit/{id}', [WelcomeTextController::class, 'update'])->name('admin.welcome.update');
+    Route::get('/main/footer', [FooterController::class, 'edit'])->name('footer.edit');
+    Route::put('/main/footer', [FooterController::class, 'update'])->name('footer.update');
 
     Route::prefix('/kunjungan')->group(function () {
         Route::get('/', [KunjunganController::class, 'getAll'])->name('kunjungan.getAll');
