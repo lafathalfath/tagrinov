@@ -148,6 +148,9 @@
                         <a class="dropdown-item {{ request()->url() == route('admin.welcome.edit') ? 'active' : '' }}" href="{{ route('admin.welcome.edit') }}">
                             Slide
                         </a>
+                        <a class="dropdown-item {{ request()->url() == route('footer.edit') ? 'active' : '' }}" href="{{ route('footer.edit') }}">
+                            Footer
+                        </a>
                     </li>
                 </ul>
               </li>
