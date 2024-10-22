@@ -115,7 +115,9 @@
 				</a>
 				@if($kunjungan->status_setujui)
 					<!-- Jika sudah disetujui -->
-					<button class="btn btn-success" disabled><i class="fa-solid fa-check"></i> Telah Disetujui</button>
+					<button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cancelApprovalModal">
+						<i class="fa-solid fa-times"></i> Batalkan Persetujuan
+					</button>
 				@else
 					<!-- Jika belum disetujui -->
 					<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmSetujuiModal"><i class="fa-solid fa-check"></i> Setujui</a>
@@ -136,6 +138,24 @@
 								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
 								<!-- Tombol untuk konfirmasi setujui -->
 								<a href="{{ route('kunjungan.approve', $kunjungan->id) }}" class="btn btn-primary">Ya, Setujui</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- Modal Pembatalan -->
+				<div class="modal fade" id="cancelApprovalModal" tabindex="-1" aria-labelledby="cancelApprovalModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header bg-danger text-white">
+								<h5 class="modal-title" id="cancelApprovalModalLabel">Batalkan Persetujuan</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								Apakah Anda yakin ingin membatalkan persetujuan kunjungan ini?
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+								<a href="{{ route('kunjungan.cancel', $kunjungan->id) }}" class="btn btn-danger">Batalkan</a>
 							</div>
 						</div>
 					</div>

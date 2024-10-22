@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Feedback;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class TestimoniAdminController extends Controller
 {
@@ -36,6 +37,9 @@ class TestimoniAdminController extends Controller
     public function destroy($id)
     {
         $feedback = Feedback::find($id);
+        if ($feedback->foto) {
+            Storage::disk('public')->delete($feedback->foto);
+        }
         if ($feedback) {
             $feedback->delete();
         }

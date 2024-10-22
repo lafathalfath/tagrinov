@@ -90,6 +90,7 @@ Route::middleware(['admin'])->prefix('/admin')->group(function () {
         Route::get('/{id}', [KunjunganController::class, 'getById'])->name('kunjungan.getById');
         Route::delete('/{id}', [KunjunganController::class, 'destroy'])->name('kunjungan.destroy');
         Route::get('/approve/{id}', [KunjunganController::class, 'approve'])->name('kunjungan.approve');
+        Route::get('/kunjungan/{id}/cancel', [KunjunganController::class, 'cancelApproval'])->name('kunjungan.cancel');
     });
 
     Route::prefix('/testimoni')->name('admin.testimoni.')->group(function () {
