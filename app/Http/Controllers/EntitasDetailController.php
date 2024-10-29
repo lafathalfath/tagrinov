@@ -34,6 +34,11 @@ class EntitasDetailController extends Controller
             'agroekosistem' => 'nullable|string',
             'kandungan' => 'nullable|string',
             'syarat_tumbuh' => 'nullable|string',
+            'judul_buku' => 'nullable|string',
+            'url_buku' => 'nullable|url|required_with:judul_buku',
+        ], [
+            'url_buku.required_with' => 'URL wajib diisi jika judul diisi.',
+            'url_buku.url' => 'URL harus berupa URL yang valid.',
         ]);
     
         // Cari entitas detail berdasarkan entitas_id

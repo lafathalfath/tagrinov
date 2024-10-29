@@ -22,6 +22,8 @@ return new class extends Migration
             $table->text('agroekosistem')->nullable();
             $table->text('kandungan')->nullable();
             $table->text('syarat_tumbuh')->nullable();
+            $table->string('judul_buku')->nullable();
+            $table->string('url_buku')->nullable();
             $table->timestamps();
 
             $table->foreign('entitas_id')->references('id')->on('entitas')->onDelete('cascade');

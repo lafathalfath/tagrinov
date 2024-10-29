@@ -18,6 +18,9 @@
     .detail-text p {
         font-family: sans-serif;
     }
+    .detail-text a {
+        text-decoration: none;
+    }
     .font-size-button {
             position: fixed;
             right: 20px; /* Jarak dari kanan */
@@ -97,6 +100,15 @@
                 @if ($tanaman->entitas_detail->syarat_tumbuh)
                     <p><strong>Syarat Tumbuh:</strong> {{ $tanaman->entitas_detail->syarat_tumbuh }}</p>
                 @endif
+                @if ($tanaman->entitas_detail->judul_buku && $tanaman->entitas_detail->url_buku)
+                    <p>
+                        <strong>
+                        <a href="{{ $tanaman->entitas_detail->url_buku }}" target="_blank" rel="noopener noreferrer">
+                            <i class="fa-regular fa-file"></i> {{ $tanaman->entitas_detail->judul_buku }}
+                        </a>
+                    </strong> 
+                    </p>
+                @endif
                 
                 {{-- <ul>
                     <li>Mengandung banyak vitamin dan mineral</li>
@@ -174,13 +186,17 @@
         let fontSize = 16; // Ukuran font awal
 
         document.getElementById('increaseFont').addEventListener('click', function() {
-            fontSize += 2; // Tambah 2px
-            detailText.style.fontSize = fontSize + 'px'; // Terapkan ukuran font baru
+            if (fontSize < 28) { // Batasi maksimal 28px
+                fontSize += 2; // Tambah 2px
+                detailText.style.fontSize = fontSize + 'px'; // Terapkan ukuran font baru
+            }
         });
 
         document.getElementById('decreaseFont').addEventListener('click', function() {
-            fontSize = Math.max(12, fontSize - 2); // Kurangi 2px, minimum 12px
-            detailText.style.fontSize = fontSize + 'px'; // Terapkan ukuran font baru
+            if (fontSize > 12) { // Minimum 12px
+                fontSize = Math.max(12, fontSize - 2); // Kurangi 2px, minimum 12px
+                detailText.style.fontSize = fontSize + 'px'; // Terapkan ukuran font baru
+            }
         });
 </script>
 @endsection
