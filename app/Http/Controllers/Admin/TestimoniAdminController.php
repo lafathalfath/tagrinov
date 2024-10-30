@@ -5,14 +5,14 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Feedback;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class TestimoniAdminController extends Controller
 {
     public function index()
     {
         $feedbacks = Feedback::all();
-        $pendingCount = Feedback::where('status', 'pending')->count(); // Hitung jumlah pending
-        return view('admin.testimoni.index', compact('feedbacks', 'pendingCount'));
+        return view('admin.testimoni.index', compact('feedbacks'));
     }
 
     public function approve($id)
@@ -37,6 +37,9 @@ class TestimoniAdminController extends Controller
     public function destroy($id)
     {
         $feedback = Feedback::find($id);
+        if ($feedback->foto) {
+            Storage::disk('public')->delete($feedback->foto);
+        }
         if ($feedback) {
             $feedback->delete();
         }

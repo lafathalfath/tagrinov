@@ -132,6 +132,13 @@ class KunjunganController extends Controller
         if (!$kunjungan) {
             return back()->with('error', 'Data kunjungan tidak ditemukan.');
         }
+        if ($kunjungan->url_foto_ktp) {
+            Storage::disk('public')->delete($kunjungan->url_foto_ktp);
+        }
+
+        if ($kunjungan->url_foto_selfie) {
+            Storage::disk('public')->delete($kunjungan->url_foto_selfie);
+        }
         if ($kunjungan->delete()) {
             return back()->with('success', 'Data kunjungan berhasil dihapus.');
         }
@@ -166,6 +173,15 @@ class KunjunganController extends Controller
         $kunjungan->save();
 
         return back()->with('success', 'Permohonan kunjungan telah disetujui dan telah ditampilan pada Kalendar Events.');
+    }
+
+    public function cancelApproval($id)
+    {
+        $kunjungan = Kunjungan::findOrFail($id);
+        $kunjungan->status_setujui = false;
+        $kunjungan->save();
+
+        return back()->with('success', 'Persetujuan kunjungan ini telah dibatalkan.');
     }
 }
     

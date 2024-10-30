@@ -264,6 +264,87 @@
         </div>
     </section>
 
+    <section id="testimoni" class="py-5 bg-light">
+        <div class="container">
+            <h2 class="text-center">Testimoni Pengunjung</h2>
+            <div id="testimoniCarousel" class="carousel slide mt-4" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="d-flex justify-content-center">
+                            <div class="testimonial-box p-4 shadow-sm bg-white rounded d-flex align-items-center">
+                                <div class="testimonial-img me-4">
+                                    <img src="{{ asset('assets/image/hero3.webp') }}" class="rounded-circle" alt="Foto Testi" width="80" height="80">
+                                </div>
+                                <div>
+                                    <p class="testimonial-text">"Tempatnya sangat indah dan asri! Sangat cocok untuk bersantai dan berfoto-foto bersama keluarga."</p>
+                                    <div class="rating">
+                                        <span class="text-warning">&#9733;</span>
+                                        <span class="text-warning">&#9733;</span>
+                                        <span class="text-warning">&#9733;</span>
+                                        <span class="text-warning">&#9733;</span>
+                                        <span class="text-muted">&#9733;</span>
+                                    </div>
+                                    <h5 class="mt-3">- Budi, Jakarta</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="d-flex justify-content-center">
+                            <div class="testimonial-box p-4 shadow-sm bg-white rounded d-flex align-items-center">
+                                <div class="testimonial-img me-4">
+                                    <img src="{{ asset('assets/image/hero3.webp') }}" class="rounded-circle" alt="User Image" width="80" height="80">
+                                </div>
+                                <div>
+                                    <p class="testimonial-text">"Suasana di sini sangat menyegarkan, saya sangat menikmati waktu saya di sini."</p>
+                                    <div class="rating">
+                                        <span class="text-warning">&#9733;</span>
+                                        <span class="text-warning">&#9733;</span>
+                                        <span class="text-warning">&#9733;</span>
+                                        <span class="text-muted">&#9733;</span>
+                                        <span class="text-muted">&#9733;</span>
+                                    </div>
+                                    <h5 class="mt-3">- Siti, Bandung</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="d-flex justify-content-center">
+                            <div class="testimonial-box p-4 shadow-sm bg-white rounded d-flex align-items-center">
+                                <div class="testimonial-img me-4">
+                                    <img src="{{ asset('assets/image/hero3.webp') }}" class="rounded-circle" alt="User Image" width="80" height="80">
+                                </div>
+                                <div>
+                                    <p class="testimonial-text">"Pemandangannya sangat memukau, saya pasti akan datang lagi!"</p>
+                                    <div class="rating">
+                                        <span class="text-warning">&#9733;</span>
+                                        <span class="text-warning">&#9733;</span>
+                                        <span class="text-warning">&#9733;</span>
+                                        <span class="text-warning">&#9733;</span>
+                                        <span class="text-warning">&#9733;</span>
+                                    </div>
+                                    <h5 class="mt-3">- Andi, Surabaya</h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#testimoniCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#testimoniCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+            <div class="text-center mt-4">
+                <a href="{{ route('testimoni.index') }}" class="btn btn-success">Lihat Semua Testimoni</a>
+            </div>
+        </div>
+    </section>
+
     <!-- Popup -->
     <div class="popup-overlay"></div>
     <div class="popup">

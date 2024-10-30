@@ -5,7 +5,13 @@
     title.innerHTML += ' | Edit Slide';
 </script>
 <div class="container">
-    <h2 class="mb-4">Edit Slide</h2>
+    <h2>Edit Slide</h2>
+    <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+          <li class="breadcrumb-item" aria-current="page">Edit Slide</li>
+        </ol>
+    </nav>
         <form action="{{ route('admin.welcome.update', $welcomeText->id) }}" method="POST">
             @csrf
             <div class="mb-3">

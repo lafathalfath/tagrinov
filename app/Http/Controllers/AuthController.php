@@ -58,18 +58,18 @@ class AuthController extends Controller
                     ->first();
 
         if (!$user) {
-            return redirect()->back()->with('error', 'User not found'); // Redirect dengan error
+            return redirect()->back()->with('error', 'Akun tidak ditemukan.'); // Redirect dengan error
         }
 
         // Memeriksa password
         if (!Hash::check($request->password, $user->password)) {
-            return redirect()->back()->with('error', 'Invalid password'); // Redirect dengan error
+            return redirect()->back()->with('error', 'Password salah!'); // Redirect dengan error
         }
 
         // Melakukan login
-        Auth::login($user);
+        Auth::login($user, $request->has('remember'));
 
-        return redirect('/admin'); // Redirect ke dashboard setelah login
+        return redirect('/admin')->with('success', 'Login berhasil! Selamat datang Admin ' . $user->name . '.'); // Redirect ke dashboard setelah login
     }
 
     public function logout()

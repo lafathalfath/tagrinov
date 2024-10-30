@@ -27,6 +27,11 @@
             </tr>
         </thead>
         <tbody>
+            @if($kunjungan->isEmpty())
+                <tr>
+                    <td colspan="8" class="text-center">Belum ada kunjungan yang tersedia.</td>
+                </tr>
+            @else
             @foreach($kunjungan as $item)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
@@ -75,5 +80,6 @@
             @endforeach
         </tbody>
     </table>
+    @endif
 </div>
 @endsection

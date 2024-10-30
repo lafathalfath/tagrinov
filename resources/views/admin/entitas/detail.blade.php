@@ -74,6 +74,23 @@
             <textarea class="form-control" id="syarat_tumbuh" name="syarat_tumbuh" rows="4">{{ old('syarat_tumbuh', $entitasDetail->syarat_tumbuh ?? '') }}</textarea>
         </div>
 
+        {{-- Judul Buku dan URL Buku --}}
+        <div class="mb-3">
+            <label class="form-label">Lampiran File/Buku</label>
+            <div class="input-group">
+                <span class="input-group-text">Judul</span>
+                <input type="text" class="form-control" name="judul_buku" 
+                    placeholder="Judul Buku" 
+                    value="{{ old('judul_buku', $entitasDetail->judul_buku ?? '') }}">
+
+                <span class="input-group-text">URL</span>
+
+                <input type="url" class="form-control" name="url_buku" 
+                    placeholder="https://contoh.com" 
+                    value="{{ old('url_buku', $entitasDetail->url_buku ?? '') }}">
+            </div>
+        </div>
+
         {{-- Tombol Simpan --}}
         <button type="submit" class="btn btn-primary">Simpan</button>
         <a href="{{ route('entitas.getAll') }}" class="btn btn-secondary">Kembali</a>

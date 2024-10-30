@@ -97,29 +97,19 @@ class EntitasController extends Controller
         ]);
     
         $data = $request->except('_token');
-    
-        // Handle image upload
-        if ($request->hasFile('url_gambar')) {
-            $image = $request->file('url_gambar');
-            $filename = $image->hashName(); // Membuat nama file unik dengan hashName
-            $image->move(storage_path('app/public/entitas'), $filename); // Simpan ke folder storage
-            $data['url_gambar'] = "/storage/entitas/$filename"; // Simpan URL gambar
-        }
-    
-        // Simpan data entitas ke database
+
+        // Simpan data entitas terlebih dahulu
         $entitas = Entitas::create($data);
     
-        // Jika entitas berhasil disimpan, buat entitas detail
-        if ($entitas) {
-            // Buat entitas detail dengan hanya entitas_id yang terisi
-            EntitasDetail::create([
-                'entitas_id' => $entitas->id,
-            ]);
-
-            return back()->with('success', 'Entitas berhasil ditambahkan!');
-        } else {
-            return back()->withErrors('Gagal menambahkan entitas');
+        // Handle gambar jika diunggah
+        if ($request->hasFile('url_gambar')) {
+            $this->handleImageUpload($request, $entitas->id);
         }
+    
+        // Buat detail entitas
+        EntitasDetail::create(['entitas_id' => $entitas->id]);
+    
+        return back()->with('success', 'Entitas berhasil ditambahkan!');
     }
 
     public function update(Request $request, $id) {
@@ -160,36 +150,18 @@ class EntitasController extends Controller
             'url_gambar.max' => 'Ukuran gambar maksimal 2MB',
         ]);
     
-        // Handle image upload
-        if ($request->hasFile('url_gambar')) {
-            // Delete old image if it exists
-            if ($entitas->url_gambar && file_exists(storage_path('app/public/' . $entitas->url_gambar))) {
-                unlink(storage_path('app/public/' . $entitas->url_gambar));
-            }
-    
-            // Proses upload gambar baru ke folder 'storage/entitas'
-            $image = $request->file('url_gambar');
-            $filename = $image->hashName(); // Menggunakan hashName untuk membuat nama file yang unik
-            $image->move(storage_path('app/public/entitas'), $filename); // Pindahkan gambar ke storage
-    
-            // Simpan URL gambar
-            $url_gambar = "/storage/entitas/$filename";
-            $entitas->url_gambar = $url_gambar;
+    // Jika ada file gambar baru, hapus yang lama dan unggah yang baru
+    if ($request->hasFile('url_gambar')) {
+        if ($entitas->url_gambar && file_exists(storage_path('app/public/' . $entitas->url_gambar))) {
+            unlink(storage_path('app/public/' . $entitas->url_gambar));
         }
-    
-        // Update entitas dengan data yang di-submit
-        $entitas->update([
-            'nama' => $request->nama,
-            'nama_latin' => $request->nama_latin,
-            'nama_daerah' => $request->nama_daerah,
-            'family_id' => $request->family_id,
-            'jenis_id' => $request->jenis_id,
-            'kategori_id' => $request->kategori_id,
-            'url_gambar' => $entitas->url_gambar, // Mengupdate gambar jika ada
-        ]);
-    
-        // Mengembalikan response sukses
-        return back()->with('success', 'Data berhasil diperbarui!');
+        $this->handleImageUpload($request, $id);
+    }
+
+    // Update entitas
+    $entitas->update($request->except(['_token', 'url_gambar']));
+
+    return back()->with('success', 'Data berhasil diperbarui!');
     }
     
 
@@ -200,7 +172,24 @@ class EntitasController extends Controller
         //     return response()->json(['status' => 'deleted'], 204);
         // }
         // return response()->json(['status' => 'error', 'message' => "internal server error"], 500);
+        if ($entitas->url_gambar && file_exists(public_path($entitas->url_gambar))) {
+            unlink(public_path($entitas->url_gambar));
+        }
         $entitas->delete();
         return back()->with('success', 'Data berhasil dihapus!');
+    }
+
+    private function handleImageUpload($request, $id) {
+        $image = $request->file('url_gambar');
+        $filename = "gambar_{$id}." . $image->getClientOriginalExtension(); // Nama file format gambar_(id)
+        $path = storage_path('app/public/entitas');
+    
+        // Pindahkan gambar ke folder 'storage/app/public/entitas'
+        $image->move($path, $filename);
+    
+        // Simpan URL gambar ke database
+        Entitas::where('id', $id)->update([
+            'url_gambar' => "/storage/entitas/$filename"
+        ]);
     }
 }
