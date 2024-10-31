@@ -56,7 +56,7 @@
 					<th>Jenis Pengunjung</th>
 					<td>{{ $kunjungan->jenis_pengunjung->nama }}</td>
 				</tr> @if($kunjungan->jumlah_orang) <tr>
-					<th>Pilihan Pertanian</th>
+					<th>Jumlah Orang</th>
 					<td>{{ $kunjungan->jumlah_orang }}</td>
 				</tr> @endif 
                 <tr>

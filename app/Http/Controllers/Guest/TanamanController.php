@@ -18,7 +18,7 @@ class TanamanController extends Controller
         // $tanaman = Entitas::where('kategori_id', 1)->paginate(10);
         $search = $request->input('search');
         $jenisId = $request->input('jenis_id');
-        $query = Entitas::where('kategori_id', 1);
+        $query = Entitas::query();
         if ($search) {
             $query->where('nama', 'like', '%' . $search . '%');
         }
