@@ -32,8 +32,8 @@
             <a href="{{ route('entitas.getAll') }}" class="text-white text-decoration-none">
                 <div class="card text-white bg-success mb-3">
                     <div class="card-body">
-                        <h6 class="card-title">Total Koleksi Tanaman</h6>
-                        <p class="card-text" style="font-size: 30px; font-weight: bold;">{{ $totalKoleksiTanaman }}</p>
+                        <h6 class="card-title">Total Koleksi</h6>
+                        <p class="card-text" style="font-size: 30px; font-weight: bold;">{{ $totalKoleksi }}</p>
                     </div>
                     <div class="card-footer">
                         <span>Lihat Koleksi</span>
@@ -72,7 +72,7 @@
         </div>
 
         <div class="col-md-6">
-            <h5 class="text-center">Data per Jenis Tanaman</h5>
+            <h5 class="text-center">Data per Jenis</h5>
             <canvas id="jenisTanamanChart" width="100%" height="100px"></canvas>
         </div>
     </div>
@@ -120,7 +120,7 @@
         data: {
             labels: jenisTanamanLabels,
             datasets: [{
-                label: 'Jumlah Jenis Tanaman',
+                label: 'Jumlah',
                 data: jenisTanamanValues,
                 backgroundColor: [
                     'rgba(255, 99, 132, 0.6)',
@@ -128,7 +128,8 @@
                     'rgba(255, 206, 86, 0.6)',
                     'rgba(75, 192, 192, 0.6)',
                     'rgba(153, 102, 255, 0.6)',
-                    'rgba(255, 159, 64, 0.6)'
+                    'rgba(255, 159, 64, 0.6)',
+                    'rgba(144, 238, 144, 0.6)'
                 ],
             }]
         },
@@ -140,7 +141,7 @@
                 },
                 title: {
                     display: true,
-                    text: 'Jenis Tanaman'
+                    text: 'Semua Jenis'
                 }
             }
         }
