@@ -152,9 +152,12 @@ class EntitasController extends Controller
     
     // Jika ada file gambar baru, hapus yang lama dan unggah yang baru
     if ($request->hasFile('url_gambar')) {
-        if ($entitas->url_gambar && file_exists(storage_path('app/public/' . $entitas->url_gambar))) {
-            unlink(storage_path('app/public/' . $entitas->url_gambar));
+        // Hapus gambar lama jika ada
+        $oldImagePath = storage_path('app/public' . str_replace('/storage', '', $entitas->url_gambar));
+        if ($entitas->url_gambar && file_exists($oldImagePath)) {
+            unlink($oldImagePath);
         }
+        // Unggah gambar baru
         $this->handleImageUpload($request, $id);
     }
 
