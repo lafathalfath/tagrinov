@@ -37,7 +37,7 @@
 
 </style>
 <div class="container">
-    <h3>Koleksi Tanaman</h3>
+    <h3>Koleksi</h3>
     <div class="row mb-3 mt-3 search-bar">
         <div class="col-12 col-md-6 mb-2">
             <form action="{{ route('tanaman.index') }}" method="GET">
