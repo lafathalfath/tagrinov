@@ -144,7 +144,7 @@ footer .bottom-text {
                         <a class="nav-link {{ request()->path()=='/'?'active':'' }}" aria-current="page" href="/">Beranda</a>
                     </li>
                     <li class="nav-item {{ request()->url()==route('tanaman.index')?'active':'' }}">
-                        <a class="nav-link" href="{{ route('tanaman.index') }}">Koleksi Tanaman</a>
+                        <a class="nav-link" href="{{ route('tanaman.index') }}">Koleksi</a>
                     </li>
                     <li class="nav-item {{ request()->url()==route('guest.permohonan.kunjungan.index')?'active':'' }}">
                         <a class="nav-link" href="{{ route('guest.permohonan.kunjungan.index') }}">Permohonan Kunjungan</a>
@@ -167,30 +167,47 @@ footer .bottom-text {
         @yield('content')
     </div>
 
+@php
+    $footer = App\Models\FooterSetting::first();
+@endphp
 <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6 col-md-12 map mb-4 mb-lg-0">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d990.8860998470195!2d106.7875092695418!3d-6.579033999588393!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e69c5311ad80031%3A0xae42de3ba17aceb7!2sBalai%20Besar%20Penerapan%20Standar%20Instrumen%20Pertanian%20(BBPSIP)!5e0!3m2!1sen!2sid!4v1721834025093!5m2!1sen!2sid" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-                </div>
-                <div class="col-lg-6 col-md-12 contact-info">
-                    <h4>KONTAK</h4>
-                    <p><i class="fas fa-phone"></i> (0251) 8351277 / WA : 085183071943</p>
-                    <p><i class="fas fa-fax"></i> (0251) 8350928</p>
-                    <p><i class="fas fa-envelope"></i> <a href="mailto:bsip.bbpsip@pertanian.go.id">bsip.bbpsip@pertanian.go.id</a></p>
-                    <p>Jl. Tentara Pelajar No.10, RT.01/RW.07, Ciwaringin, Kecamatan Bogor Tengah, Kota Bogor, Jawa Barat 16124</p>
-                    <p><a href="https://bbpsip.bsip.pertanian.go.id" target="_blank">https://bbpsip.bsip.pertanian.go.id</a></p>
-                    <div class="social-links">
-                        <a href="https://www.facebook.com/BSIPPenerapan/" target="_blank"><i class="fab fa-facebook"></i></a>
-                        <a href="https://www.youtube.com/@bsippenerapan" target="_blank"><i class="fab fa-youtube"></i></a>
-                        <a href="https://instagram.com/bsippenerapan" target="_blank"><i class="fab fa-instagram"></i></a>
-                        <a href="https://twitter.com/bsippenerapan" target="_blank"><i class="fab fa-x-twitter"></i></a>
-                        <a href="https://tiktok.com/@bsippenerapan" target="_blank"><i class="fab fa-tiktok"></i></a>
-                    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 col-md-12 map mb-4 mb-lg-0">
+                {!! $footer->map_link !!}
+            </div>
+            <div class="col-lg-6 col-md-12 contact-info">
+                <h4>KONTAK</h4>
+                <p><i class="fas fa-phone"></i> {{ $footer->phone }}</p>
+                <p><i class="fas fa-fax"></i> {{ $footer->fax }}</p>
+                <p><i class="fas fa-envelope"></i> <a href="mailto:{{ $footer->email }}">{{ $footer->email }}</a></p>
+                <p>{{ $footer->address }}</p>
+                <p><a href="{{ $footer->website_link }}" target="_blank">{{ $footer->website_link }}</a></p>
+                <div class="social-links">
+                    @if (!empty($footer->facebook_link))
+                        <a href="{{ $footer->facebook_link }}" target="_blank"><i class="fab fa-facebook"></i></a>
+                    @endif
+                
+                    @if (!empty($footer->youtube_link))
+                        <a href="{{ $footer->youtube_link }}" target="_blank"><i class="fab fa-youtube"></i></a>
+                    @endif
+                
+                    @if (!empty($footer->instagram_link))
+                        <a href="{{ $footer->instagram_link }}" target="_blank"><i class="fab fa-instagram"></i></a>
+                    @endif
+                
+                    @if (!empty($footer->twitter_link))
+                        <a href="{{ $footer->twitter_link }}" target="_blank"><i class="fab fa-x-twitter"></i></a>
+                    @endif
+                
+                    @if (!empty($footer->tiktok_link))
+                        <a href="{{ $footer->tiktok_link }}" target="_blank"><i class="fab fa-tiktok"></i></a>
+                    @endif
                 </div>
             </div>
         </div>
-        <p class="bottom-text">&copy; 2024 Balai Besar Penerapan Standar Instrumen Pertanian. All Rights Reserved</p>
+    </div>
+    <p class="bottom-text">&copy; 2024 Balai Besar Penerapan Standar Instrumen Pertanian & IPB. All Rights Reserved</p>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

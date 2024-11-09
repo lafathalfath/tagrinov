@@ -16,7 +16,7 @@ class AdminController extends Controller
 
         $totalkunjungan = Kunjungan::where('status_setujui', true)->count();
         $totalkunjunganpending = Kunjungan::where('status_setujui', false)->count();
-        $totalKoleksiTanaman = Entitas::where('kategori_id', 1)->count(); // Menggunakan kategori_id
+        $totalKoleksi = Entitas::count();
         $totaltestimoni = Feedback::where('status', 'Disetujui')->count();
         $totaltestimonipending = Feedback::where('status', 'pending')->count();
 
@@ -44,7 +44,7 @@ class AdminController extends Controller
         return view('admin.dashboard', compact(
             'totalkunjungan', 
             'totalkunjunganpending', 
-            'totalKoleksiTanaman',
+            'totalKoleksi',
             'totaltestimoni',
             'totaltestimonipending',
             'kunjunganPerBulanLengkap' ,
