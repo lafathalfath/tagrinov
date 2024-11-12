@@ -8,6 +8,9 @@ use App\Models\Family;
 use App\Models\Jenis;
 use App\Models\Kategori;
 use Illuminate\Http\Request;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Storage;
 
 class EntitasController extends Controller
 {
@@ -194,5 +197,24 @@ class EntitasController extends Controller
         Entitas::where('id', $id)->update([
             'url_gambar' => "/storage/entitas/$filename"
         ]);
+    }
+
+    public function generateQrCode($id)
+    {
+        $entitas = Entitas::find($id);
+    
+        // Cek apakah entitas ditemukan
+        if (!$entitas) {
+            return response()->json(['status' => 'error', 'message' => "Data tidak ditemukan"], 404);
+        }
+    
+        // Generate URL untuk halaman detail entitas
+        $url = route('tanaman.detail', Crypt::encrypt($entitas->id));
+    
+        // Buat QR code dalam format SVG
+        $qrCodeSvg = QrCode::format('svg')->size(150)->generate($url);
+    
+        // Kembalikan QR code SVG
+        return response($qrCodeSvg)->header('Content-Type', 'image/svg+xml');
     }
 }

@@ -134,6 +134,7 @@ Route::middleware(['admin'])->prefix('/admin')->group(function () {
         Route::post('/', [EntitasController::class, 'store'])->name('entitas.store');
         Route::put('/{id}', [EntitasController::class, 'update'])->name('entitas.update');
         Route::delete('/{id}', [EntitasController::class, 'destroy'])->name('entitas.destroy');
+        Route::get('/{id}/qrcode', [EntitasController::class, 'generateQrCode'])->name('entitas.qrcode');
 
         // Route for EntitasDetail
         Route::prefix('/detail')->group(function () {

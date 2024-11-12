@@ -13,13 +13,13 @@
         </ol>
     </nav>
     <!-- Create Button -->
-    <button class="btn btn-success mb-4" data-bs-toggle="modal" data-bs-target="#createModal"><i class="fa fa-plus"></i> Tambah Entitas</button>
+    <button class="btn btn-success mb-4" data-bs-toggle="modal" data-bs-target="#createModal"><i class="fa fa-plus"></i> Tambahkan</button>
 
     <form method="GET" action="{{ route('entitas.getAll') }}">
         <div class="row mb-3">
             <!-- Pencarian Nama -->
             <div class="col-md-3">
-                <input type="text" name="search" class="form-control" placeholder="Cari entitas" value="{{ request('search') }}">
+                <input type="text" name="search" class="form-control" placeholder="Cari.." value="{{ request('search') }}">
             </div>
     
             <!-- Filter Family -->
@@ -79,6 +79,7 @@
                 <th>Family</th>
                 <th>Jenis</th>
                 <th>Kategori</th>
+                <th>Kode QR</th>
                 <th>Aksi</th>
             </tr>
         </thead>
@@ -93,8 +94,62 @@
                 <td>{{ $item->jenis->nama }}</td>
                 <td>{{ $item->kategori->nama }}</td>
                 <td>
+                    {{-- <button class="btn btn-primary btn-sm" title="Lihat QR"><i class="fa-solid fa-qrcode"></i> Lihat QR</button> --}}
+    
+                    <!-- Tombol untuk membuka modal -->
+                    <button type="button" class="btn btn-primary btn-sm" title="Lihat QR" data-toggle="modal" data-target="#qrModal{{ $item->id }}">
+                        <i class="fa-solid fa-qrcode"></i> Lihat QR
+                    </button>
+    
+                    <!-- Modal untuk menampilkan QR code -->
+                    {{-- <div class="modal fade" id="qrModal{{ $item->id }}" tabindex="-1" role="dialog" aria-labelledby="qrModalLabel{{ $item->id }}" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="qrModalLabel{{ $item->id }}">QR Code untuk {{ $item->nama }}</h5>
+                                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body text-center">
+                                    <!-- Tampilkan QR code dari URL SVG -->
+                                    <img src="{{ route('entitas.qrcode', $item->id) }}" alt="QR Code untuk {{ $item->nama }}" />
+                                </div>
+                            </div>
+                        </div>
+                    </div> --}}
+                    <!-- Modal untuk menampilkan QR code -->
+                    <div class="modal fade" id="qrModal{{ $item->id }}" tabindex="-1" role="dialog" aria-labelledby="qrModalLabel{{ $item->id }}" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content" style="background-color: #faf2cc;">
+                                <div class="modal-header bg-primary text-white">
+                                    <h5 class="modal-title" id="qrModalLabel{{ $item->id }}"><i class="fa-solid fa-qrcode"></i> QR Code</h5>
+                                    <button type="button" class="btn-close bg-white" data-dismiss="modal" aria-label="Close">
+                                    </button>
+                                </div>
+                                <div class="modal-body d-flex align-items-center justify-content-center" style="gap: 40px;">
+                                    <!-- Kolom kiri untuk nama tanaman dan nama latin -->
+                                    <div>
+                                        <h5 style="margin: 0; font-weight: bold;">{{ $item->nama }}</h5>
+                                        <p style="font-style: italic; color: #555;">{{ $item->nama_latin }}</p>
+                                    </div>
+
+                                    <!-- Kolom kanan untuk QR Code -->
+                                    <div>
+                                        <img src="{{ route('entitas.qrcode', $item->id) }}" alt="QR Code untuk {{ $item->nama }}"/>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    {{-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button> --}}
+                                    <button type="button" class="btn btn-sm btn-primary" onclick="printQRCode('qrModal{{ $item->id }}', '{{ $item->nama }}')"><i class="fa-solid fa-print"></i> View & Print</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </td>
+                <td>
                     <!-- Edit Button -->
-                    <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editEntitasModal{{ $item->id }}">Edit</button>
+                    <button class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editEntitasModal{{ $item->id }}" title="Edit"><i class="fa-solid fa-pen-to-square" style="color: #FFF;"></i></button>
 
                     <!-- Modal Edit -->
                     <div class="modal fade" id="editEntitasModal{{ $item->id }}" tabindex="-1" aria-labelledby="editEntitasModalLabel{{ $item->id }}" aria-hidden="true">
@@ -103,9 +158,9 @@
                                 <form action="{{ route('entitas.update', $item->id) }}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     @method('PUT')
-                                    <div class="modal-header">
+                                    <div class="modal-header bg-warning text-dark">
                                         <h5 class="modal-title" id="editEntitasModalLabel{{ $item->id }}">Edit Entitas</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
                                         <div class="row">
@@ -214,18 +269,18 @@
                     </div>
 
                     <!-- Detail Button -->
-                    <a href="{{ route('entitas.detail.getById', $item->id) }}" class="btn btn-success btn-sm">Detail</a>
+                    <a href="{{ route('entitas.detail.getById', $item->id) }}" class="btn btn-success btn-sm" title="Detail">Detail</a>
 
                     <!-- Delete Button with Modal -->
-                    <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $item->id }}">Hapus</button>
+                    <button class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal-{{ $item->id }}" title="Hapus"><i class="fa-solid fa-trash"></i></button>
                     
                     <!-- Delete Confirmation Modal -->
                     <div class="modal fade" id="deleteModal-{{ $item->id }}" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
-                                <div class="modal-header">
+                                <div class="modal-header bg-danger text-white">
                                     <h5 class="modal-title" id="deleteModalLabel">Konfirmasi Hapus</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
                                     Apakah Anda yakin ingin menghapus entitas "{{ $item->nama }}"?
@@ -254,9 +309,9 @@
     <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="createModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg"> <!-- Mengubah ukuran modal agar lebih lebar -->
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="createModalLabel">Tambah Entitas</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title" id="createModalLabel">Tambah Koleksi</h5>
+                    <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <form action="{{ route('entitas.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
@@ -321,7 +376,70 @@
             </div>
         </div>
     </div>
-    
-
 </div>
+<!-- Import libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html-docx-js/0.3.1/html-docx.min.js"></script>
+
+<script>
+function printQRCode(modalId, nama) {
+    // Ambil konten modal
+    var modalContent = document.getElementById(modalId).querySelector('.modal-body').innerHTML;
+
+    // Membuat jendela baru untuk mencetak
+    var printWindow = window.open('', '_blank', 'width=800,height=600');
+    printWindow.document.write(`
+        <html>
+            <head>
+                <title>${nama} QR Code</title>
+                <style>
+                    @page {
+                        size: landscape;
+                        margin: 20mm;
+                    }
+                    body {
+                        font-family: Arial, sans-serif;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        height: 100vh;
+                        background-color: #faf2cc;
+                        margin: 0;
+                    }
+                    .content {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        gap: 100px;
+                        text-align: center;
+                    }
+                    h5 {
+                        margin: 0;
+                        font-weight: bold;
+                        font-size: 40px;
+                    }
+                    p {
+                        margin: 10 0;
+                        font-style: italic;
+                        color: #555;
+                        font-size: 30px;
+                    }
+                    img {
+                        width: 300px;
+                        height: 300px;
+                    }
+                </style>
+            </head>
+            <body>
+                <div class="content">
+                    ${modalContent}
+                </div>
+            </body>
+        </html>
+    `);
+    printWindow.document.close();
+    printWindow.print();
+}
+
+
+</script>
 @endsection
