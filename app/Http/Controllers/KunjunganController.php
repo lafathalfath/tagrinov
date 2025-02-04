@@ -15,21 +15,39 @@ use Illuminate\Contracts\Pipeline\Hub;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\App;
 
 class KunjunganController extends Controller
 {
-    public function getAll() {
-        $kunjungan = Kunjungan::get();
-        // if (!$kunjungan) return response()->json(['status' => 'error', 'message' => 'cannot found any data'], 404);
-        // return response()->json(['status' => 'success', 'payload' => $kunjungan], 200);
-        // if ($kunjungan->isEmpty()) {
-        //     return back()->with('error', 'Tidak ada data yang ditemukan.');
-        // }
-        $kunjungan->each(function($item) {
-            $item->tanggal_kunjungan = Carbon::parse($item->tanggal_kunjungan)->locale('id')->translatedFormat('l, d F Y');
+    public function getAll(Request $request) {
+        $query = Kunjungan::query();
+    
+        // Ambil input pencarian
+        $search = $request->input('search');
+    
+        // Jika ada input search, lakukan pencarian di nama_lengkap, tanggal_kunjungan, asal_instansi
+        if ($search) {
+            $query->where('nama_lengkap', 'like', "%$search%")
+                  ->orWhere('tanggal_kunjungan', 'like', "%$search%")
+                  ->orWhere('asal_instansi', 'like', "%$search%");
+        }
+    
+        // Ambil data kunjungan
+        $kunjungan = $query->get();
+    
+        // Format tanggal ke bahasa Indonesia
+        // $kunjungan->each(function ($item) {
+        //     $item->tanggal_kunjungan = Carbon::parse($item->tanggal_kunjungan)->locale('id')->translatedFormat('l, d F Y');
+        // });
+        App::setLocale('id'); // Set bahasa ke Indonesia
+
+        $kunjungan = Kunjungan::all()->each(function ($item) {
+            $item->tanggal_kunjungan = Carbon::parse($item->tanggal_kunjungan)->translatedFormat('l, d F Y');
         });
-        return view('admin.kunjungan.index', compact('kunjungan'));
+    
+        return view('admin.kunjungan.index', compact('kunjungan', 'search'));
     }
+    
 
     public function getById($id) {
         $kunjungan = Kunjungan::find($id);

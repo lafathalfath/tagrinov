@@ -70,7 +70,7 @@
 
     <!-- Table -->
     <table class="table table-bordered">
-        <thead>
+        <thead class="table-primary">
             <tr>
                 <th>ID</th>
                 <th>Nama</th>
@@ -101,21 +101,6 @@
                         <i class="fa-solid fa-qrcode"></i> Lihat QR
                     </button>
     
-                    <!-- Modal untuk menampilkan QR code -->
-                    {{-- <div class="modal fade" id="qrModal{{ $item->id }}" tabindex="-1" role="dialog" aria-labelledby="qrModalLabel{{ $item->id }}" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="qrModalLabel{{ $item->id }}">QR Code untuk {{ $item->nama }}</h5>
-                                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body text-center">
-                                    <!-- Tampilkan QR code dari URL SVG -->
-                                    <img src="{{ route('entitas.qrcode', $item->id) }}" alt="QR Code untuk {{ $item->nama }}" />
-                                </div>
-                            </div>
-                        </div>
-                    </div> --}}
                     <!-- Modal untuk menampilkan QR code -->
                     <div class="modal fade" id="qrModal{{ $item->id }}" tabindex="-1" role="dialog" aria-labelledby="qrModalLabel{{ $item->id }}" aria-hidden="true">
                         <div class="modal-dialog" role="document">
@@ -379,11 +364,14 @@
 </div>
 <!-- Import libraries -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html-docx-js/0.3.1/html-docx.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 
 <script>
 function printQRCode(modalId, nama) {
     // Ambil konten modal
     var modalContent = document.getElementById(modalId).querySelector('.modal-body').innerHTML;
+
+    console.log(modalContent)
 
     // Membuat jendela baru untuk mencetak
     var printWindow = window.open('', '_blank', 'width=800,height=600');
@@ -437,8 +425,33 @@ function printQRCode(modalId, nama) {
         </html>
     `);
     printWindow.document.close();
-    printWindow.print();
+    
+    printWindow.onload = function(){
+        printWindow.print();
+    }
 }
+
+function downloadQRCodeAsPNG(modalId, fileName) {
+    // Ambil elemen modal
+    var modalElement = document.getElementById(modalId).querySelector('.modal-body');
+
+    // Gunakan html2canvas untuk membuat screenshot elemen
+    html2canvas(modalElement).then(function (canvas) {
+        // Konversi canvas ke data URL PNG
+        var imgData = canvas.toDataURL('image/png');
+
+        // Buat elemen link untuk mendownload
+        var link = document.createElement('a');
+        link.href = imgData;
+        link.download = fileName + '.png';
+
+        // Klik link secara otomatis untuk mendownload file
+        link.click();
+    }).catch(function (error) {
+        console.error('Gagal membuat PNG:', error);
+    });
+}
+
 
 
 </script>

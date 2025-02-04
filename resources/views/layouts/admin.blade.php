@@ -138,22 +138,25 @@
                 <li><a href="{{ route('kunjungan.getAll') }}" class="{{ request()->url() == route('kunjungan.getAll') ? 'active' : '' }}">Permohonan Kunjungan</a></li>
                 <li>
                 <a href="{{ route('admin.testimoni.index') }}" class="{{ request()->is('admin/testimoni') ? 'active' : '' }}">Testimoni</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Main
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <li>
-                        <a class="dropdown-item {{ request()->url() == route('admin.welcome.edit') ? 'active' : '' }}" href="{{ route('admin.welcome.edit') }}">
-                            Slide
-                        </a>
-                        <a class="dropdown-item {{ request()->url() == route('footer.edit') ? 'active' : '' }}" href="{{ route('footer.edit') }}">
-                            Footer
-                        </a>
-                    </li>
-                </ul>
-              </li>
+                </li>
+                <li>
+                <a href="{{ route('kelola-akun.index') }}" class="{{ request()->is('admin/kelola-akun') ? 'active' : '' }}">Kelola Akun</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Main
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li>
+                            <a class="dropdown-item {{ request()->url() == route('admin.welcome.edit') ? 'active' : '' }}" href="{{ route('admin.welcome.edit') }}">
+                                Slide
+                            </a>
+                            <a class="dropdown-item {{ request()->url() == route('footer.edit') ? 'active' : '' }}" href="{{ route('footer.edit') }}">
+                                Footer
+                            </a>
+                        </li>
+                    </ul>
+                </li>
 
                 {{-- <li><a href="{{ route('admin.verifikasiPj') }}" class="{{ request()->url() == route('admin.verifikasiPj') ? 'active' : '' }}">Verifikasi <br>Penanggungjawab</a></li> --}}
 
@@ -164,6 +167,7 @@
 
         <!-- Content -->
         <div class="content">
+            <!-- Alert Error -->
             @if ($errors->any())
                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
                     <ul>
@@ -174,7 +178,15 @@
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif
+
+            @if(session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            @endif
             
+            <!-- Alert Success -->
             @if (session('success'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">
                     {{ session('success') }}
