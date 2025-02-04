@@ -14,7 +14,7 @@
         </ol>
     </nav>
     <table class="table table-bordered">
-        <thead>
+        <thead class="table-primary">
             <tr>
                 <th>No</th>
                 <th>Nama</th>

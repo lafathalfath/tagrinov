@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\TestimoniAdminController;
 use App\Http\Controllers\Admin\WelcomeTextController;
+use App\Http\Controllers\Admin\ManageAccountController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FooterController;
 use App\Http\Controllers\EntitasController;
@@ -141,6 +142,14 @@ Route::middleware(['admin'])->prefix('/admin')->group(function () {
             Route::get('/{id}', [EntitasDetailController::class, 'getById'])->name('entitas.detail.getById');
             Route::put('/{id}', [EntitasDetailController::class, 'update'])->name('entitas.detail.update');
         });
+    });
+
+    Route::prefix('/kelola-akun')->group(function () {
+        Route::get('/', [ManageAccountController::class, 'index'])->name('kelola-akun.index');
+        Route::post('/add', [ManageAccountController::class, 'store'])->name('kelola-akun.store');
+        Route::put('/updateprofile', [ManageAccountController::class, 'updateProfile'])->name('kelola-akun.updateProfile');
+        Route::put('/updatepassword', [ManageAccountController::class, 'updatePassword'])->name('kelola-akun.updatePassword');
+        Route::delete('/{id}', [ManageAccountController::class, 'destroy'])->name('kelola-akun.destroy');
     });
 });
 // admin end

@@ -13,8 +13,19 @@
           <li class="breadcrumb-item" aria-current="page">Permohonan Kunjungan</li>
         </ol>
     </nav>
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <form method="GET" action="{{ route('kunjungan.getAll') }}">
+                <div class="input-group">
+                    <input type="text" name="search" class="form-control col-md-4" placeholder="Cari nama, tanggal, atau instansi.." value="{{ request('search') }}">
+                    <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
+                    <a href="{{ route('kunjungan.getAll') }}" class="btn btn-danger"><i class="fa fa-eraser"></i></a>
+                </div>
+            </form>
+        </div>
+    </div>
     <table class="table table-bordered table-hover">
-        <thead class="thead-dark">
+        <thead class="table-primary">
             <tr>
                 <th>No</th>
                 <th>Nama Lengkap</th>
@@ -29,7 +40,7 @@
         <tbody>
             @if($kunjungan->isEmpty())
                 <tr>
-                    <td colspan="8" class="text-center">Belum ada kunjungan yang tersedia.</td>
+                    <td colspan="8" class="text-center">Data tidak ditemukan.</td>
                 </tr>
             @else
             @foreach($kunjungan as $item)
