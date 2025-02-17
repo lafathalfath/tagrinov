@@ -135,7 +135,10 @@
                         </li>
                     </ul>
                 </li>
-                <li><a href="{{ route('kunjungan.getAll') }}" class="{{ request()->url() == route('kunjungan.getAll') ? 'active' : '' }}">Permohonan Kunjungan</a></li>
+                <li><a href="{{ route('kunjungan.getAll') }}" class="{{ request()->url() == route('kunjungan.getAll') ? 'active' : '' }}">Permohonan Kunjungan</a>
+                </li>
+                <li><a href="{{ route('benih.getAll') }}" class="{{ request()->url() == route('benih.getAll') ? 'active' : '' }}">Stok Benih</a>
+                </li>
                 <li>
                 <a href="{{ route('admin.testimoni.index') }}" class="{{ request()->is('admin/testimoni') ? 'active' : '' }}">Testimoni</a>
                 </li>

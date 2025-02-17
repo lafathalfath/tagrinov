@@ -35,10 +35,6 @@ class KunjunganController extends Controller
         // Ambil data kunjungan
         $kunjungan = $query->get();
     
-        // Format tanggal ke bahasa Indonesia
-        // $kunjungan->each(function ($item) {
-        //     $item->tanggal_kunjungan = Carbon::parse($item->tanggal_kunjungan)->locale('id')->translatedFormat('l, d F Y');
-        // });
         App::setLocale('id'); // Set bahasa ke Indonesia
 
         $kunjungan = Kunjungan::all()->each(function ($item) {

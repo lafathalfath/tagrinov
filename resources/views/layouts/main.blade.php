@@ -146,12 +146,12 @@ footer .bottom-text {
                     <li class="nav-item {{ request()->url()==route('tanaman.index')?'active':'' }}">
                         <a class="nav-link" href="{{ route('tanaman.index') }}">Koleksi</a>
                     </li>
+                    <li class="nav-item {{ request()->url()==route('stokbenih.index')?'active':'' }}">
+                        <a class="nav-link" href="{{ route('stokbenih.index') }}">Stok Benih</a>
+                    </li>
                     <li class="nav-item {{ request()->url()==route('guest.permohonan.kunjungan.index')?'active':'' }}">
                         <a class="nav-link" href="{{ route('guest.permohonan.kunjungan.index') }}">Permohonan Kunjungan</a>
                     </li>
-                    {{-- <li class="nav-item {{ request()->url()==route('stokBenih.index')?'active':'' }}">
-                        <a class="nav-link" href="{{ route('stokBenih.index') }}">Stok Benih</a>
-                    </li> --}}
                     <li class="nav-item {{ request()->url()==route('events.index')?'active':'' }}">
                         <a class="nav-link" a href="{{ route('events.index') }}">Event</a>
                     </li>
