@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\TestimoniAdminController;
 use App\Http\Controllers\Admin\WelcomeTextController;
 use App\Http\Controllers\Admin\ManageAccountController;
+use App\Http\Controllers\Admin\BenihController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FooterController;
 use App\Http\Controllers\EntitasController;
@@ -14,7 +15,7 @@ use App\Http\Controllers\Guest\TanamanController;
 use App\Http\Controllers\Guest\FeedbackController;
 use App\Http\Controllers\Guest\HomeController;
 use App\Http\Controllers\Guest\PermohonanController;
-use App\Http\Controllers\Guest\StokBenihController;
+use App\Http\Controllers\StokBenihController;
 use App\Http\Controllers\Guest\QrcodeController;
 use App\Http\Controllers\JenisController;
 use App\Http\Controllers\KategoriController;
@@ -36,9 +37,6 @@ use Illuminate\Support\Facades\Route;
 // guest start
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
 
-Route::get('/stokbenih', [StokBenihController::class, 'index'])->name('stokBenih.index');
-Route::get('/stokbenih/{id}/detail', [StokBenihController::class, 'detail'])->name('stokBenih.detail');
-
 //permohonan
 // Route::get('/kunjungan', [PermohonanController::class, 'kunjungan'])->name('permohonan.kunjungan.index');
 // Route::post('/kunjungan', [KunjunganController::class, 'store'])->name('kunjungan.store');
@@ -56,6 +54,11 @@ Route::prefix('/tanaman')->group(function () {
     Route::get('/', [TanamanController::class, 'index'])->name('tanaman.index');
     Route::get('/{id}/detail', [TanamanController::class, 'detail'])->name('tanaman.detail');
     Route::get('/qr/generate', [TanamanController::class, 'generateQrAll'])->name('tanaman.generate.qr');
+});
+
+Route::prefix('/stokbenih')->group(function () {
+    Route::get('/', [StokBenihController::class, 'index'])->name('stokbenih.index');
+    Route::get('/detail/{id}', [StokBenihController::class, 'detail'])->name('stokbenih.detail');
 });
 
 Route::prefix('/kunjungan')->group(function () {
@@ -136,7 +139,6 @@ Route::middleware(['admin'])->prefix('/admin')->group(function () {
         Route::put('/{id}', [EntitasController::class, 'update'])->name('entitas.update');
         Route::delete('/{id}', [EntitasController::class, 'destroy'])->name('entitas.destroy');
         Route::get('/{id}/qrcode', [EntitasController::class, 'generateQrCode'])->name('entitas.qrcode');
-
         // Route for EntitasDetail
         Route::prefix('/detail')->group(function () {
             Route::get('/{id}', [EntitasDetailController::class, 'getById'])->name('entitas.detail.getById');
@@ -150,6 +152,14 @@ Route::middleware(['admin'])->prefix('/admin')->group(function () {
         Route::put('/updateprofile', [ManageAccountController::class, 'updateProfile'])->name('kelola-akun.updateProfile');
         Route::put('/updatepassword', [ManageAccountController::class, 'updatePassword'])->name('kelola-akun.updatePassword');
         Route::delete('/{id}', [ManageAccountController::class, 'destroy'])->name('kelola-akun.destroy');
+    });
+
+    Route::prefix('/benih')->group(function () {
+        Route::get('/', [BenihController::class, 'getAll'])->name('benih.getAll');
+        Route::get('/{id}', [BenihController::class, 'getById'])->name('benih.getById');
+        Route::post('/', [BenihController::class, 'store'])->name('benih.store');
+        Route::put('/{id}', [BenihController::class, 'update'])->name('benih.update');
+        Route::delete('/{id}', [BenihController::class, 'destroy'])->name('benih.destroy');
     });
 });
 // admin end

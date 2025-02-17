@@ -59,56 +59,48 @@
         color: inherit;
     }
 </style>
+
 <div class="container">
     <h3>Stok Benih</h3>
-    <div class="search-bar">
-        <input type="text" id="search-input" placeholder="Cari">
-        <select id="category-select">
-            <option value="">Semua Kategori</option>
-            <option value="Tanaman Obat (TOGA)">Tanaman Obat (TOGA)</option>
-            <option value="Tanaman Buah">Tanaman Buah</option>
-            <option value="Tanaman Hias">Tanaman Hias</option>
-            <option value="Tanaman Liar">Tanaman Liar</option>
-            <option value="Tanaman Sayur">Tanaman Sayur</option>
-            <option value="Mamalia">Mamalia</option>
-            <option value="Pisces">Pisces</option>
-        </select>
-    </div>
-    <div class="seed-grid" id="seed-grid">
-        {{-- @foreach ($tanaman as $tm)
-            <div class="seed-item" data-name="{{ $tm->nama }}" data-category="{{ $tm->kategori }}">
-                <a href="{{ route('stobenih.detailbenih', $tm->id) }}"><img src="{{ asset('images/seed1.png') }}" alt="{{ $tm->nama }}">
-                <p>{{ $tm->nama }}</p></a>
+
+    <!-- FORM PENCARIAN -->
+    <div class="col-md-6 mt-3 mb-3">
+        <form action="{{ route('stokbenih.index') }}" method="GET">
+            <div class="input-group">
+                <input type="text" name="search" class="form-control" placeholder="Cari benih..." value="{{ request('search') }}">
+                <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i></button>
+                <a href="{{ route('stokbenih.index') }}" class="btn btn-danger"><i class="fa fa-eraser"></i></a>
             </div>
-        @endforeach --}}
-        <div class="seed-item" data-name="Kangkung" data-category="Tanaman Sayur">
-            <a href="{{ route('stokBenih.detail', Crypt::encryptString(1)) }}"><img src="{{ asset('images/kangkung.jpeg') }}" alt="Kangkung">
-            <p>Benih Kangkung</p></a>
-        </div>
+        </form>
+    </div>
+
+    <!-- DAFTAR BENIH -->
+    <div class="seed-grid">
+        @forelse ($benih as $item)
+            <div class="seed-item">
+                <a href="{{ route('stokbenih.detail', Crypt::encryptString($item->id)) }}">
+                    @php
+                        $gambar = $item->url_gambar ? json_decode($item->url_gambar, true) : null;
+                        $gambarPertama = $gambar && count($gambar) > 0 ? asset('storage/' . $gambar[0]) : asset('images/default-seed.png');
+                    @endphp
+                    <img src="{{ $gambarPertama }}" alt="{{ $item->nama }}">
+                    <p>{{ $item->nama }}</p>
+                    <div class="fw-semibold text-danger fs-5">Rp{{ number_format($item->harga, 0, ',', '.') }}</div>
+                </a>
+            </div>
+            @empty
+                <div class="col-12 d-flex justify-content-center mt-4">
+                    <div class="card text-center border-danger">
+                        <div class="card-body">
+                            <h5 class="text-danger">Benih Saat Ini Belum Tersedia</h5>
+                            <p class="text-muted">Kami sedang menambahkan stok benih baru. Silakan cek kembali nanti.</p>
+                        </div>
+                    </div>
+                </div>
+            @endforelse
+    </div>
+    <div class="d-flex justify-content-center mt-3">
+        {{ $benih->links('pagination::bootstrap-5') }}
     </div>
 </div>
-<script>
-    document.getElementById('search-input').addEventListener('input', filterItems);
-    document.getElementById('category-select').addEventListener('change', filterItems);
-
-    function filterItems() {
-        const searchQuery = document.getElementById('search-input').value.toLowerCase();
-        const selectedCategory = document.getElementById('category-select').value.toLowerCase();
-        const seedItems = document.querySelectorAll('.seed-item');
-
-        seedItems.forEach(item => {
-            const itemName = item.getAttribute('data-name').toLowerCase();
-            const itemCategory = item.getAttribute('data-category').toLowerCase();
-            const matchesSearch = itemName.includes(searchQuery);
-            const matchesCategory = selectedCategory === "" || itemCategory.includes(selectedCategory);
-
-            if (matchesSearch && matchesCategory) {
-                item.style.display = 'block';
-            } else {
-                item.style.display = 'none';
-            }
-        });
-    }
-</script>
-
 @endsection
