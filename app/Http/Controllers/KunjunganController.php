@@ -15,6 +15,9 @@ use Illuminate\Contracts\Pipeline\Hub;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Barryvdh\DomPDF\Facade\Pdf;
+use App\Exports\KunjunganExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\App;
 
 class KunjunganController extends Controller
@@ -47,20 +50,19 @@ class KunjunganController extends Controller
 
     public function getById($id) {
         $kunjungan = Kunjungan::find($id);
-        // if (!$kunjungan) return response()->json(['status' => 'error', 'message' => 'cannot found any data'], 404);
-        // return response()->json(['status' => 'success', 'payload' => $kunjungan], 200);
-        $kunjungan->tanggal_kunjungan = Carbon::parse($kunjungan->tanggal_kunjungan)->locale('id')->translatedFormat('l, d F Y');
-
+    
         if (!$kunjungan) {
             return back()->with('error', 'Data kunjungan tidak ditemukan.');
         }
+    
+        $kunjungan->tanggal_kunjungan = Carbon::parse($kunjungan->tanggal_kunjungan)->locale('id')->translatedFormat('l, d F Y');
         return view('admin.kunjungan.detail', compact('kunjungan'));
     }
 
     public function store(Request $request)
     {
         // Validasi input dari pengguna
-        $request->validate([
+        $validatedData = $request->validate([
             'nama_lengkap' => 'required|string|max:255',
             'no_hp' => 'required|string|max:15',
             'usia_id' => 'required|string',
@@ -81,8 +83,23 @@ class KunjunganController extends Controller
             'url_foto_ktp' => 'required|image|mimes:jpeg,png,jpg|max:2048',
             'url_foto_selfie' => 'required|image|mimes:jpeg,png,jpg|max:2048',
         ], [
+            'url_foto_ktp.required' => 'Foto KTP wajib diunggah.',
+            'url_foto_ktp.image' => 'File yang diunggah harus berupa gambar.',
+            'url_foto_ktp.mimes' => 'Foto KTP harus berformat jpeg, png, atau jpg.',
+            'url_foto_ktp.max' => 'Ukuran foto KTP tidak boleh lebih dari 2MB.',
+
+            'url_foto_selfie.required' => 'Foto selfie wajib diunggah.',
+            'url_foto_selfie.image' => 'File yang diunggah harus berupa gambar.',
+            'url_foto_selfie.mimes' => 'Foto selfie harus berformat jpeg, png, atau jpg.',
+            'url_foto_selfie.max' => 'Ukuran foto selfie tidak boleh lebih dari 2MB.',
+
             'tanggal_kunjungan.unique' => 'Tanggal kunjungan ini sudah terdaftar, silakan pilih tanggal lain.'
         ]);
+
+        // Jika validasi gagal, redirect kembali dengan input yang benar tetap terisi
+        if (!$validatedData) {
+            return redirect()->back()->withErrors($validatedData)->withInput();
+        }
 
         // Inisialisasi variabel untuk menyimpan path foto
         $url_foto_ktp = null;
@@ -183,19 +200,70 @@ class KunjunganController extends Controller
     public function approve($id)
     {
         $kunjungan = Kunjungan::findOrFail($id);
-        $kunjungan->status_setujui = true;
+        $kunjungan->status_setujui = 'Disetujui';
         $kunjungan->save();
-
-        return back()->with('success', 'Permohonan kunjungan telah disetujui dan telah ditampilan pada Kalendar Events.');
+    
+        return back()->with('success', 'Permohonan kunjungan telah disetujui dan telah ditampilkan pada Kalendar Events.');
     }
-
+    
+    public function reject($id)
+    {
+        $kunjungan = Kunjungan::findOrFail($id);
+        $kunjungan->status_setujui = 'Ditolak';
+        $kunjungan->save();
+    
+        return back()->with('success', 'Permohonan kunjungan telah ditolak.');
+    }
+    
     public function cancelApproval($id)
     {
         $kunjungan = Kunjungan::findOrFail($id);
-        $kunjungan->status_setujui = false;
+        $kunjungan->status_setujui = 'Pending';
         $kunjungan->save();
-
+    
         return back()->with('success', 'Persetujuan kunjungan ini telah dibatalkan.');
+    }
+    public function cancelRejection($id)
+    {
+        $kunjungan = Kunjungan::findOrFail($id);
+        $kunjungan->status_setujui = 'pending';
+        $kunjungan->save();
+    
+        return back()->with('success', 'Penolakan kunjungan ini telah dibatalkan.');
+    }
+    
+    public function exportxlsx(Request $request) {
+        $tanggal = Carbon::now()->format('dmY'); // Format: ddmmyyyy
+        return Excel::download(new KunjunganExport, "Data-Kunjungan-{$tanggal}.xlsx");
+    }
+    
+    public function exportPDF()
+    {
+        $tanggal = Carbon::now()->format('dmY'); // Format: ddmmyyyy
+        $kunjungan = Kunjungan::all(); // Ambil semua data kunjungan
+    
+        $pdf = Pdf::loadView('admin.kunjungan.export-pdf', compact('kunjungan'))
+                ->setPaper('a4', 'landscape');
+    
+        return $pdf->download("Data-Kunjungan-{$tanggal}.pdf");
+    }
+
+    public function unduhUndangan($id)
+    {
+        $kunjungan = Kunjungan::findOrFail($id);
+        if ($kunjungan->status_setujui !== 'Disetujui') {
+            return redirect()->back()->with('error', 'Undangan hanya bisa diunduh jika permohonan telah disetujui.');
+        }
+    
+        $tanggalHariIni = Carbon::now()->translatedFormat('d F Y');
+
+        // Format No Surat
+        $noSurat = "B-2128/PK" . $kunjungan->id;
+    
+        $pdf = Pdf::loadView('admin.kunjungan.undangan', compact('kunjungan', 'tanggalHariIni', 'noSurat'))
+            ->setPaper('A4', 'portrait');
+    
+        return $pdf->download('Surat_Undangan_Kunjungan_' . $kunjungan->nama_lengkap . '.pdf');
     }
 }
     

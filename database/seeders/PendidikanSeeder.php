@@ -23,6 +23,11 @@ class PendidikanSeeder extends Seeder
             ['id' => 7, 'nama' => 'S2'],
             ['id' => 8, 'nama' => 'S3'],
         ];
-        DB::table('pendidikan')->insert($pendidikan);
+        foreach ($pendidikan as $item) {
+            DB::table('pendidikan')->updateOrInsert(
+                ['id' => $item['id']], // Cek apakah ID sudah ada
+                ['nama' => $item['nama']] // Jika ada, update nama saja
+            );
+        }
     }
 }

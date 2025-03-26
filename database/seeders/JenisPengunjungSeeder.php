@@ -17,6 +17,11 @@ class JenisPengunjungSeeder extends Seeder
             ['id' => 1, 'nama' => 'Perorangan'],
             ['id' => 2, 'nama' => 'Perkelompok'],
         ];
-        DB::table('jenis_pengunjung')->insert($jenis_pengunjung);
+        foreach ($jenis_pengunjung as $item) {
+            DB::table('jenis_pengunjung')->updateOrInsert(
+                ['id' => $item['id']], // Cek apakah ID sudah ada
+                ['nama' => $item['nama']] // Jika ada, update nama saja
+            );
+        }
     }
 }

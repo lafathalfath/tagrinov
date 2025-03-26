@@ -17,6 +17,11 @@ class JenisKelaminSeeder extends Seeder
             ['id' => 1, 'nama' => 'Laki-laki'],
             ['id' => 2, 'nama' => 'Perempuan'],
         ];
-        DB::table('jenis_kelamin')->insert($jenis_kelamin);
+        foreach ($jenis_kelamin as $item) {
+            DB::table('jenis_kelamin')->updateOrInsert(
+                ['id' => $item['id']], // Cek apakah ID sudah ada
+                ['nama' => $item['nama']] // Jika ada, update nama saja
+            );
+        }
     }
 }

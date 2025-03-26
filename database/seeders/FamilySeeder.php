@@ -73,6 +73,11 @@ class FamilySeeder extends Seeder
             ['id' => 57, 'nama' => 'Vitaceae'],
             ['id' => 58, 'nama' => 'Zingiberaceae']
         ];
-        DB::table('family')->insert($family);
+        foreach ($family as $item) {
+            DB::table('family')->updateOrInsert(
+                ['id' => $item['id']], // Cek apakah ID sudah ada
+                ['nama' => $item['nama']] // Jika ada, update nama saja
+            );
+        }
     }
 }

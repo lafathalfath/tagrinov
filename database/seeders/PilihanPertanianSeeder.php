@@ -19,6 +19,11 @@ class PilihanPertanianSeeder extends Seeder
             ['id' => 3, 'nama' => 'Pelatihan/Bimbingan Teknis'],
             ['id' => 4, 'nama' => 'Magang'],
         ];
-        DB::table('pilihan_pertanian')->insert($pilihan_pertanian);
+        foreach ($pilihan_pertanian as $item) {
+            DB::table('pilihan_pertanian')->updateOrInsert(
+                ['id' => $item['id']], // Cek apakah ID sudah ada
+                ['nama' => $item['nama']] // Jika ada, update nama saja
+            );
+        }
     }
 }

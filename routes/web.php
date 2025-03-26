@@ -94,10 +94,18 @@ Route::middleware(['admin'])->prefix('/admin')->group(function () {
 
     Route::prefix('/kunjungan')->group(function () {
         Route::get('/', [KunjunganController::class, 'getAll'])->name('kunjungan.getAll');
+        Route::get('/export', [KunjunganController::class, 'exportxlsx'])->name('kunjungan.exportxlsx');
+        Route::get('/export-pdf', [KunjunganController::class, 'exportPDF'])->name('kunjungan.export-pdf');
+        Route::get('/undangan/{id}', [KunjunganController::class, 'unduhUndangan'])->name('kunjungan.undangan');
+
+
         Route::get('/{id}', [KunjunganController::class, 'getById'])->name('kunjungan.getById');
         Route::delete('/{id}', [KunjunganController::class, 'destroy'])->name('kunjungan.destroy');
-        Route::get('/approve/{id}', [KunjunganController::class, 'approve'])->name('kunjungan.approve');
+        Route::post('/approve/{id}', [KunjunganController::class, 'approve'])->name('kunjungan.approve');
         Route::get('/kunjungan/{id}/cancel', [KunjunganController::class, 'cancelApproval'])->name('kunjungan.cancel');
+        Route::put('/{id}/reject', [KunjunganController::class, 'reject'])->name('kunjungan.reject');
+        Route::put('{id}/cancel-rejection', [KunjunganController::class, 'cancelRejection'])->name('kunjungan.cancelRejection');
+
     });
 
     Route::prefix('/testimoni')->name('admin.testimoni.')->group(function () {

@@ -141,8 +141,11 @@ class EntitasSeeder extends Seeder
         ];
 
         foreach ($entitas as $en) {
-            // Simpan entitas ke database
-            DB::table('entitas')->insert($en);
+            // Insert jika belum ada, update jika sudah ada
+            DB::table('entitas')->updateOrInsert(
+                ['id' => $en['id']], // Cek berdasarkan ID
+                $en // Insert/update data entitas
+            );
 
             // Cari gambar berdasarkan ID entitas
             $url_gambar = $this->findImagePath($en['id']);
@@ -151,9 +154,10 @@ class EntitasSeeder extends Seeder
             if ($url_gambar) {
                 DB::table('entitas')->where('id', $en['id'])->update(['url_gambar' => $url_gambar]);
             }
-
-            // Simpan entitas detail
-            EntitasDetail::create(['entitas_id' => $en['id']]);
+            // Insert ke entitas_detail jika belum ada
+            EntitasDetail::firstOrCreate([
+                'entitas_id' => $en['id']
+            ]);
         }
     }
 

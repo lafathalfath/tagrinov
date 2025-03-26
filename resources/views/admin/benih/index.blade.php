@@ -92,7 +92,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="harga" class="form-label">Deskripsi</label>
-                            <textarea name="deskripsi" class="form-control">{{ $item->deskripsi }}</textarea>
+                            <textarea rows="8px" name="deskripsi" class="form-control">{{ $item->deskripsi }}</textarea>
                         </div>
                         <div class="mb-3">
                             <label for="stok" class="form-label">Stok</label>
@@ -181,7 +181,7 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="deskripsi" class="form-label">Deskripsi</label>
-                                        <textarea type="text" class="form-control" id="deskripsi" name="deskripsi" placeholder="Deskripsi benih" required></textarea>
+                                        <textarea rows="8px" type="text" class="form-control" id="deskripsi" name="deskripsi" placeholder="Deskripsi benih" required></textarea>
                                     </div>
                                     <div class="mb-3">
                                         <label for="stok" class="form-label">Stok</label>
