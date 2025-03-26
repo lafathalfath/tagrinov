@@ -23,6 +23,15 @@
                 </div>
             </form>
         </div>
+        <div class="col-md d-flex justify-content-end">
+            <a href="{{ route('kunjungan.exportxlsx') }}" class="btn btn-success me-2">
+                <i class="fas fa-file-excel"></i>
+            </a>
+            <a href="{{ route('kunjungan.export-pdf') }}" class="btn btn-danger">
+                <i class="fa fa-file-pdf"></i>
+            </a>
+        </div>
+        
     </div>
     <table class="table table-bordered table-hover">
         <thead class="table-primary">
@@ -52,12 +61,15 @@
                     <td>{{ $item->asal_instansi }}</td>
                     <td>{{ $item->jenis_pengunjung->nama }}</td>
                     <td>
-                        @if($item->status_setujui)
+                        @if($item->status_setujui === 'Disetujui')
                             <span class="badge bg-success fs-6 fw-normal text-capitalize">Disetujui</span>
+                        @elseif($item->status_setujui === 'Ditolak')
+                            <span class="badge bg-danger fs-6 fw-normal text-capitalize">Ditolak</span>
                         @else
                             <span class="badge bg-warning fs-6 fw-normal text-capitalize">Pending</span>
                         @endif
                     </td>
+                    
                     <td>
                         <a href="{{ route('kunjungan.getById', $item->id) }}" class="btn btn-primary btn-sm">Detail</a>
                         <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $item->id }}">

@@ -11,7 +11,7 @@ class EventController extends Controller
 {
     public function index()
     {
-        $events = Kunjungan::with('jenis_pengunjung')->where('status_setujui', true)
+        $events = Kunjungan::with('jenis_pengunjung')->where('status_setujui', 'Disetujui')
             ->get(['nama_lengkap', 'tanggal_kunjungan', 'asal_instansi', 'jenis_pengunjung_id', 'jumlah_orang']);
 
         $event_data = [];

@@ -21,6 +21,11 @@ class UsiaSeeder extends Seeder
             ['id' => 4, 'nama' => '40-49'],
             ['id' => 5, 'nama' => '>50'],
         ];
-        DB::table('usia')->insert($usia);
+        foreach ($usia as $item) {
+            DB::table('usia')->updateOrInsert(
+                ['id' => $item['id']], // Cek apakah ID sudah ada
+                ['nama' => $item['nama']] // Jika ada, update nama saja
+            );
+        }
     }
 }

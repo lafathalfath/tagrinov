@@ -14,8 +14,8 @@ class AdminController extends Controller
     public function dashboard()
     {
 
-        $totalkunjungan = Kunjungan::where('status_setujui', true)->count();
-        $totalkunjunganpending = Kunjungan::where('status_setujui', false)->count();
+        $totalkunjungan = Kunjungan::where('status_setujui', 'Disetujui')->count();
+        $totalkunjunganpending = Kunjungan::where('status_setujui', 'pending')->count();
         $totalKoleksi = Entitas::count();
         $totaltestimoni = Feedback::where('status', 'Disetujui')->count();
         $totaltestimonipending = Feedback::where('status', 'pending')->count();

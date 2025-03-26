@@ -102,13 +102,13 @@
         <!-- Nama Lengkap -->
         <div class="mb-3">
             <label for="namaLengkap" class="form-label">Nama Lengkap</label>
-            <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap" placeholder="Nama Lengkap" required>
+            <input type="text" class="form-control" id="nama_lengkap" name="nama_lengkap" placeholder="Nama Lengkap" value="{{ old('nama_lengkap') }}" required>
         </div>
 
         <!-- No HP -->
         <div class="mb-3">
             <label for="no_hp" class="form-label">Nomor HP atau WhatsApp</label>
-            <input type="tel" class="form-control" id="no_hp" name="no_hp" placeholder="Nomor HP atau WhatsApp Aktif" required>
+            <input type="tel" class="form-control" id="no_hp" name="no_hp" value="{{ old('no_hp') }}" placeholder="Nomor HP atau WhatsApp Aktif" required>
         </div>
 
         <!-- Usia -->
@@ -116,7 +116,8 @@
             <legend class="col-form-label" style="font-weight: bold;">Usia (tahun)</legend>
             @foreach($usia as $item)
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" id="usia{{ $item->id }}" name="usia_id" value="{{ $item->id }}" required>
+                    <input class="form-check-input" type="radio" id="usia{{ $item->id }}" name="usia_id" 
+                        value="{{ $item->id }}" {{ old('usia_id') == $item->id ? 'checked' : '' }} required>
                     <label class="form-check-label" for="usia{{ $item->id }}">{{ $item->nama }}</label>
                 </div>
             @endforeach
@@ -127,7 +128,8 @@
             <legend class="col-form-label" style="font-weight: bold;">Jenis Kelamin</legend>
             @foreach($jenis_kelamin as $item)
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" id="jenis_kelamin{{ $item->id }}" name="jenis_kelamin_id" value="{{ $item->id }}" required>
+                    <input class="form-check-input" type="radio" id="jenis_kelamin{{ $item->id }}" name="jenis_kelamin_id" 
+                        value="{{ $item->id }}" {{ old('jenis_kelamin_id') == $item->id ? 'checked' : '' }} required>
                     <label class="form-check-label" for="jenis_kelamin{{ $item->id }}">{{ $item->nama }}</label>
                 </div>
             @endforeach
@@ -136,16 +138,18 @@
         <!-- Asal Instansi -->
         <div class="mb-3">
             <label for="asal_instansi" class="form-label">Asal Instansi</label>
-            <input type="text" class="form-control" id="asal_instansi" name="asal_instansi" placeholder="Masukkan asal instansi" required>
+            <input type="text" class="form-control" id="asal_instansi" name="asal_instansi" value="{{ old('asal_instansi') }}" placeholder="Masukkan asal instansi" required>
         </div>
 
         <!-- Pekerjaan -->
         <div class="mb-3">
             <label for="pekerjaan" class="form-label">Pekerjaan</label>
             <select class="form-select" id="pekerjaan" name="pekerjaan_id" required>
-                <option value="" disabled selected>Pilih Pekerjaan</option>
+                <option value="" disabled {{ old('pekerjaan_id') ? '' : 'selected' }}>Pilih Pekerjaan</option>
                 @foreach($pekerjaan as $item)
-                    <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                    <option value="{{ $item->id }}" {{ old('pekerjaan_id') == $item->id ? 'selected' : '' }}>
+                        {{ $item->nama }}
+                    </option>
                 @endforeach
             </select>
         </div>
@@ -154,9 +158,11 @@
         <div class="mb-3">
             <label for="kategori_informasi" class="form-label">Kategori Informasi Publik</label>
             <select class="form-select" id="kategori_informasi" name="kategori_informasi_id" required>
-                <option value="" disabled selected>Pilih Kategori Informasi Publik</option>
+                <option value="" disabled {{ old('kategori_informasi_id') ? '' : 'selected' }}>Pilih Kategori Informasi Publik</option>
                 @foreach($kategori_informasi as $item)
-                    <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                    <option value="{{ $item->id }}" {{ old('kategori_informasi_id') == $item->id ? 'selected' : '' }}>
+                        {{ $item->nama }}
+                    </option>
                 @endforeach
             </select>
         </div>
@@ -166,7 +172,8 @@
             <label class="form-label">Pilihan Pertanian</label>
             @foreach($pilihan_pertanian as $item)
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" id="pilihan_pertanian{{ $item->id }}" name="pilihan_pertanian_id" value="{{ $item->id }}">
+                    <input class="form-check-input" type="radio" id="pilihan_pertanian{{ $item->id }}" name="pilihan_pertanian_id" 
+                        value="{{ $item->id }}" {{ old('pilihan_pertanian_id') == $item->id ? 'checked' : '' }}>
                     <label class="form-check-label" for="pilihan_pertanian{{ $item->id }}">{{ $item->nama }}</label>
                 </div>
             @endforeach
@@ -176,40 +183,49 @@
         <div class="mb-3">
             <label for="pendidikan" class="form-label">Pendidikan Terakhir</label>
             <select class="form-select" id="pendidikan" name="pendidikan_id" required>
-                <option value="" disabled selected>Pilih Pendidikan Terakhir</option>
+                <option value="" disabled {{ old('pendidikan_id') ? '' : 'selected' }}>Pilih Pendidikan Terakhir</option>
                 @foreach($pendidikan as $item)
-                    <option value="{{ $item->id }}">{{ $item->nama }}</option>
+                    <option value="{{ $item->id }}" {{ old('pendidikan_id') == $item->id ? 'selected' : '' }}>
+                        {{ $item->nama }}
+                    </option>
                 @endforeach
             </select>
         </div>
 
-        <!-- Jenis Pengunjung (tombol perorangan dan perkelompok) -->
+        <!-- Jenis Pengunjung -->
         <div class="mb-3">
             <label class="form-label">Jenis Pengunjung</label>
             <div class="btn-group-custom mb-3 col-12" role="group" aria-label="Jenis Pengunjung">
                 @foreach($jenis_pengunjung as $item)
-                    <input type="radio" class="btn-check" id="jenis_pengunjung{{ $item->id }}" name="jenis_pengunjung_id" value="{{ $item->id }}" required>
+                    <input type="radio" class="btn-check" id="jenis_pengunjung{{ $item->id }}" name="jenis_pengunjung_id" 
+                        value="{{ $item->id }}" {{ old('jenis_pengunjung_id') == $item->id ? 'checked' : '' }} required>
                     <label class="btn btn-outline-success" for="jenis_pengunjung{{ $item->id }}">{{ $item->nama }}</label>
                 @endforeach
             </div>
+
             <!-- Input untuk jumlah orang, muncul hanya jika Perkelompok dipilih -->
             <div id="jumlah_orang" class="mb-3" style="display:none;">
                 <label for="jumlah" class="form-label">Jumlah Orang</label>
-                <input type="number" class="form-control" id="jumlah_orang" name="jumlah_orang" min="1" placeholder="Masukkan Jumlah Orang">
+                <input type="number" class="form-control" id="jumlah_orang" name="jumlah_orang" min="1" 
+                    placeholder="Masukkan Jumlah Orang" value="{{ old('jumlah_orang') }}">
             </div>
         </div>
+
 
 
         <!-- Tanggal Kunjungan -->
         <div class="mb-3">
             <label for="tanggal_kunjungan" class="form-label">Tanggal Kunjungan</label>
-            <input type="date" class="form-control" id="tanggal_kunjungan" name="tanggal_kunjungan" required>
+            <input type="date" class="form-control @error('tanggal_kunjungan') is-invalid @enderror" id="tanggal_kunjungan" value="{{ old('tanggal_kunjungan') }}" name="tanggal_kunjungan" required>
+            @error('tanggal_kunjungan')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
         </div>
 
         <!-- Tujuan Kunjungan -->
         <div class="mb-3">
             <label for="tujuan_kunjungan" class="form-label">Tujuan Kunjungan</label>
-            <textarea class="form-control" id="tujuan_kunjungan" name="tujuan_kunjungan" rows="3" placeholder="Tulis Tujuan Kunjungan" required></textarea>
+            <textarea class="form-control" id="tujuan_kunjungan" name="tujuan_kunjungan" rows="3" placeholder="Tulis Tujuan Kunjungan" required>{{ old('tujuan_kunjungan') }}</textarea>
         </div>
 
         <!-- Unggah Foto KTP -->
@@ -217,7 +233,10 @@
             <label for="fotoKTP" class="form-label">Unggah Foto KTP </label> 
             <div class="small text-danger">* File diizinkan: JPG, JPEG, PNG</div>
             <div class="small text-danger">* Ukuran maksimal: 2MB</div>
-            <input type="file" class="form-control" id="fotoKTP" name="url_foto_ktp" accept="image/*" required>
+            <input type="file" class="form-control @error('url_foto_ktp') is-invalid @enderror" id="fotoKTP" name="url_foto_ktp" accept="image/*" required>
+            @error('url_foto_ktp')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
         </div>
         
         <!-- Unggah Foto Selfie -->
@@ -225,7 +244,10 @@
             <label for="fotoSelfie" class="form-label">Unggah Foto Selfie</label>
             <div class="small text-danger">* File diizinkan: JPG, JPEG, PNG</div>
             <div class="small text-danger">* Ukuran maksimal: 2MB</div>
-            <input type="file" class="form-control" id="fotoSelfie" name="url_foto_selfie" accept="image/*" required>
+            <input type="file" class="form-control @error('url_foto_selfie') is-invalid @enderror" id="fotoSelfie" name="url_foto_selfie" accept="image/*" required>
+            @error('url_foto_selfie')
+                <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
         </div>
 
         <!-- Tombol Submit -->

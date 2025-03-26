@@ -21,6 +21,11 @@ class KategoriInformasiSeeder extends Seeder
             ['id' => 5, 'nama' => 'Pengadaan Barang dan Jasa'],
             ['id' => 6, 'nama' => 'Lain-lain'],
         ];
-        DB::table('kategori_informasi')->insert($kategori_informasi);
+        foreach ($kategori_informasi as $item) {
+            DB::table('kategori_informasi')->updateOrInsert(
+                ['id' => $item['id']], // Cek apakah ID sudah ada
+                ['nama' => $item['nama']] // Jika ada, update nama saja
+            );
+        }
     }
 }

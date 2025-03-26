@@ -22,6 +22,11 @@ class JenisSeeder extends Seeder
             ['id' => 6, 'nama' => 'Mamalia'],
             ['id' => 7, 'nama' => 'Pisces']
         ];
-        DB::table('jenis')->insert($jenis);
+        foreach ($jenis as $item) {
+            DB::table('jenis')->updateOrInsert(
+                ['id' => $item['id']], // Cek apakah ID sudah ada
+                ['nama' => $item['nama']] // Jika ada, update nama saja
+            );
+        }
     }
 }
