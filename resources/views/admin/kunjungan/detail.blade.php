@@ -14,7 +14,7 @@
 			<li class="breadcrumb-item">
 				<a href="{{ route('kunjungan.getAll') }}">Permohonan Kunjungan</a>
 			</li>
-			<li class="breadcrumb-item" aria-current="page">Detail Permohonan Kunjungan</li>
+			<li class="breadcrumb-item" aria-current="page">Detaill Permohonan Kunjungan</li>
 		</ol>
 	</nav>
 	<div class="d-flex flex-wrap gap-2 mb-3">
