@@ -80,18 +80,18 @@ class KunjunganController extends Controller
                 Rule::unique('kunjungan', 'tanggal_kunjungan') 
             ],
             'tujuan_kunjungan' => 'required|string',
-            'url_foto_ktp' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-            'url_foto_selfie' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'url_foto_ktp' => 'required|image|mimes:jpeg,png,jpg|max:10240',
+            'url_foto_selfie' => 'required|image|mimes:jpeg,png,jpg|max:10240',
         ], [
             'url_foto_ktp.required' => 'Foto KTP wajib diunggah.',
             'url_foto_ktp.image' => 'File yang diunggah harus berupa gambar.',
             'url_foto_ktp.mimes' => 'Foto KTP harus berformat jpeg, png, atau jpg.',
-            'url_foto_ktp.max' => 'Ukuran foto KTP tidak boleh lebih dari 2MB.',
+            'url_foto_ktp.max' => 'Ukuran foto KTP tidak boleh lebih dari 10MB.',
 
             'url_foto_selfie.required' => 'Foto selfie wajib diunggah.',
             'url_foto_selfie.image' => 'File yang diunggah harus berupa gambar.',
             'url_foto_selfie.mimes' => 'Foto selfie harus berformat jpeg, png, atau jpg.',
-            'url_foto_selfie.max' => 'Ukuran foto selfie tidak boleh lebih dari 2MB.',
+            'url_foto_selfie.max' => 'Ukuran foto selfie tidak boleh lebih dari 10MB.',
 
             'tanggal_kunjungan.unique' => 'Tanggal kunjungan ini sudah terdaftar, silakan pilih tanggal lain.'
         ]);
