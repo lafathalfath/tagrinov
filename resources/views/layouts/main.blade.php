@@ -144,7 +144,7 @@ footer .bottom-text {
                         <a class="nav-link {{ request()->path()=='/'?'active':'' }}" aria-current="page" href="/">Beranda</a>
                     </li>
                     <li class="nav-item {{ request()->url()==route('tanaman.index')?'active':'' }}">
-                        <a class="nav-link" href="{{ route('tanaman.index') }}">Koleksi Tanaman</a>
+                        <a class="nav-link" href="{{ route('tanaman.index') }}">Koleksi</a>
                     </li>
                     <li class="nav-item {{ request()->url()==route('stokbenih.index')?'active':'' }}">
                         <a class="nav-link" href="{{ route('stokbenih.index') }}">Stok Benih</a>
