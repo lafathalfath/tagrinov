@@ -167,7 +167,7 @@
 							<form action="{{ route('kunjungan.approve', $kunjungan->id) }}" method="POST">
 								@csrf
 								@method('POST')
-								<button type="submit" class="btn btn-success">Setujui</button>
+								<button type="submit" class="btn btn-primary">Setujui</button>
 							</form>
 						</div>
 					</div>
