@@ -164,26 +164,11 @@
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-							<a href="#" id="approveButton" class="btn btn-primary">Ya, Setujui</a>
-						</div>
-					</div>
-				</div>
-			</div>
-			<!-- Modal Notifikasi Setelah Persetujuan -->
-			<div class="modal fade" id="successApprovalModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="successApprovalModalLabel" aria-hidden="true">
-				<div class="modal-dialog">
-					<div class="modal-content">
-						<div class="modal-header bg-success text-white">
-							<h5 class="modal-title" id="successApprovalModalLabel">Persetujuan Berhasil</h5>
-						</div>
-						<div class="modal-body text-center">
-							<i class="fa-solid fa-check-circle text-success fa-3x"></i>
-							<p class="mt-3">Kunjungan telah disetujui! Anda harus menghubungi pemohon.</p>
-						</div>
-						<div class="modal-footer d-flex justify-content-center">
-							<a href="https://wa.me/{{ preg_replace('/\D/', '', $kunjungan->no_hp) }}" target="_blank" class="btn btn-success">
-								<i class="fab fa-whatsapp"></i> Hubungi Sekarang
-							</a>
+							<form action="{{ route('kunjungan.approve', $kunjungan->id) }}" method="POST">
+								@csrf
+								@method('POST')
+								<button type="submit" class="btn btn-success">Setujui</button>
+							</form>
 						</div>
 					</div>
 				</div>
@@ -232,75 +217,6 @@
 					</div>
 				</div>
 			</div>
-
-			<script>
-			document.getElementById('approveButton').addEventListener('click', function (event) {
-				event.preventDefault();
-
-				// Simulasi proses persetujuan (bisa diganti dengan AJAX untuk update status di backend)
-				setTimeout(function () {
-					// Tutup modal konfirmasi
-					var confirmModal = new bootstrap.Modal(document.getElementById('confirmSetujuiModal'));
-					confirmModal.hide();
-
-					// Tampilkan modal sukses yang tidak bisa di-close
-					var successModal = new bootstrap.Modal(document.getElementById('successApprovalModal'));
-					successModal.show();
-				}, 500);
-			});
-			</script>
-			<script>
-				document.getElementById('approveButton').addEventListener('click', function (event) {
-					event.preventDefault();
-				
-					fetch("{{ route('kunjungan.approve', $kunjungan->id) }}", {
-						method: "POST",
-						headers: {
-							"X-CSRF-TOKEN": "{{ csrf_token() }}",
-							"Content-Type": "application/json"
-						}
-					})
-					.then(response => response.json())
-					.then(data => {
-						console.log(data); // Debugging: Cek respons dari server
-				
-						if (data.success) {
-							// Tutup modal konfirmasi
-							var confirmModalEl = document.getElementById('confirmSetujuiModal');
-							var confirmModal = bootstrap.Modal.getInstance(confirmModalEl);
-							confirmModal.hide();
-				
-							// Tampilkan modal sukses
-							var successModal = new bootstrap.Modal(document.getElementById('successApprovalModal'));
-							successModal.show();
-						} else {
-							alert("Gagal menyetujui kunjungan. Silakan coba lagi.");
-						}
-					})
-					.catch(error => console.error("Terjadi kesalahan:", error));
-				});
-				</script>
-				<script>
-					document.getElementById('rejectButton').addEventListener('click', function (event) {
-						event.preventDefault();
-					
-						fetch("{{ route('kunjungan.reject', $kunjungan->id) }}", {
-							method: "POST",
-							headers: {
-								"X-CSRF-TOKEN": "{{ csrf_token() }}",
-								"Content-Type": "application/json"
-							}
-						}).then(response => {
-							if (response.ok) {
-								var rejectModal = new bootstrap.Modal(document.getElementById('confirmTolakModal'));
-								rejectModal.hide();
-					
-								var successModal = new bootstrap.Modal(document.getElementById('successRejectionModal'));
-								successModal.show();
-							}
-						}).catch(error => console.error('Error:', error));
-					});
-					</script>
 					
 				<!-- Modal Pembatalan -->
 				<div class="modal fade" id="cancelApprovalModal" tabindex="-1" aria-labelledby="cancelApprovalModalLabel" aria-hidden="true">
