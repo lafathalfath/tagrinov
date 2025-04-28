@@ -25,25 +25,32 @@
             <i class="fab fa-whatsapp"></i> Hubungi
         </a>
 
-		@elseif(Str::lower($kunjungan->status_setujui) === 'pending')
+		@switch($kunjungan->status_setujui)
+		@case('Disetujui')
 			<a href="{{ route('kunjungan.undangan', $kunjungan->id) }}" class="btn btn-warning">
 				<i class="fa-solid fa-file-pdf"></i> Unduh Undangan
 			</a>
 			<button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cancelApprovalModal">
 				<i class="fa-solid fa-times"></i> Batalkan Persetujuan
 			</button>
-		@elseif($kunjungan->status_setujui === 'pending')
+			@break
+	
+		@case('pending')
 			<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmSetujuiModal">
 				<i class="fa-solid fa-check"></i> Setujui
 			</button>
 			<button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmTolakModal">
 				<i class="fa-solid fa-times"></i> Tolak
 			</button>
-		@elseif($kunjungan->status_setujui === 'Ditolak')
+			@break
+	
+		@case('Ditolak')
 			<button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#cancelRejectionModal">
 				<i class="fa-solid fa-undo"></i> Batalkan Penolakan
 			</button>
-		@endif
+			@break
+	@endswitch
+	
     </div>
 			<table class="table table-bordered">
 				<thead class="table-primary">
