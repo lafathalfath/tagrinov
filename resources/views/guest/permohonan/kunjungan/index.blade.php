@@ -97,7 +97,7 @@
             </ul>
         </div>
     @endif
-    <form action="{{ route('kunjungan.store') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('kunjungan.store') }}" method="POST" id="form-kunjungan" enctype="multipart/form-data">
         @csrf
         <!-- Nama Lengkap -->
         <div class="mb-3">
@@ -107,8 +107,18 @@
 
         <!-- No HP -->
         <div class="mb-3">
-            <label for="no_hp" class="form-label">Nomor HP atau WhatsApp</label>
-            <input type="tel" class="form-control" id="no_hp" name="no_hp" value="{{ old('no_hp') }}" placeholder="Nomor HP atau WhatsApp Aktif" required>
+            <label for="no_hp" class="form-label">No HP/WhatsApp</label>
+            <input 
+                type="text" 
+                class="form-control" 
+                id="no_hp" 
+                name="no_hp" 
+                value="{{ old('no_hp') }}" 
+                placeholder="08XX XXXX XXXX" 
+                maxlength="13"
+                required
+            >
+            <div id="no_hp_error" class="invalid-feedback" style="display: none;"></div>
         </div>
 
         <!-- Usia -->
@@ -230,10 +240,9 @@
 
         <!-- Unggah Foto KTP -->
         <div class="file-input-container">
-            <label for="fotoKTP" class="form-label">Unggah Foto KTP </label> 
-            <div class="small text-danger">* File diizinkan: JPG, JPEG, PNG</div>
-            <div class="small text-danger">* Ukuran maksimal: 2MB</div>
-            <input type="file" class="form-control @error('url_foto_ktp') is-invalid @enderror" id="fotoKTP" name="url_foto_ktp" accept="image/*" required>
+            <label for="fotoKTP" class="form-label">Unggah Foto KTP </label>
+            <input type="file" class="form-control @error('url_foto_ktp') is-invalid @enderror" id="fotoKTP" name="url_foto_ktp" accept="image/*" capture="environment" required>
+            <small class="text-muted">Format: JPG, JPEG, PNG. Maks: 10MB.</small>
             @error('url_foto_ktp')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
@@ -242,9 +251,8 @@
         <!-- Unggah Foto Selfie -->
         <div class="file-input-container">
             <label for="fotoSelfie" class="form-label">Unggah Foto Selfie</label>
-            <div class="small text-danger">* File diizinkan: JPG, JPEG, PNG</div>
-            <div class="small text-danger">* Ukuran maksimal: 2MB</div>
-            <input type="file" class="form-control @error('url_foto_selfie') is-invalid @enderror" id="fotoSelfie" name="url_foto_selfie" accept="image/*" required>
+            <input type="file" class="form-control @error('url_foto_selfie') is-invalid @enderror" id="fotoSelfie" name="url_foto_selfie" accept="image/*" capture="user" required>
+            <small class="text-muted">Format: JPG, JPEG, PNG. Maks: 10MB.</small>
             @error('url_foto_selfie')
                 <div class="invalid-feedback">{{ $message }}</div>
             @enderror
@@ -255,6 +263,100 @@
             <button type="submit" class="btn btn-success">Kirim Permohonan</button>
         </div>
     </form>
+
+    <script>
+        const form = document.getElementById('form-kunjungan');
+        const inputNoHp = document.getElementById('no_hp');
+        const errorDiv = document.getElementById('no_hp_error');
+    
+        function showError(message) {
+            errorDiv.textContent = message;
+            errorDiv.style.display = 'block';
+            inputNoHp.classList.add('is-invalid');
+        }
+    
+        function clearError() {
+            errorDiv.textContent = '';
+            errorDiv.style.display = 'none';
+            inputNoHp.classList.remove('is-invalid');
+        }
+    
+        inputNoHp.addEventListener('input', function () {
+            // Hapus karakter non-digit
+            this.value = this.value.replace(/\D/g, '');
+    
+            // Maksimal 13 digit
+            if (this.value.length > 13) {
+                this.value = this.value.slice(0, 13);
+            }
+    
+            const val = this.value;
+    
+            if (val === '') {
+                clearError();
+                return;
+            }
+    
+            // Jika baru 1 digit
+            if (val.length === 1) {
+                if (val !== '0') {
+                    showError('Nomor hp harus diawali 08');
+                } else {
+                    clearError(); // 0 masih valid, jangan error
+                }
+                return;
+            }
+    
+            // Jika lebih dari 1 digit tapi bukan 08
+            if (!val.startsWith('08')) {
+                showError('Nomor hp harus diawali 08');
+            } else {
+                clearError();
+            }
+        });
+    
+        inputNoHp.addEventListener('blur', function () {
+            const val = this.value;
+    
+            if (val === '') {
+                clearError();
+                return;
+            }
+    
+            if (!val.startsWith('08')) {
+                showError('Nomor hp harus diawali 08');
+                return;
+            }
+    
+            if (val.length < 11) {
+                showError('Nomor hp minimal 11 angka');
+            } else {
+                clearError();
+            }
+        });
+        form.addEventListener('submit', function (e) {
+            const val = inputNoHp.value;
+
+            // Cek ulang logika error sebelum kirim
+            if (
+                val === '' ||
+                !val.startsWith('08') ||
+                val.length < 11 ||
+                val.length > 13
+            ) {
+                e.preventDefault(); // blok submit
+                inputNoHp.focus();  // arahkan fokus
+                // Tampilkan error jika belum tampil
+                if (val === '') {
+                    clearError(); // biarkan HTML5 required jalan
+                } else if (!val.startsWith('08')) {
+                    showError('Nomor hp harus diawali 08');
+                } else if (val.length < 11) {
+                    showError('Nomor hp minimal 11 angka');
+                }
+            }
+        });
+    </script>
 </div>
 
 <script>
