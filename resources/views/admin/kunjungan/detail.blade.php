@@ -25,7 +25,7 @@
             <i class="fab fa-whatsapp"></i> Hubungi
         </a>
 
-		@if($kunjungan->status_setujui === 'Disetujui')
+		@elseif(Str::lower($kunjungan->status_setujui) === 'pending')
 			<a href="{{ route('kunjungan.undangan', $kunjungan->id) }}" class="btn btn-warning">
 				<i class="fa-solid fa-file-pdf"></i> Unduh Undangan
 			</a>
