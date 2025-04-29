@@ -3,8 +3,9 @@
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\TestimoniAdminController;
 use App\Http\Controllers\Admin\WelcomeTextController;
-use App\Http\Controllers\Admin\ManageAccountController;
 use App\Http\Controllers\Admin\BenihController;
+use App\Http\Controllers\ManageAccountController;
+use App\Http\Controllers\TimKerjaController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\FooterController;
 use App\Http\Controllers\EntitasController;
@@ -84,6 +85,36 @@ Route::view('/login', 'auth.login')->name('auth.login');
 Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
 
+// tim kerja start
+Route::middleware(['timkerja'])->prefix('/timkerja')->group(function () {
+    Route::get('/', [TimKerjaController::class, 'dashboard'])->name('timkerja.dashboard');
+
+    Route::prefix('/kunjungan')->group(function () {
+        Route::get('/', [KunjunganController::class, 'indextimkerja'])->name('timkerja.kunjungan.index');
+        Route::get('/undangan/{id}', [KunjunganController::class, 'unduhUndangan'])->name('kunjungan.undangan');
+        Route::get('/{id}', [KunjunganController::class, 'detail'])->name('kunjungan.detail');
+        Route::post('/{id}/approve', [KunjunganController::class, 'approve'])->name('kunjungan.approve');
+        Route::post('/{id}/reject', [KunjunganController::class, 'reject'])->name('kunjungan.reject');
+        Route::put('/{id}/cancelapproval', [KunjunganController::class, 'cancelApproval'])->name('kunjungan.cancelApproval');
+        Route::put('/{id}/cancelrejection', [KunjunganController::class, 'cancelRejectionApproval'])->name('kunjungan.cancelRejectionApproval');
+        Route::delete('/{id}', [KunjunganController::class, 'destroykunjungan'])->name('kunjungan.destroy');
+    });
+});
+
+// auth role
+Route::middleware(['auth', 'role:admin,tim_kerja'])->group(function () { 
+    Route::get('/export-xlsx', [KunjunganController::class, 'exportxlsx'])->name('kunjungan.exportxlsx');
+    Route::get('/export-pdf', [KunjunganController::class, 'exportPDF'])->name('kunjungan.exportpdf'); 
+
+    Route::prefix('/kelola-akun')->group(function () {
+        Route::get('/', [ManageAccountController::class, 'index'])->name('kelola-akun.index');
+        Route::post('/store', [ManageAccountController::class, 'store'])->name('kelola-akun.store');
+        Route::post('/update-password', [ManageAccountController::class, 'updatePassword'])->name('kelola-akun.updatePassword');
+        Route::post('/update-profile', [ManageAccountController::class, 'updateProfile'])->name('kelola-akun.updateProfile');
+        Route::post('/delete/{id}', [ManageAccountController::class, 'destroy'])->name('kelola-akun.destroy'); 
+    });
+});
+
 // admin start
 Route::middleware(['admin'])->prefix('/admin')->group(function () {
     Route::get('/', [AdminController::class, 'dashboard'])->name('admin.dashboard');
@@ -94,17 +125,15 @@ Route::middleware(['admin'])->prefix('/admin')->group(function () {
 
     Route::prefix('/kunjungan')->group(function () {
         Route::get('/', [KunjunganController::class, 'getAll'])->name('kunjungan.getAll');
-        Route::get('/export', [KunjunganController::class, 'exportxlsx'])->name('kunjungan.exportxlsx');
-        Route::get('/export-pdf', [KunjunganController::class, 'exportPDF'])->name('kunjungan.export-pdf');
-        Route::get('/undangan/{id}', [KunjunganController::class, 'unduhUndangan'])->name('kunjungan.undangan');
-
-
+        Route::get('/trash', [KunjunganController::class, 'trash'])->name('kunjungan.trash');
         Route::get('/{id}', [KunjunganController::class, 'getById'])->name('kunjungan.getById');
         Route::delete('/{id}', [KunjunganController::class, 'destroy'])->name('kunjungan.destroy');
-        Route::post('/approve/{id}', [KunjunganController::class, 'approve'])->name('kunjungan.approve');
-        Route::get('/kunjungan/{id}/cancel', [KunjunganController::class, 'cancelApproval'])->name('kunjungan.cancel');
-        Route::put('/{id}/reject', [KunjunganController::class, 'reject'])->name('kunjungan.reject');
+        Route::post('/verify/{id}', [KunjunganController::class, 'verify'])->name('kunjungan.verify');
+        Route::put('/{id}/reject', [KunjunganController::class, 'rejectVerification'])->name('kunjungan.rejectVerification');
+        Route::get('/kunjungan/{id}/cancel', [KunjunganController::class, 'cancelVerification'])->name('kunjungan.cancelVerification');
         Route::put('{id}/cancel-rejection', [KunjunganController::class, 'cancelRejection'])->name('kunjungan.cancelRejection');
+        Route::post('/restore/{id}', [KunjunganController::class, 'restore'])->name('kunjungan.restore');
+        Route::delete('/force-delete/{id}', [KunjunganController::class, 'forceDelete'])->name('kunjungan.forceDelete');
 
     });
 
@@ -154,13 +183,13 @@ Route::middleware(['admin'])->prefix('/admin')->group(function () {
         });
     });
 
-    Route::prefix('/kelola-akun')->group(function () {
-        Route::get('/', [ManageAccountController::class, 'index'])->name('kelola-akun.index');
-        Route::post('/add', [ManageAccountController::class, 'store'])->name('kelola-akun.store');
-        Route::put('/updateprofile', [ManageAccountController::class, 'updateProfile'])->name('kelola-akun.updateProfile');
-        Route::put('/updatepassword', [ManageAccountController::class, 'updatePassword'])->name('kelola-akun.updatePassword');
-        Route::delete('/{id}', [ManageAccountController::class, 'destroy'])->name('kelola-akun.destroy');
-    });
+    // Route::prefix('/kelola-akun')->group(function () {
+    //     Route::get('/', [ManageAccountController::class, 'index'])->name('kelola-akun.index');
+    //     Route::post('/add', [ManageAccountController::class, 'store'])->name('kelola-akun.store');
+    //     Route::put('/updateprofile', [ManageAccountController::class, 'updateProfile'])->name('kelola-akun.updateProfile');
+    //     Route::put('/updatepassword', [ManageAccountController::class, 'updatePassword'])->name('kelola-akun.updatePassword');
+    //     Route::delete('/{id}', [ManageAccountController::class, 'destroy'])->name('kelola-akun.destroy');
+    // });
 
     Route::prefix('/benih')->group(function () {
         Route::get('/', [BenihController::class, 'getAll'])->name('benih.getAll');
