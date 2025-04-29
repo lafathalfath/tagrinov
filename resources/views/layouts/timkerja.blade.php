@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Admin</title>
+        <title>Tim Kerja</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="{{ asset('assets/icons/logo.png') }}">
@@ -78,17 +78,12 @@
             }
 
             .logout {
-            margin-top: auto; /* Memastikan tombol berada di bagian bawah */
-            padding: 15px 0; /* Mengatur padding vertikal */
-            width: 100%; /* Memastikan lebar tombol 100% */
-            text-align: center;
-            color: white;
-            background-color: #4c462e; /* Warna latar belakang tombol */
-            border: none; /* Menghilangkan border */
-            cursor: pointer; /* Menunjukkan bahwa ini adalah tombol */
-            }
-            .logout:hover {
-                background-color: #3b3a2e; /* Warna saat hover */
+                margin-top: auto;
+                padding: 15px 20px;
+                width: 100%;
+                text-align: center;
+                color: white;
+                text-decoration: none !important;
             }
 
             .content {
@@ -112,62 +107,21 @@
                 <h1>Tagrinov</h1>
             </div>
             <ul class="sidebar-menu">
-                <li><a href="{{ route('admin.dashboard') }}" class="{{ request()->url() == route('admin.dashboard') ? 'active' : '' }}">Beranda</a></li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Aset Beranda
+                <li>
+                    <a href="{{ route('timkerja.dashboard') }}" class="{{ request()->url() == route('timkerja.dashboard') ? 'active' : '' }}">
+                        Beranda
                     </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li>
-                            <a class="dropdown-item {{ request()->url() == route('admin.welcome.edit') ? 'active' : '' }}" href="{{ route('admin.welcome.edit') }}">
-                                Slide
-                            </a>
-                            <a class="dropdown-item {{ request()->url() == route('footer.edit') ? 'active' : '' }}" href="{{ route('footer.edit') }}">
-                                Footer
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Koleksi
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li>
-                            <a class="dropdown-item {{ request()->url() == route('entitas.getAll') ? 'active' : '' }}" href="{{ route('entitas.getAll') }}">
-                            Daftar Koleksi
-                        </a>
-                    </li>
-                      <li>
-                          <a class="dropdown-item {{ request()->url() == route('family.getAll') ? 'active' : '' }}" href="{{ route('family.getAll') }}">
-                              Kelola Family
-                            </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item {{ request()->url() == route('jenis.getAll') ? 'active' : '' }}" href="{{ route('jenis.getAll') }}">
-                              Kelola Jenis
-                          </a>
-                      </li>
-                      <li>
-                          <a class="dropdown-item {{ request()->url() == route('kategori.getAll') ? 'active' : '' }}" href="{{ route('kategori.getAll') }}">
-                              Kelola Kategori
-                          </a>
-                        </li>
-                    </ul>
-                </li>
-                <li><a href="{{ route('kunjungan.getAll') }}" class="{{ request()->url() == route('kunjungan.getAll') ? 'active' : '' }}">Permohonan Kunjungan</a>
-                </li>
-                <li><a href="{{ route('benih.getAll') }}" class="{{ request()->url() == route('benih.getAll') ? 'active' : '' }}">Stok Benih</a>
                 </li>
                 <li>
-                <a href="{{ route('admin.testimoni.index') }}" class="{{ request()->is('admin/testimoni') ? 'active' : '' }}">Testimoni</a>
+                    <a href="{{ route('timkerja.kunjungan.index') }}" class="{{ request()->is('timkerja/kunjungan*') ? 'active' : '' }}">
+                        Permohonan Kunjungan
+                    </a>
                 </li>
                 <li>
-                <a href="{{ route('kelola-akun.index') }}" class="{{ request()->is('kelola-akun') ? 'active' : '' }}">Kelola Akun</a>
+                    <a href="{{ route('kelola-akun.index') }}" class="{{ request()->is('kelola-akun') ? 'active' : '' }}">
+                        Kelola Akun
+                    </a>
                 </li>
-
-                {{-- <li><a href="{{ route('admin.verifikasiPj') }}" class="{{ request()->url() == route('admin.verifikasiPj') ? 'active' : '' }}">Verifikasi <br>Penanggungjawab</a></li> --}}
-
             </ul>
             <br>
             <a href="#" class="logout" data-bs-toggle="modal" data-bs-target="#logoutModal"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
@@ -193,7 +147,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
             @endif
-
+            
             <!-- Alert Success -->
             @if (session('success'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">

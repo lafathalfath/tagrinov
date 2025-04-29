@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
@@ -13,23 +13,38 @@ class ManageAccountController extends Controller
 {
     public function index(Request $request)
     {
-    $query = User::query();
-    if ($request->has('search')) {
-        $search = $request->search;
-        $query->where('name', 'LIKE', "%{$search}%")
-              ->orWhere('email', 'LIKE', "%{$search}%")
-              ->orWhere('no_hp', 'LIKE', "%{$search}%");
+        // Ambil role pengguna yang sedang login
+        $role = Auth::user()->role;
+    
+        // Filter user berdasarkan role
+        $query = User::where('role', $role);
+    
+        if ($request->has('search')) {
+            $search = $request->search;
+            $query->where('name', 'LIKE', "%{$search}%")
+                  ->orWhere('email', 'LIKE', "%{$search}%")
+                  ->orWhere('no_hp', 'LIKE', "%{$search}%");
+        }
+    
+        $users = $query->orderBy('name', 'asc')->get();
+    
+        // Tentukan view berdasarkan role
+        if ($role === 'admin') {
+            return view('admin.kelola-akun.index', compact('users'));
+        } elseif ($role === 'tim_kerja') {
+            return view('timkerja.kelola-akun.index', compact('users'));
+        }
+    
+        return abort(403, 'Akses tidak diizinkan.');
     }
-    $users = $query->orderBy('name', 'asc')->get();
-    return view('admin.kelola-akun.index', compact('users'));
-}
+    
 
     public function store(Request $request)
     {
         $request->validate([
             'name' => 'required|string',
             'email' => 'required|string|email|unique:users',
-            'no_hp' => 'required|string|unique:users',
+            'no_hp' => 'required|numeric|digits_between:10,13|unique:users',
             'password' => 'required|string|min:8|confirmed',
         ], [
             'password.min' => 'Password minimal terdiri dari 8 karakter.',
@@ -43,6 +58,7 @@ class ManageAccountController extends Controller
             'email' => $request->email,
             'no_hp' => $request->no_hp,
             'password' => Hash::make($request->password),
+            'role' => $request->role,
         ]);
 
         return redirect()->back()->with('success', 'Akun berhasil ditambahkan!');
@@ -63,12 +79,12 @@ class ManageAccountController extends Controller
     
         // Cek apakah password lama benar
         if (!Hash::check($request->old_password, $user->password)) {
-            return back()->with('error', 'Password lama salah.');
+            return back()->with('error', 'Password lama salah!');
         }
     
         // Cek jika password baru sama dengan password lama
         if (Hash::check($request->new_password, $user->password)) {
-            return back()->with('error', 'Password baru tidak boleh sama dengan password lama.');
+            return back()->with('error', 'Password baru tidak boleh sama dengan password lama!');
         }
     
         // Update password
@@ -76,7 +92,7 @@ class ManageAccountController extends Controller
             'password' => Hash::make($request->new_password),
         ]);
     
-        return back()->with('success', 'Password berhasil diperbarui.');
+        return back()->with('success', 'Password berhasil diperbarui!');
     }
 
     public function updateProfile(Request $request)
@@ -118,7 +134,7 @@ class ManageAccountController extends Controller
     
         // Cek apakah password yang dimasukkan cocok dengan password user yang login
         if (!Hash::check($request->password, auth()->user()->password)) {
-            return back()->with('error', 'Password salah! Akun tidak dapat dihapus.');
+            return back()->with('error', 'Password salah! Coba lagi.');
         }
     
         // Hapus akun jika password benar

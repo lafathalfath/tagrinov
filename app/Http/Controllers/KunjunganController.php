@@ -10,6 +10,9 @@ use App\Models\Pekerjaan;
 use App\Models\Pendidikan;
 use App\Models\PilihanPertanian;
 use App\Models\Usia;
+use App\Models\User;
+use App\Mail\KunjunganDiterima;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rule;
 use Illuminate\Contracts\Pipeline\Hub;
 use Illuminate\Support\Facades\Storage;
@@ -28,21 +31,22 @@ class KunjunganController extends Controller
         // Ambil input pencarian
         $search = $request->input('search');
     
-        // Jika ada input search, lakukan pencarian di nama_lengkap, tanggal_kunjungan, asal_instansi
+        // input search
         if ($search) {
-            $query->where('nama_lengkap', 'like', "%$search%")
+            $query->where(function ($q) use ($search) {
+                $q->where('nama_lengkap', 'like', "%$search%")
                   ->orWhere('tanggal_kunjungan', 'like', "%$search%")
-                  ->orWhere('asal_instansi', 'like', "%$search%");
+                  ->orWhere('asal_instansi', 'like', "%$search%")
+                  ->orWhere('no_hp', 'like', "%$search%") 
+                  ->orWhere('status_verifikasi', 'like', "%$search%")
+                  ->orWhereHas('jenis_pengunjung', function ($q) use ($search) { 
+                      $q->where('nama', 'like', "%$search%"); 
+                  });
+            });
         }
     
         // Ambil data kunjungan
-        $kunjungan = $query->get();
-    
-        App::setLocale('id'); // Set bahasa ke Indonesia
-
-        $kunjungan = Kunjungan::all()->each(function ($item) {
-            $item->tanggal_kunjungan = Carbon::parse($item->tanggal_kunjungan)->translatedFormat('l, d F Y');
-        });
+        $kunjungan = $query->paginate(10)->appends(['search' => $search]);
     
         return view('admin.kunjungan.index', compact('kunjungan', 'search'));
     }
@@ -77,12 +81,13 @@ class KunjunganController extends Controller
             'tanggal_kunjungan' => [
                 'required',
                 'date',
-                Rule::unique('kunjungan', 'tanggal_kunjungan') 
             ],
             'tujuan_kunjungan' => 'required|string',
             'url_foto_ktp' => 'required|image|mimes:jpeg,png,jpg|max:10240',
             'url_foto_selfie' => 'required|image|mimes:jpeg,png,jpg|max:10240',
         ], [
+            'no_hp' => 'required|starts_with:08|digits_between:11,13',
+
             'url_foto_ktp.required' => 'Foto KTP wajib diunggah.',
             'url_foto_ktp.image' => 'File yang diunggah harus berupa gambar.',
             'url_foto_ktp.mimes' => 'Foto KTP harus berformat jpeg, png, atau jpg.',
@@ -134,9 +139,17 @@ class KunjunganController extends Controller
             'url_foto_selfie' => $url_foto_selfie,
         ]);
 
+        
         // Periksa apakah data berhasil disimpan
         if ($kunjungan) {
-            return redirect()->back()->with('success', 'Permohonan kunjungan berhasil dikirim, Silahkan Tunggu informasi selajutnya akan dikirim melalui WhatsApps!');
+            // Ambil semua email user
+            $users = User::pluck('email');
+    
+            // Kirim email ke semua user
+            foreach ($users as $email) {
+                Mail::to($email)->send(new KunjunganDiterima($kunjungan));
+            }
+            return redirect()->back()->with('success', 'Permohonan kunjungan Anda telah berhasil dikirim. Mohon menunggu, informasi selanjutnya akan kami kirimkan melalui WhatsApps! Terimakasih.');
         } else {
             return redirect()->back()->with('error', 'Gagal mengirim permohonan kunjungan.');
         }
@@ -155,26 +168,63 @@ class KunjunganController extends Controller
     //     return response()->json(['status' => 'error', 'message' => 'internal server error'], 500);
     // }
 
-    public function destroy($id) {
+    public function destroy($id)
+    {
         $kunjungan = Kunjungan::find($id);
-        // if (!$kunjungan) return response()->json(['status' => 'error', 'message' => 'cannot found any data'], 404);
-        // if ($kunjungan->delete()) return response()->json(['status' => 'deleted', 'message' => 'data deleted successfully'], 204);
-        // return response()->json(['status' => 'error', 'message' => 'internal server error'], 500);
+
         if (!$kunjungan) {
             return back()->with('error', 'Data kunjungan tidak ditemukan.');
         }
+
+        // Jangan hapus file, karena data hanya disoft-delete
+        if ($kunjungan->delete()) {
+            return back()->with('success', 'Data permohonan kunjungan berhasil dipindahkan ke keranjang sampah.');
+        }
+
+        return back()->with('error', 'Gagal menghapus data kunjungan.');
+    }
+
+    public function forceDelete($id)
+    {
+        $kunjungan = Kunjungan::onlyTrashed()->find($id);
+    
+        if (!$kunjungan) {
+            return back()->with('error', 'Data kunjungan tidak ditemukan untuk dihapus permanen.');
+        }
+    
+        // Hapus file dari storage
         if ($kunjungan->url_foto_ktp) {
             Storage::disk('public')->delete($kunjungan->url_foto_ktp);
         }
-
+    
         if ($kunjungan->url_foto_selfie) {
             Storage::disk('public')->delete($kunjungan->url_foto_selfie);
         }
-        if ($kunjungan->delete()) {
-            return back()->with('success', 'Data kunjungan berhasil dihapus.');
-        }
-        return back()->with('error', 'Gagal menghapus data kunjungan.');
+    
+        $kunjungan->forceDelete();
+    
+        return back()->with('success', 'Data kunjungan berhasil dihapus permanen.');
     }
+    
+
+
+    // public function destroy($id) {
+    //     $kunjungan = Kunjungan::find($id);
+    //     if (!$kunjungan) {
+    //         return back()->with('error', 'Data kunjungan tidak ditemukan.');
+    //     }
+    //     if ($kunjungan->url_foto_ktp) {
+    //         Storage::disk('public')->delete($kunjungan->url_foto_ktp);
+    //     }
+
+    //     if ($kunjungan->url_foto_selfie) {
+    //         Storage::disk('public')->delete($kunjungan->url_foto_selfie);
+    //     }
+    //     if ($kunjungan->delete()) {
+    //         return back()->with('success', 'Data kunjungan berhasil dihapus.');
+    //     }
+    //     return back()->with('error', 'Gagal menghapus data kunjungan.');
+    // }
 
     public function index()
     {
@@ -197,40 +247,135 @@ class KunjunganController extends Controller
         ]);
     }
 
-    public function approve($id)
+    public function verify($id)
     {
         $kunjungan = Kunjungan::findOrFail($id);
-        $kunjungan->status_setujui = 'Disetujui';
+        $kunjungan->status_verifikasi = 'Terverifikasi';
+        $kunjungan->verified_at = now();
+        $kunjungan->verified_by = auth()->id();
         $kunjungan->save();
     
-        return back()->with('success', 'Permohonan kunjungan telah disetujui dan telah ditampilkan pada Kalendar Events.');
+        return back()->with('success', 'Permohonan kunjungan berhasil diverifikasi!');
     }
     
-    public function reject($id)
+    public function rejectVerification($id)
     {
         $kunjungan = Kunjungan::findOrFail($id);
-        $kunjungan->status_setujui = 'Ditolak';
+        $kunjungan->status_verifikasi = 'Ditolak';
+        $kunjungan->rejectverify_at = now();
+        $kunjungan->rejectverify_by = auth()->id();
         $kunjungan->save();
     
-        return back()->with('success', 'Permohonan kunjungan telah ditolak.');
+        return back()->with('success', 'Permohonan kunjungan berhasil ditolak!');
     }
     
-    public function cancelApproval($id)
+    public function cancelVerification($id)
     {
         $kunjungan = Kunjungan::findOrFail($id);
-        $kunjungan->status_setujui = 'Pending';
+    
+        // Cek apakah status_setujui adalah 'Disetujui'
+        if ($kunjungan->status_setujui === 'Disetujui') {
+            return back()->with('error', 'Verifikasi tidak bisa dibatalkan karena pemohon kunjungan ini telah disetujui oleh Tim Kerja.');
+        }
+    
+        // Jika belum disetujui, maka bisa dibatalkan
+        $kunjungan->status_verifikasi = 'Belum Diverifikasi';
         $kunjungan->save();
     
-        return back()->with('success', 'Persetujuan kunjungan ini telah dibatalkan.');
+        return back()->with('success', 'Verifikasi kunjungan telah dibatalkan.');
     }
+    
     public function cancelRejection($id)
     {
         $kunjungan = Kunjungan::findOrFail($id);
-        $kunjungan->status_setujui = 'pending';
+        $kunjungan->status_verifikasi = 'Belum Diverifikasi';
         $kunjungan->save();
     
-        return back()->with('success', 'Penolakan kunjungan ini telah dibatalkan.');
+        return back()->with('success', 'Penolakan verifikasi kunjungan telah dibatalkan.');
     }
+
+        // Menampilkan daftar kunjungan yang sudah diverifikasi admin
+        public function indextimkerja(Request $request)
+        {
+            $query = Kunjungan::where('status_verifikasi', 'Terverifikasi');
+    
+            $search = $request->input('search');
+    
+            // input search
+            if ($search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('nama_lengkap', 'like', "%$search%")
+                      ->orWhere('tanggal_kunjungan', 'like', "%$search%")
+                      ->orWhere('asal_instansi', 'like', "%$search%")
+                      ->orWhere('no_hp', 'like', "%$search%") 
+                      ->orWhere('status_setujui', 'like', "%$search%")
+                      ->orWhereHas('jenis_pengunjung', function ($q) use ($search) { 
+                          $q->where('nama', 'like', "%$search%");
+                      });
+                });
+            }
+    
+            $kunjungan = $query->paginate(10)->appends(['search' => $search]);
+    
+            return view('timkerja.kunjungan.index', compact('kunjungan', 'search'));
+        }
+    
+        // Menampilkan halaman detail kunjungan
+        public function detail($id)
+        {
+            $kunjungan = Kunjungan::where('status_verifikasi', 'Terverifikasi')->findOrFail($id);
+            return view('timkerja.kunjungan.detail', compact('kunjungan'));
+        }
+    
+        // Tim kerja
+        // Menyetujui permohonan kunjungan
+        public function approve($id)
+        {
+            $kunjungan = Kunjungan::where('status_verifikasi', 'Terverifikasi')->findOrFail($id);
+            $kunjungan->status_setujui = 'Disetujui';
+            $kunjungan->approved_at = now();
+            $kunjungan->approved_by = auth()->id();
+            $kunjungan->save();
+    
+            return back()->with('success', 'Permohonan kunjungan berhasil disetujui.');
+        }
+    
+        public function reject($id)
+        {
+            $kunjungan = Kunjungan::where('status_verifikasi', 'Terverifikasi')->findOrFail($id);
+            $kunjungan->status_setujui = 'Ditolak';
+            $kunjungan->rejectapprove_at = now();
+            $kunjungan->rejectapprove_by = auth()->id();
+            $kunjungan->save();
+    
+            return back()->with('success', 'Permohonan kunjungan telah ditolak.');
+        }
+
+        public function cancelApproval($id)
+        {
+            $kunjungan = Kunjungan::where('status_verifikasi', 'Terverifikasi')->findOrFail($id);
+            $kunjungan->status_setujui = 'pending';
+            $kunjungan->save();
+
+            return back()->with('success', 'Persetujuan kunjungan telah dibatalkan.');
+        }
+
+        public function cancelRejectionApproval($id)
+        {
+            $kunjungan = Kunjungan::where('status_verifikasi', 'Terverifikasi')->findOrFail($id);
+            $kunjungan->status_setujui = 'pending';
+            $kunjungan->save();
+
+            return back()->with('success', 'Penolakan kunjungan telah dibatalkan.');
+        }
+
+        public function destroykunjungan($id)
+        {
+            $kunjungan = Kunjungan::where('status_verifikasi', 'Terverifikasi')->findOrFail($id);
+            $kunjungan->delete();
+    
+            return back()->with('success', 'Permohonan kunjungan berhasil dihapus.');
+        }
     
     public function exportxlsx(Request $request) {
         $tanggal = Carbon::now()->format('dmY'); // Format: ddmmyyyy
@@ -239,14 +384,15 @@ class KunjunganController extends Controller
     
     public function exportPDF()
     {
-        $tanggal = Carbon::now()->format('dmY'); // Format: ddmmyyyy
-        $kunjungan = Kunjungan::all(); // Ambil semua data kunjungan
+        $tanggal = Carbon::now()->format('dmY');
+        $kunjungan = Kunjungan::all();
     
-        $pdf = Pdf::loadView('admin.kunjungan.export-pdf', compact('kunjungan'))
+        $pdf = Pdf::loadView('export-pdf', compact('kunjungan'))
                 ->setPaper('a4', 'landscape');
     
         return $pdf->download("Data-Kunjungan-{$tanggal}.pdf");
     }
+    
 
     public function unduhUndangan($id)
     {
@@ -260,10 +406,28 @@ class KunjunganController extends Controller
         // Format No Surat
         $noSurat = "B-2128/PK" . $kunjungan->id;
     
-        $pdf = Pdf::loadView('admin.kunjungan.undangan', compact('kunjungan', 'tanggalHariIni', 'noSurat'))
+        $pdf = Pdf::loadView('timkerja.kunjungan.undangan', compact('kunjungan', 'tanggalHariIni', 'noSurat'))
             ->setPaper('A4', 'portrait');
     
         return $pdf->download('Surat_Undangan_Kunjungan_' . $kunjungan->nama_lengkap . '.pdf');
     }
+
+// Tampilkan data yang dihapus
+    public function trash()
+    {
+        $kunjunganTerhapus = Kunjungan::onlyTrashed()->orderBy('deleted_at', 'desc')->get();
+        return view('admin.kunjungan.trash', compact('kunjunganTerhapus'));
+    }
+
+    // Restore data
+    public function restore($id)
+    {
+        $kunjungan = Kunjungan::onlyTrashed()->findOrFail($id);
+        $kunjungan->restore();
+
+        return redirect()->route('kunjungan.trash')->with('success', 'Data berhasil dikembalikan.');
+    }
+
+
 }
     

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Admin Tagrinov</title>
+    <title>Tagrinov Access</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
@@ -53,7 +53,7 @@
 
 <div class="login-container">
     <div class="login-header">
-        <h3>Admin Tagrinov</h3>
+        <h3>Tagrinov</h3>
     </div>
     <form action="{{ route('auth.login') }}" method="POST">
         @csrf
@@ -66,9 +66,9 @@
             <label for="password" class="form-label">Password</label>
             <div class="input-group">
                 <input type="password" class="form-control" id="password" name="password" placeholder="Masukkan Password" required>
-                <span class="input-group-text" id="togglePassword" style="cursor: pointer;">
+                {{-- <span class="input-group-text" id="togglePassword" style="cursor: pointer;">
                     <i class="fa-solid fa-eye-slash" id="eyeIcon"></i>
-                </span>
+                </span> --}}
             </div>
         </div>
 
@@ -92,7 +92,7 @@
     </form>
 </div>
 
-<script>
+{{-- <script>
     const togglePassword = document.getElementById('togglePassword');
     const passwordInput = document.getElementById('password');
     const eyeIcon = document.getElementById('eyeIcon');
@@ -106,7 +106,7 @@
         eyeIcon.classList.toggle('fa-eye-slash');
         eyeIcon.classList.toggle('fa-eye');
     });
-</script>
+</script> --}}
 <!-- Bootstrap JS (Optional) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>

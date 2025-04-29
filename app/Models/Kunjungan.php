@@ -5,10 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Kunjungan extends Model
 {
     use HasFactory;
+    use SoftDeletes;
     protected $table = 'kunjungan';
     protected $guarded = [];
     protected $fillable = [
@@ -61,4 +63,22 @@ class Kunjungan extends Model
         return $this->belongsTo(JenisPengunjung::class, 
         'jenis_pengunjung_id'); 
     }
+    public function verifiedBy()
+    {
+        return $this->belongsTo(User::class, 'verified_by');
+    }
+
+    public function approvedBy()
+    {
+        return $this->belongsTo(User::class, 'approved_by');
+    }
+    public function rejectVerifyBy()
+    {
+        return $this->belongsTo(User::class, 'rejectverify_by');
+    }
+    public function rejectApproveBy()
+    {
+        return $this->belongsTo(User::class, 'rejectapprove_by');
+    }    
+
 }

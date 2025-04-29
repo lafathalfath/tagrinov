@@ -28,6 +28,7 @@ return new class extends Migration
             $table->text('tujuan_kunjungan');
             $table->string('url_foto_ktp');
             $table->string('url_foto_selfie');
+            $table->enum('status_verifikasi', ['Belum Diverifikasi', 'Ditolak', 'Terverifikasi'])->default('Belum Diverifikasi');
             $table->enum('status_setujui', ['pending', 'Disetujui', 'Ditolak'])->default('pending');
             $table->timestamps();            
     

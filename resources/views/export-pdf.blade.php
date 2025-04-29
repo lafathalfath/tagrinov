@@ -51,7 +51,13 @@
                     <td>{{ $item->jenis_pengunjung->nama ?? '-' }}</td>
                     <td>{{ $item->jumlah_orang }}</td>
                     <td>{{ $item->tujuan_kunjungan }}</td>
-                    <td>{{ $item->status_setujui }}</td>
+                    <td>
+                        @if(auth()->user()->role === 'tim_kerja')
+                            {{ $item->status_setujui }}
+                        @elseif(auth()->user()->role === 'admin')
+                            {{ $item->status_verifikasi }}
+                        @endif
+                    </td>
                 </tr>
             @endforeach
         </tbody>
