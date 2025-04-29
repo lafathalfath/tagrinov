@@ -78,12 +78,17 @@
             }
 
             .logout {
-                margin-top: auto;
-                padding: 15px 20px;
-                width: 100%;
-                text-align: center;
-                color: white;
-                text-decoration: none !important;
+            margin-top: auto; /* Memastikan tombol berada di bagian bawah */
+            padding: 15px 0; /* Mengatur padding vertikal */
+            width: 100%; /* Memastikan lebar tombol 100% */
+            text-align: center;
+            color: white;
+            background-color: #4c462e; /* Warna latar belakang tombol */
+            border: none; /* Menghilangkan border */
+            cursor: pointer; /* Menunjukkan bahwa ini adalah tombol */
+            }
+            .logout:hover {
+                background-color: #3b3a2e; /* Warna saat hover */
             }
 
             .content {
@@ -108,6 +113,21 @@
             </div>
             <ul class="sidebar-menu">
                 <li><a href="{{ route('admin.dashboard') }}" class="{{ request()->url() == route('admin.dashboard') ? 'active' : '' }}">Beranda</a></li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Aset Beranda
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li>
+                            <a class="dropdown-item {{ request()->url() == route('admin.welcome.edit') ? 'active' : '' }}" href="{{ route('admin.welcome.edit') }}">
+                                Slide
+                            </a>
+                            <a class="dropdown-item {{ request()->url() == route('footer.edit') ? 'active' : '' }}" href="{{ route('footer.edit') }}">
+                                Footer
+                            </a>
+                        </li>
+                    </ul>
+                </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Koleksi
@@ -145,21 +165,6 @@
                 <li>
                 <a href="{{ route('kelola-akun.index') }}" class="{{ request()->is('kelola-akun') ? 'active' : '' }}">Kelola Akun</a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Main
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li>
-                            <a class="dropdown-item {{ request()->url() == route('admin.welcome.edit') ? 'active' : '' }}" href="{{ route('admin.welcome.edit') }}">
-                                Slide
-                            </a>
-                            <a class="dropdown-item {{ request()->url() == route('footer.edit') ? 'active' : '' }}" href="{{ route('footer.edit') }}">
-                                Footer
-                            </a>
-                        </li>
-                    </ul>
-                </li>
 
                 {{-- <li><a href="{{ route('admin.verifikasiPj') }}" class="{{ request()->url() == route('admin.verifikasiPj') ? 'active' : '' }}">Verifikasi <br>Penanggungjawab</a></li> --}}
 
@@ -188,7 +193,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
             @endif
-            
+
             <!-- Alert Success -->
             @if (session('success'))
                 <div class="alert alert-success alert-dismissible fade show" role="alert">

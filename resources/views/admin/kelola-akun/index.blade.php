@@ -54,13 +54,13 @@
         <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editAkunModal{{ $user->id }}">
             Edit
         </button>
-        
+
         <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#changePasswordModal{{ $user->id }}">
             Ubah Password
         </button>
 
         {{-- Admin tidak bisa menghapus dirinya sendiri --}}
-        <button type="button" class="btn btn-danger btn-sm" 
+        <button type="button" class="btn btn-danger btn-sm"
             @if ($user->id === 1) disabled @endif
             data-bs-toggle="modal" data-bs-target="#deleteModal{{ $user->id }}">
             Hapus
@@ -106,12 +106,12 @@
                                 @csrf
                                 {{-- @method('PUT') --}}
                                 <input type="hidden" name="user_id" value="{{ $user->id }}">
-                                
+
                                 <div class="modal-header bg-warning">
                                     <h5 class="modal-title" id="editAkunModalLabel">Edit Profil Akun</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
-                                
+
                                 <div class="modal-body">
                                     <div class="mb-3">
                                         <label for="nama" class="form-label">Nama</label>
@@ -126,7 +126,7 @@
                                         <input type="text" class="form-control" id="no_hp" name="no_hp" value="{{ $user->no_hp }}" required>
                                     </div>
                                 </div>
-                                
+
                                 <div class="modal-footer">
                                     <button type="submit" class="btn btn-primary">Simpan</button>
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
