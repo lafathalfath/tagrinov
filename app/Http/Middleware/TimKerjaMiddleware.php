@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Illuminate\Support\Facades\Auth;
 
-class AdminMiddleware
+class TimKerjaMiddleware
 {
     /**
      * Handle an incoming request.
@@ -20,13 +20,13 @@ class AdminMiddleware
             return redirect('/login');
         }
 
-        // Pastikan user adalah admin
-        if (Auth::user()->role !== 'admin') {
+        // Pastikan user adalah tim kerja
+        if (Auth::user()->role !== 'tim_kerja') {
             return abort(403, 'Akses ditolak.');
         }
 
-        // Jika user admin mencoba masuk ke /timkerja, blokir akses
-        if ($request->is('timkerja/*')) {
+        // Jika user tim kerja mencoba masuk ke /admin, blokir akses
+        if ($request->is('admin/*')) {
             return abort(403, 'Akses ditolak.');
         }
 

@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.timkerja')
 @section('content')
 <script>
     const title = document.getElementsByTagName('title')[0];
@@ -8,7 +8,7 @@
     <h2>Kelola Akun</h2>
     <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('admin.dashboard') }}">Dashboard</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('timkerja.dashboard') }}">Dashboard</a></li>
             <li class="breadcrumb-item" aria-current="page">Kelola Akun</li>
         </ol>
     </nav>
@@ -49,8 +49,8 @@
                     <td>{{ $user->email }}</td>
                     <td>{{ $user->no_hp }}</td>
                     <td>
-    {{-- Jika yang login adalah admin (ID = 1) --}}
-    @if (auth()->user()->id === 1)
+    {{-- Jika yang login adalah tim kerja utama (ID = 2) --}}
+    @if (auth()->user()->id === 2)
         <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editAkunModal{{ $user->id }}">
             Edit
         </button>
@@ -59,9 +59,9 @@
             Ubah Password
         </button>
 
-        {{-- Admin tidak bisa menghapus dirinya sendiri --}}
+        {{-- tim kerja utama tidak bisa menghapus dirinya sendiri --}}
         <button type="button" class="btn btn-danger btn-sm" 
-            @if ($user->id === 1) disabled @endif
+            @if ($user->id === 2) disabled @endif
             data-bs-toggle="modal" data-bs-target="#deleteModal{{ $user->id }}">
             Hapus
         </button>

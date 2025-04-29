@@ -46,7 +46,7 @@ class KunjunganExport implements FromCollection, WithHeadings, WithColumnWidths,
                 'url_foto_selfie' => $item->url_foto_selfie 
                     ? '=HYPERLINK("' . $baseUrl . '/storage/' . $item->url_foto_selfie . '", "VIEW")' 
                     : '-',
-                'status_setujui' => $item->status_setujui
+                'status' => auth()->user()->role === 'tim_kerja' ? $item->status_setujui : $item->status_verifikasi
             ];
         });
     }

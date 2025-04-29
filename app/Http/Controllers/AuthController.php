@@ -42,35 +42,75 @@ class AuthController extends Controller
     }
 
     public function login(Request $request)
-    {
-        // Validasi input
-        $request->validate([
-            'login' => 'required|string', // Ganti menjadi satu field untuk email atau no_hp
-            'password' => 'required|string',
-        ], [
-            'login.required' => 'Email or No HP is required',
-            'password.required' => 'Password is required',
-        ]);
+{
+    // Validasi input
+    $request->validate([
+        'login' => 'required|string',
+        'password' => 'required|string',
+    ], [
+        'login.required' => 'Email atau No HP wajib diisi',
+        'password.required' => 'Password wajib diisi',
+    ]);
 
-        // Cek apakah pengguna menggunakan email atau no_hp
-        $user = User::where('email', $request->login)
-                    ->orWhere('no_hp', $request->login)
-                    ->first();
+    // Cek apakah login menggunakan email atau no_hp
+    $user = User::where('email', $request->login)
+                ->orWhere('no_hp', $request->login)
+                ->first();
 
-        if (!$user) {
-            return redirect()->back()->with('error', 'Akun tidak ditemukan.'); // Redirect dengan error
-        }
-
-        // Memeriksa password
-        if (!Hash::check($request->password, $user->password)) {
-            return redirect()->back()->with('error', 'Password salah!'); // Redirect dengan error
-        }
-
-        // Melakukan login
-        Auth::login($user, $request->has('remember'));
-
-        return redirect('/admin')->with('success', 'Login berhasil! Selamat datang Admin ' . $user->name . '.'); // Redirect ke dashboard setelah login
+    if (!$user) {
+        return redirect()->back()->with('error', 'Akun tidak ditemukan.');
     }
+
+    // Periksa password
+    if (!Hash::check($request->password, $user->password)) {
+        return redirect()->back()->with('error', 'Password salah!');
+    }
+
+    // Login pengguna
+    Auth::login($user, $request->has('remember'));
+
+    // Redirect berdasarkan role
+    if ($user->role === 'admin') {
+        return redirect('/admin')->with('success', 'Login berhasil! Selamat datang Admin ' . $user->name . '.');
+    } elseif ($user->role === 'tim_kerja') {
+        return redirect('/timkerja')->with('success', 'Login berhasil! Selamat datang Tim Kerja ' . $user->name . '.');
+    }
+
+    // Default redirect jika role tidak dikenali
+    return redirect('/')->with('error', 'Role tidak dikenali.');
+}
+
+
+    // public function login(Request $request)
+    // {
+    //     // Validasi input
+    //     $request->validate([
+    //         'login' => 'required|string', // Ganti menjadi satu field untuk email atau no_hp
+    //         'password' => 'required|string',
+    //     ], [
+    //         'login.required' => 'Email or No HP is required',
+    //         'password.required' => 'Password is required',
+    //     ]);
+
+    //     // Cek apakah pengguna menggunakan email atau no_hp
+    //     $user = User::where('email', $request->login)
+    //                 ->orWhere('no_hp', $request->login)
+    //                 ->first();
+
+    //     if (!$user) {
+    //         return redirect()->back()->with('error', 'Akun tidak ditemukan.'); // Redirect dengan error
+    //     }
+
+    //     // Memeriksa password
+    //     if (!Hash::check($request->password, $user->password)) {
+    //         return redirect()->back()->with('error', 'Password salah!'); // Redirect dengan error
+    //     }
+
+    //     // Melakukan login
+    //     Auth::login($user, $request->has('remember'));
+
+    //     return redirect('/admin')->with('success', 'Login berhasil! Selamat datang Admin ' . $user->name . '.'); // Redirect ke dashboard setelah login
+    // }
 
     public function logout()
     {

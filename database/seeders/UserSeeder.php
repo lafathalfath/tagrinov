@@ -19,12 +19,14 @@ class UserSeeder extends Seeder
                 'email' => 'bsippenerapan@gmail.com',
                 'no_hp' => '081234567890',
                 'password' => Hash::make('tagrinov2024'),
+                'role' => 'admin',
             ],
             [
                 'name' => 'Husni Mubarok',
                 'email' => 'husniramadhan@apps.ipb.ac.id',
                 'no_hp' => '082299702860',
                 'password' => Hash::make('tagrinov2025'),
+                'role' => 'tim_kerja',
             ],
         ];
 

@@ -22,8 +22,13 @@ class User extends Authenticatable
         'email',
         'no_hp',
         'password',
+        'role',
     ];
-
+    public function hasRole($roles)
+    {
+        return in_array($this->role, (array) $roles);
+    }
+    
     /**
      * The attributes that should be hidden for serialization.
      *
