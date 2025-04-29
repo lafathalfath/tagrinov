@@ -30,7 +30,7 @@
     }
     .nav-link {
         color: green !important;
-        
+
     }
     .nav-link:hover {
         font-weight: bold !important;
@@ -144,7 +144,7 @@ footer .bottom-text {
                         <a class="nav-link {{ request()->path()=='/'?'active':'' }}" aria-current="page" href="/">Beranda</a>
                     </li>
                     <li class="nav-item {{ request()->url()==route('tanaman.index')?'active':'' }}">
-                        <a class="nav-link" href="{{ route('tanaman.index') }}">Koleksi</a>
+                        <a class="nav-link" href="{{ route('tanaman.index') }}">Koleksi Tanaman</a>
                     </li>
                     <li class="nav-item {{ request()->url()==route('stokbenih.index')?'active':'' }}">
                         <a class="nav-link" href="{{ route('stokbenih.index') }}">Stok Benih</a>
@@ -187,19 +187,19 @@ footer .bottom-text {
                     @if (!empty($footer->facebook_link))
                         <a href="{{ $footer->facebook_link }}" target="_blank"><i class="fab fa-facebook"></i></a>
                     @endif
-                
+
                     @if (!empty($footer->youtube_link))
                         <a href="{{ $footer->youtube_link }}" target="_blank"><i class="fab fa-youtube"></i></a>
                     @endif
-                
+
                     @if (!empty($footer->instagram_link))
                         <a href="{{ $footer->instagram_link }}" target="_blank"><i class="fab fa-instagram"></i></a>
                     @endif
-                
+
                     @if (!empty($footer->twitter_link))
                         <a href="{{ $footer->twitter_link }}" target="_blank"><i class="fab fa-x-twitter"></i></a>
                     @endif
-                
+
                     @if (!empty($footer->tiktok_link))
                         <a href="{{ $footer->tiktok_link }}" target="_blank"><i class="fab fa-tiktok"></i></a>
                     @endif
@@ -211,6 +211,6 @@ footer .bottom-text {
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
+
 </body>
 </html>

@@ -57,13 +57,13 @@
     }
 </style>
     <div class="container">
-        <h3 class="mb-4 d-flex justify-content-between align-items-center"> 
+        <h3 class="mb-4 d-flex justify-content-between align-items-center">
             {{ $tanaman->nama }}
-            <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#qrCodeModal">
-                <i class="fa-solid fa-qrcode"></i> Lihat QR 
-            </button>
+            {{-- <button type="button" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#qrCodeModal">
+                <i class="fa-solid fa-qrcode"></i> Lihat QR
+            </button> --}}
         </h3>
-    
+
         <div class="row image-detail">
             <div class="col-lg-5 col-md-6 mb-4">
                 @if ($tanaman->url_gambar)
@@ -72,7 +72,7 @@
                     <img src="{{ asset('assets/image/no_image.png') }}" class="img-fluid" alt="No image available">
                 @endif
             </div>
-            
+
             <div class="col-lg-7 col-md-6">
                 <div class="detail-text" id="detailText">
                 <p><strong>Nama Tanaman:</strong> {{ $tanaman->nama }}</p>
@@ -106,10 +106,10 @@
                         <a href="{{ $tanaman->entitas_detail->url_buku }}" target="_blank" rel="noopener noreferrer">
                             <i class="fa-regular fa-file"></i> {{ $tanaman->entitas_detail->judul_buku }}
                         </a>
-                    </strong> 
+                    </strong>
                     </p>
                 @endif
-                
+
                 {{-- <ul>
                     <li>Mengandung banyak vitamin dan mineral</li>
                     <li>Bagus untuk kesehatan mata</li>
@@ -135,7 +135,7 @@
                         <div class="qr-code text-center mb-3">
                             {!! $qr !!}
                         </div>
-                        
+
                         <div class="input-group copy-url">
                             <input type="text" class="form-control" id="plantUrl" value="{{ $url }}" readonly>
                             <button class="btn btn-outline-secondary" type="button" id="copyButton" onclick="copyToClipboard()" data-bs-toggle="tooltip" data-bs-placement="top" title="Salin ke clipboard"><i class="fa-regular fa-copy"></i></button>
@@ -162,9 +162,9 @@
         var copyText = document.getElementById("plantUrl");
         copyText.select();
         document.execCommand("copy");
-        
+
         var copyButton = document.getElementById("copyButton");
-        
+
         // Hide the tooltip for "Salin ke clipboard"
         var originalTooltip = bootstrap.Tooltip.getInstance(copyButton);
         if (originalTooltip) {
@@ -176,12 +176,12 @@
             title: "Disalin!"
         });
         tooltip.show();
-        
+
         setTimeout(function() {
             tooltip.hide();
         }, 2000);
     }
-    
+
     const detailText = document.getElementById('detailText');
         let fontSize = 16; // Ukuran font awal
 
