@@ -104,7 +104,7 @@
                         <div class="modal-content">
                             <form action="{{ route('kelola-akun.updateProfile', $user->id) }}" method="POST">
                                 @csrf
-                                {{-- @method('PUT') --}}
+                                @method('PUT')
                                 <input type="hidden" name="user_id" value="{{ $user->id }}">
 
                                 <div class="modal-header bg-warning">
@@ -142,7 +142,7 @@
                         <div class="modal-content">
                             <form action="{{ route('kelola-akun.updatePassword') }}" method="POST">
                                 @csrf
-                                {{-- @method('PUT') <!-- Karena rute di web.php pakai PUT --> --}}
+                                @method('PUT') <!-- Karena rute di web.php pakai PUT -->
 
                                 <!-- Kirim ID User -->
                                 <input type="hidden" name="user_id" value="{{ $user->id }}">
@@ -180,7 +180,7 @@
                         <div class="modal-content">
                             <form action="{{ route('kelola-akun.destroy', $user->id) }}" method="POST">
                                 @csrf
-                                {{-- @method('DELETE') --}}
+                                @method('DELETE')
                                 <div class="modal-header bg-danger text-white">
                                     <h5 class="modal-title">Konfirmasi Hapus Akun</h5>
                                     <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -212,7 +212,6 @@
             <div class="modal-content">
                 <form action="{{ route('kelola-akun.store') }}" method="POST">
                     @csrf
-                    <input type="hidden" name="role" value="{{ Auth::user()->role }}">
                     <div class="modal-header">
                         <h5 class="modal-title" id="createAkunModalLabel">Tambah Akun</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -220,7 +219,7 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="nama" class="form-label">Nama</label>
-                            <input type="text" class="form-control" id="role" name="name" placeholder="Nama akun" required>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Nama akun" required>
                         </div>
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
@@ -228,7 +227,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="no_hp" class="form-label">Nomor HP</label>
-                            <input type="number" class="form-control" id="no_hp" name="no_hp" placeholder="Nomor HP" required >
+                            <input type="text" class="form-control" id="no_hp" name="no_hp" placeholder="Nomor HP" required>
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">Password</label>

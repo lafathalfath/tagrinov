@@ -20,16 +20,6 @@ class AdminMiddleware
             return redirect('/login');
         }
 
-        // Pastikan user adalah admin
-        if (Auth::user()->role !== 'admin') {
-            return abort(403, 'Akses ditolak.');
-        }
-
-        // Jika user admin mencoba masuk ke /timkerja, blokir akses
-        if ($request->is('timkerja/*')) {
-            return abort(403, 'Akses ditolak.');
-        }
-
         return $next($request);
     }
 }

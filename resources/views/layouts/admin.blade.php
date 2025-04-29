@@ -112,7 +112,7 @@
                 <h1>Tagrinov</h1>
             </div>
             <ul class="sidebar-menu">
-                <li><a href="{{ route('admin.dashboard') }}" class="{{ request()->url() == route('admin.dashboard') ? 'active' : '' }}">Beranda</a></li>
+                <li><a href="{{ route('admin.dashboard') }}" class="{{ request()->url() == route('admin.dashboard') ? 'active' : '' }}">Dashboard</a></li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Aset Beranda
@@ -163,7 +163,7 @@
                 <a href="{{ route('admin.testimoni.index') }}" class="{{ request()->is('admin/testimoni') ? 'active' : '' }}">Testimoni</a>
                 </li>
                 <li>
-                <a href="{{ route('kelola-akun.index') }}" class="{{ request()->is('kelola-akun') ? 'active' : '' }}">Kelola Akun</a>
+                <a href="{{ route('kelola-akun.index') }}" class="{{ request()->is('admin/kelola-akun') ? 'active' : '' }}">Kelola Akun</a>
                 </li>
 
                 {{-- <li><a href="{{ route('admin.verifikasiPj') }}" class="{{ request()->url() == route('admin.verifikasiPj') ? 'active' : '' }}">Verifikasi <br>Penanggungjawab</a></li> --}}

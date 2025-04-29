@@ -5,7 +5,7 @@
 	title.innerHTML += ' | Detail Permohonan Kunjungan';
 </script>
 <div class="container">
-	<h2>Detail Permohonan Kunjungan</h2>
+	<h2>Daftar Kunjungan</h2>
 	<nav class="mb-4" style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
 		<ol class="breadcrumb">
 			<li class="breadcrumb-item">
@@ -14,147 +14,44 @@
 			<li class="breadcrumb-item">
 				<a href="{{ route('kunjungan.getAll') }}">Permohonan Kunjungan</a>
 			</li>
-			<li class="breadcrumb-item" aria-current="page">Detail Permohonan Kunjungan</li>
+			<li class="breadcrumb-item" aria-current="page">Detaill Permohonan Kunjungan</li>
 		</ol>
 	</nav>
-
-	@if($kunjungan->status_verifikasi === 'Terverifikasi' && $kunjungan->verified_at)
-		<div class="alert alert-primary mt-3 d-flex align-items-start gap-2">
-			<i class="fa-solid fa-check-circle fs-3 text-primary align-self-center"></i>
-			<div>
-				<strong>Terverifikasi oleh {{ $kunjungan->verifiedBy->name }}</strong><br>
-				<small class="text-muted">
-					{{ \Carbon\Carbon::parse($kunjungan->verified_at)->locale('id')->setTimezone('Asia/Jakarta')->translatedFormat('j F Y H:i:s') }}
-				</small>
-			</div>
-		</div>
-	@elseif($kunjungan->status_verifikasi === 'Ditolak' && $kunjungan->rejectverify_at)
-		<div class="alert alert-danger mt-3 d-flex align-items-start gap-2">
-			<i class="fa-solid fa-circle-xmark fs-3 text-danger align-self-center"></i>
-			<div>
-				<strong>Verifikasi ditolak oleh {{ $kunjungan->rejectVerifyBy->name }}</strong><br>
-				<small class="text-muted">
-					{{ \Carbon\Carbon::parse($kunjungan->rejectverify_at)->locale('id')->setTimezone('Asia/Jakarta')->translatedFormat('j F Y H:i:s') }}
-				</small>
-			</div>
-		</div>
-	@endif
-
-
 	<div class="d-flex flex-wrap gap-2 mb-3">
-		<a href="https://wa.me/{{ preg_replace('/\D/', '', $kunjungan->no_hp) }}" target="_blank" class="btn btn-success">
-			<i class="fab fa-whatsapp"></i> Hubungi
-		</a>
+        {{-- <a href="{{ route('kunjungan.getAll') }}" class="btn btn-secondary">
+            <i class="fa-solid fa-arrow-left"></i> Kembali
+        </a> --}}
+        <a href="https://wa.me/{{ preg_replace('/\D/', '', $kunjungan->no_hp) }}" target="_blank" class="btn btn-success">
+            <i class="fab fa-whatsapp"></i> Hubungi
+        </a>
+
+		@switch($kunjungan->status_setujui)
+		@case('Disetujui')
+			<a href="{{ route('kunjungan.undangan', $kunjungan->id) }}" class="btn btn-warning">
+				<i class="fa-solid fa-file-pdf"></i> Unduh Undangan
+			</a>
+			<button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cancelApprovalModal">
+				<i class="fa-solid fa-times"></i> Batalkan Persetujuan
+			</button>
+			@break
 	
-		@if($kunjungan->status_verifikasi === 'Terverifikasi')
-			<button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cancelVerificationModal">
-				<i class="fa-solid fa-times"></i> Batalkan Verifikasi
+		@case('pending')
+			<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmSetujuiModal">
+				<i class="fa-solid fa-check"></i> Setujui
 			</button>
-		@elseif($kunjungan->status_verifikasi === 'Belum Diverifikasi')
-			<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmVerificationModal">
-				<i class="fa-solid fa-check"></i> Verifikasi
-			</button>
-			<button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmRejectModal">
+			<button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmTolakModal">
 				<i class="fa-solid fa-times"></i> Tolak
 			</button>
-		@elseif($kunjungan->status_verifikasi === 'Ditolak')
+			@break
+	
+		@case('Ditolak')
 			<button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#cancelRejectionModal">
 				<i class="fa-solid fa-undo"></i> Batalkan Penolakan
 			</button>
-		@endif
-	</div>
+			@break
+	@endswitch
 	
-	<!-- Modal Konfirmasi Verifikasi -->
-	<div class="modal fade" id="confirmVerificationModal" tabindex="-1" aria-labelledby="confirmVerificationModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header bg-primary text-white">
-					<h5 class="modal-title" id="confirmVerificationModalLabel">Konfirmasi Verifikasi</h5>
-					<button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<div class="modal-body">
-					Apakah Anda yakin ingin memverifikasi permohonan kunjungan ini?
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-					<form action="{{ route('kunjungan.verify', $kunjungan->id) }}" method="POST">
-						@csrf
-						<button type="submit" class="btn btn-primary">Verifikasi</button>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-	
-	<!-- Modal Konfirmasi Penolakan -->
-	<div class="modal fade" id="confirmRejectModal" tabindex="-1" aria-labelledby="confirmRejectModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header bg-danger text-white">
-					<h5 class="modal-title" id="confirmRejectModalLabel">Konfirmasi Penolakan</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<div class="modal-body">
-					Apakah Anda yakin ingin menolak permohonan kunjungan ini?
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-					<form action="{{ route('kunjungan.rejectVerification', $kunjungan->id) }}" method="POST">
-						@csrf
-						@method('PUT')
-						<button type="submit" class="btn btn-danger">Tolak</button>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-	
-	<!-- Modal Konfirmasi Pembatalan Verifikasi -->
-	<div class="modal fade" id="cancelVerificationModal" tabindex="-1" aria-labelledby="cancelVerificationModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header bg-danger text-white">
-					<h5 class="modal-title" id="cancelVerificationModalLabel">Batalkan Verifikasi</h5>
-					<button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<div class="modal-body">
-					Apakah Anda yakin ingin membatalkan verifikasi kunjungan ini?
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-					<a href="{{ route('kunjungan.cancelVerification', $kunjungan->id) }}" class="btn btn-danger">Batalkan Verifikasi</a>
-				</div>
-			</div>
-		</div>
-	</div>
-	
-	<!-- Modal Konfirmasi Pembatalan Penolakan -->
-	<div class="modal fade" id="cancelRejectionModal" tabindex="-1" aria-labelledby="cancelRejectionModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header bg-success text-white">
-					<h5 class="modal-title" id="cancelRejectionModalLabel">Batalkan Penolakan</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<div class="modal-body">
-					Apakah Anda yakin ingin membatalkan penolakan permohonan kunjungan ini?
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-					<form action="{{ route('kunjungan.cancelRejection', $kunjungan->id) }}" method="POST">
-						@csrf
-						@method('PUT')
-						<button type="submit" class="btn btn-success">Batalkan Penolakan</button>
-					</form>
-				</div>
-			</div>
-		</div>
-	</div>
-	<style>
-		.table th {
-			width: 30%;
-		}
-	</style>	
+    </div>
 			<table class="table table-bordered">
 				<thead class="table-primary">
 					<tr>
@@ -169,10 +66,6 @@
 				<tr>
 					<th>Nomor HP</th>
 					<td>{{ $kunjungan->no_hp }}</td>
-				</tr>
-				<tr>
-					<th>Tanggal Kunjungan</th>
-					<td>{{ $kunjungan->tanggal_kunjungan }}</td>
 				</tr>
 				<tr>
 					<th>Usia</th>
@@ -207,6 +100,10 @@
 					<th>Jumlah Orang</th>
 					<td>{{ $kunjungan->jumlah_orang }}</td>
 				</tr> @endif 
+                <tr>
+					<th>Tanggal Kunjungan</th>
+					<td>{{ $kunjungan->tanggal_kunjungan }}</td>
+				</tr>
 				<tr>
 					<th>Tujuan Kunjungan</th>
 					<td>{{ $kunjungan->tujuan_kunjungan }}</td>
@@ -251,34 +148,94 @@
 						</div>
 					</div>
 				</div>
-
-				@if($kunjungan->status_verifikasi === 'Terverifikasi')
-				<tr>
-					<th>Status Persetujuan</th>
-					<td>
-						@if($kunjungan->status_setujui === 'pending')
-							<span class="badge bg-warning text-white text-capitalize px-3 py-2">
-								Menunggu persetujuan
-							</span>
-						@elseif($kunjungan->status_setujui === 'Disetujui' && $kunjungan->approvedBy && $kunjungan->approved_at)
-							<div class="d-flex align-items-center gap-2">
-								<span class="badge bg-success text-capitalize px-3 py-2">
-									Disetujui
-								</span>
-								<div class="text small">
-									oleh <strong>{{ $kunjungan->approvedBy->name }}</strong><br>
-									{{ \Carbon\Carbon::parse($kunjungan->approved_at)
-										->locale('id')
-										->setTimezone('Asia/Jakarta')
-										->translatedFormat('j F Y H:i') }}
-								</div>
-							</div>
-						@endif
-					</td>
-				</tr>
-				@endif
-					
+								
 			</table>
+
+			<!-- Modal Persetujuan -->
+			<div class="modal fade" id="confirmSetujuiModal" tabindex="-1" aria-labelledby="confirmSetujuiModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header bg-primary text-white">
+							<h5 class="modal-title" id="confirmSetujuiModalLabel">Konfirmasi Persetujuan</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							Apakah Anda yakin ingin menyetujui kunjungan ini?
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+							<form action="{{ route('kunjungan.approve', $kunjungan->id) }}" method="POST">
+								@csrf
+								@method('POST')
+								<button type="submit" class="btn btn-primary">Setujui</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Modal Konfirmasi Penolakan -->
+			<div class="modal fade" id="confirmTolakModal" tabindex="-1" aria-labelledby="confirmTolakModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header bg-danger text-white">
+							<h5 class="modal-title" id="confirmTolakModalLabel">Konfirmasi Penolakan</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							Apakah Anda yakin ingin menolak permohonan kunjungan ini?
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+							<form action="{{ route('kunjungan.reject', $kunjungan->id) }}" method="POST">
+								@csrf
+								@method('PUT')
+								<button type="submit" class="btn btn-danger">Tolak</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- Modal Batalkan Penolakan -->
+			<div class="modal fade" id="cancelRejectionModal" tabindex="-1" aria-labelledby="cancelRejectionModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h5 class="modal-title" id="cancelRejectionModalLabel">Batalkan Penolakan</h5>
+							<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+						</div>
+						<div class="modal-body">
+							Apakah Anda yakin ingin membatalkan penolakan kunjungan ini? Status akan kembali menjadi "Pending".
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+							<form action="{{ route('kunjungan.cancelRejection', $kunjungan->id) }}" method="POST">
+								@csrf
+								@method('PUT')
+								<button type="submit" class="btn btn-warning">Batalkan Penolakan</button>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+					
+				<!-- Modal Pembatalan -->
+				<div class="modal fade" id="cancelApprovalModal" tabindex="-1" aria-labelledby="cancelApprovalModalLabel" aria-hidden="true">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header bg-danger text-white">
+								<h5 class="modal-title" id="cancelApprovalModalLabel">Batalkan Persetujuan</h5>
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								Apakah Anda yakin ingin membatalkan persetujuan kunjungan ini?
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+								<a href="{{ route('kunjungan.cancel', $kunjungan->id) }}" class="btn btn-danger">Batalkan</a>
+							</div>
+						</div>
+					</div>
+				</div>
 
 				
 </div> 
