@@ -207,7 +207,7 @@ footer .bottom-text {
             </div>
         </div>
     </div>
-    <p class="bottom-text">&copy; 2024 Balai Besar Penerapan Standar Instrumen Pertanian & IPB. All Rights Reserved</p>
+    <p class="bottom-text">&copy; 2025 Balai Besar Pengembangan dan Penerapan Modernisasi Pertanian & IPB. All Rights Reserved</p>
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
