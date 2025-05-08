@@ -133,7 +133,7 @@ footer .bottom-text {
     <nav class="navbar navbar-expand-lg navbar-dark py-2 fixed-top bg-light shadow">
         <div class="container">
             <a class="navbar-brand" href="{{ route('home.index') }}">
-                <img src="{{ asset('assets/icons/logotype.png') }}" height="55" alt="">
+                <img src="{{ asset('assets/icons/logonew.png') }}" height="55" alt="">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
