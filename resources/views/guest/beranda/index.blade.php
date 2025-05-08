@@ -265,6 +265,57 @@
     </div>
 </section>
 
+<!-- Pilihan Layanan -->
+<section id="layanan" class="py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-4" data-aos="fade-down">Layanan Kami</h2>
+        <div class="row g-4 justify-content-center">
+            <!-- Koleksi Tanaman -->
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                <a href="{{ route('tanaman.index') }}" class="text-decoration-none text-dark">
+                    <div class="card h-100 shadow text-center p-3">
+                        <div class="card-body">
+                            <i class="fas fa-leaf fa-3x mb-3 text-success"></i>
+                            <h5 class="card-title">Koleksi Tanaman</h5>
+                            <p class="card-text">Jelajahi dan temukan informasi berbagai koleksi tanaman unggulan yang dapat discan dengan QR code di Taman Agro Inovasi.</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <!-- Permohonan Kunjungan -->
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                <a href="{{ route('guest.permohonan.kunjungan.index') }}" class="text-decoration-none text-dark">
+                    <div class="card h-100 shadow text-center p-3">
+                        <div class="card-body">
+                            <i class="bi bi-calendar-check text-primary display-4 mb-3"></i>
+                            <h5 class="card-title">Permohonan Kunjungan</h5>
+                            <p class="card-text">Ajukan kunjunganmu untuk konsultasi,
+                                agroeduwisata sekolah TK/SD,
+                                pelatihan/bimbingan teknis,
+                                magang,
+                                dan rasakan pengalamannya. </p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <!-- Stok Benih -->
+            <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                <a href="{{ route('stokbenih.index') }}" class="text-decoration-none text-dark">
+                    <div class="card h-100 shadow text-center p-3">
+                        <div class="card-body">
+                            <i class="bi bi-box-seam text-warning display-4 mb-3"></i>
+                            <h5 class="card-title">Stok Benih</h5>
+                            <p class="card-text">Lihat benih unggul dari berbagai varietas tanaman yang tersedia di Taman Agro Inovasi Benih kami.</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
 <!-- Denah -->
 <section id="denah" class="py-5" data-aos="fade-up">
     <div class="container text-center">
